@@ -14,12 +14,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { alpha, styled } from '@mui/material/styles';
+import notificationService from '../../services/notificationService';
 
 const LoginPage = () => {
 
 
   const handleSubmit = (e) => {
     console.log(e)
+    notificationService.success("hola como estas")
   }
 
   const CssTextField = styled(TextField)({
