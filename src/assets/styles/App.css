@@ -1,0 +1,21 @@
+
+body {
+  background-color: #FFFDFA;
+}
+
+
+.color-primary {
+  color: #319795
+}
+
+ .MuiTypography-h3 {
+  color: #319795;
+  font-size: 20;
+  font-family: bold;
+}
+
+.line-login {
+  border-bottom: 2px solid #545c5c;
+  margin-top: 20px;
+  width: 40%;
+}
