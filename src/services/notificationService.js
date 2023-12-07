@@ -7,12 +7,36 @@ const MySwal = withReactContent(Swal);
 
 
 const success = (msg) => MySwal.fire({
-  title: msg,
+  text: msg,
   position: "center",
-  icon: "sucess",
+  icon: "success",
+  timer: 2000,
+  background: "#FFFDFA",
+  showConfirmButton: false
+})
+
+const error = (msg) => MySwal.fire({
+  text: msg,
+  position: "center",
+  icon: "error",
+  timer: 2000,
+  background: "#FFFDFA",
+
+  showConfirmButton: false
+})
+
+const warning = (msg) => MySwal.fire({
+  text: msg,
+  position: "center",
+  icon: "warning",
+  timer: 2000,
+  background: "#FFFDFA",
+  showConfirmButton: false
 })
 
 
 export default {
-  success: success
+  success: success,
+  error: error,
+  warning: warning
 }

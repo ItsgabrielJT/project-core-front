@@ -1,102 +1,38 @@
 
-import React from 'react'
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import React, { useState } from 'react'
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { alpha, styled } from '@mui/material/styles';
-import notificationService from '../../services/notificationService';
+import { useLogin } from '@hook/accounts/useLogin';
+import { CssTexField } from '@constants/styles';
+import ButtonContained from '@components/buttons/ButtonContained';
+import ButtonOutline from '@components/buttons/ButtonOutline';
+import RegisterPage from './RegisterPage';
+
 
 const LoginPage = () => {
 
-
-  const handleSubmit = (e) => {
-    console.log(e)
-    notificationService.success("hola como estas")
-  }
-
-  const CssTextField = styled(TextField)({
-    '& label.Mui-focused': {
-      color: '#A0AAB4',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#9BBEC8',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderRadius: '50px',
-        border: '3px solid #9BBEC8',
-      },
-      '&:hover fieldset': {
-        borderColor: '#9BBEC8',
-
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#44C6C3',
-      },
-    },
-  });
-
-  const ContainedButton = styled(Button)({
-    boxShadow: 'none',
-    textTransform: 'none',
-    fontSize: 16,
-    padding: '6px 12px',
-    border: '3px solid',
-    borderRadius: '25px',
-    backgroundColor: '#319795',
-    borderColor: '#319795',
-    '&:hover': {
-      backgroundColor: '#44C6C3',
-      borderColor: '#44C6C3',
-      boxShadow: 'none',
-    },
-    '&:active': {
-      boxShadow: 'none',
-      backgroundColor: '#44C6C3',
-      borderColor: '#44C6C3',
-    },
-
-  });
-
-  const OutlinedButton = styled(Button)({
-    color: '#319795',
-    boxShadow: 'none',
-    textTransform: 'none',
-    fontSize: 16,
-    padding: '6px 12px',
-    border: '3px solid',
-    borderRadius: '25px',
-    borderColor: '#319795',
-    '&:hover': {
-      borderColor: '#44C6C3',
-      boxShadow: 'none',
-    },
-    '&:active': {
-      boxShadow: 'none',
-      borderColor: '#44C6C3',
-    },
-
-  });
+  const { formLogin } = useLogin()
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
       <CssBaseline />
+      <RegisterPage 
+        open={open}
+        handleClose={handleClose}
+      />
       <Grid
         item
         xs={false}
         sm={4}
         md={7}
-        
+
       >
         <Grid item sx={{
         }}>
@@ -111,7 +47,7 @@ const LoginPage = () => {
         }}>
         </Grid>
       </Grid>
-      <Grid item xs={14} sm={8} md={5} elevation={6} square>
+      <Grid item xs={14} sm={8} md={5} elevation={6} >
         <Box
           sx={{
             my: 8,
@@ -121,70 +57,70 @@ const LoginPage = () => {
             alignItems: 'center',
           }}
         >
-          <Typography component="body2" variant="h3" className='color-primary'>
+          <Typography component="h1" variant="h3" className='color-primary'>
             Bienvenido al portal de proyectos de investigacion
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 5 }}>
-            <CssTextField
+          <Box component="form" noValidate onSubmit={formLogin.handleSubmit} sx={{ mt: 5 }}>
+            <TextField
               margin="normal"
-              required
               fullWidth
-              id="email"
-              label="Email"
-              name="email"
               autoComplete="email"
-              autoFocus
+              id="email"
+              name="email"
+              label="Email"
+              value={formLogin.values.email}
+              onChange={formLogin.handleChange}
+              onBlur={formLogin.handleBlur}
+              error={formLogin.touched.email && Boolean(formLogin.errors.email)}
+              helperText={formLogin.touched.email && formLogin.errors.email}
+              sx={CssTexField}
+
             />
-            <CssTextField
+            <TextField
               margin="normal"
-              required
               fullWidth
               name="password"
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
+              value={formLogin.values.password}
+              onChange={formLogin.handleChange}
+              onBlur={formLogin.handleBlur}
+              error={formLogin.touched.password && Boolean(formLogin.errors.password)}
+              helperText={formLogin.touched.password && formLogin.errors.password}
+              sx={CssTexField}
             />
-            <ContainedButton
+            <ButtonContained
+              text={"Iniciar sesion"}
               type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 4 }}
-            >
-              Iniciar sesion
-            </ContainedButton>
-            
+            />
             <Grid sx={{
               mt: 3,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-            }} >            
-              <Grid item >
-                <div >
-                  o
-                </div>
-              </Grid>
+            }} >
+              <div >
+                o
+              </div>
             </Grid>
-            <OutlinedButton
-              type="submit"
-              fullWidth
-              sx={{ mt: 3, mb: 2 }}
+            <ButtonOutline
+              text={"Crear cuenta"}
+              onClick={handleOpen}
+            />
+
+            <Grid item
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginTop: '20px',
+              }}
             >
-              Crear cuenta
-            </OutlinedButton>
-            <Grid content 
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }} 
-            >            
-              <Grid item  >
               <Link href="#" variant="body2">
                 Olvidaste tu contraseña?
               </Link>
-              </Grid>
             </Grid>
           </Box>
         </Box>
