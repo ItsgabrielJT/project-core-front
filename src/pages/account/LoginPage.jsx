@@ -13,30 +13,41 @@ import ButtonOutline from '@components/buttons/ButtonOutline';
 import RegisterPage from './RegisterPage';
 import personas from "@images/estudiantes.png"
 import logo from "@images/logos/logo.png"
+import ResetPage from './ResetPage';
 
 const LoginPage = () => {
 
   const { formLogin } = useLogin()
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
+  const [openReset, setOpenReset] = useState(false);
 
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleOpenReset = () => setOpenReset(true);
+  const handleCloseReset = () => setOpenReset(false);
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
-      <CssBaseline />
       <RegisterPage
         open={open}
         handleClose={handleClose}
+      />
+      <ResetPage
+        open={openReset}
+        handleClose={handleCloseReset}
       />
       <Grid
         item
         xs={false}
         sm={4}
-        md={6}
-
+        md={7}
+        sx={{
+          backgroundColor: (t) =>
+            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
       >
         <div className="centrar-logo">
           <img src={logo} alt="" className="logo" />
@@ -46,7 +57,7 @@ const LoginPage = () => {
         </div>
 
       </Grid>
-      <Grid item xs={14} sm={8} md={5} elevation={5} >
+      <Grid item xs={12} sm={8} md={5}   elevation={6} square>
         <Box
           sx={{
             my: 8,
@@ -117,7 +128,7 @@ const LoginPage = () => {
                 marginTop: '20px',
               }}
             >
-              <Link href="#" variant="body2">
+              <Link onClick={handleOpenReset} variant="body2">
                 Olvidaste tu contraseña?
               </Link>
             </Grid>
