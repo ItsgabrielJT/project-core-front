@@ -32,7 +32,6 @@ export const useLogin = () => {
         onSubmit: async (values) => {
             console.log(values)
             singUp("value");
-            notificationService.success("Sing in successfully")
             navigate("/home")
         }
     });

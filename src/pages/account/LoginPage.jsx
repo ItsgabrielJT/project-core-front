@@ -11,19 +11,23 @@ import { CssTexField } from '@constants/styles';
 import ButtonContained from '@components/buttons/ButtonContained';
 import ButtonOutline from '@components/buttons/ButtonOutline';
 import RegisterPage from './RegisterPage';
-
+import personas from "@images/estudiantes.png"
+import logo from "@images/logos/logo.png"
 
 const LoginPage = () => {
 
   const { formLogin } = useLogin()
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+
+  };
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
       <CssBaseline />
-      <RegisterPage 
+      <RegisterPage
         open={open}
         handleClose={handleClose}
       />
@@ -31,23 +35,18 @@ const LoginPage = () => {
         item
         xs={false}
         sm={4}
-        md={7}
+        md={6}
 
       >
-        <Grid item sx={{
-        }}>
-        </Grid>
-        <Grid item sx={{
-          backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-          backgroundRepeat: 'no-repeat',
-          backgroundColor: (t) =>
-            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-          backgroundSize: 'contain',
-          backgroundPosition: 'end',
-        }}>
-        </Grid>
+        <div className="centrar-logo">
+          <img src={logo} alt="" className="logo" />
+        </div>
+        <div className="centrar-contenido">
+          <img src={personas} alt="" className="imagen" />
+        </div>
+
       </Grid>
-      <Grid item xs={14} sm={8} md={5} elevation={6} >
+      <Grid item xs={14} sm={8} md={5} elevation={5} >
         <Box
           sx={{
             my: 8,
