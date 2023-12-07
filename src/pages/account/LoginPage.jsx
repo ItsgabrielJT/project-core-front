@@ -19,7 +19,7 @@ const LoginPage = () => {
   const { formLogin } = useLogin();
   const [open, setOpen] = useState(false);
   const [openReset, setOpenReset] = useState(false);
-
+  
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -33,6 +33,7 @@ const LoginPage = () => {
 
      
         <Grid
+        item
         xs={false}
         sm={4}
         md={7}

@@ -126,7 +126,7 @@ export const ModalContent = styled('div')(
 
     & .modal-title {
       margin: 0;
-      line-height: 1.5rem;
+      line-height: 1.5rem;z
       margin-bottom: 8px;
     }
 

@@ -1,33 +1,38 @@
+import React, { useState } from "react";
+import {
+  CssTexField,
+  Modal,
+  ModalContent,
+  ModalButton,
+  StyledBackdrop,
+} from "@constants/styles";
+import Fab from "@mui/material/Fab";
+import ClearIcon from "@mui/icons-material/Clear";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import { Collapse, TextField } from "@mui/material";
+import { useRegister } from "@hook/accounts/useRegister";
+import ButtonContained from "@components/buttons/ButtonContained";
+import { Box } from "@mui/system";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
-import React, { useState } from 'react'
-import { CssTexField, Modal, ModalContent, ModalButton, StyledBackdrop } from '@constants/styles';
-import Fab from '@mui/material/Fab';
-import ClearIcon from '@mui/icons-material/Clear';
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import { Collapse, TextField } from '@mui/material';
-import { useRegister } from '@hook/accounts/useRegister';
-import ButtonContained from '@components/buttons/ButtonContained';
-import { Box } from '@mui/system';
-
-const tab = false
+const tab = false;
 
 function RegisterPage({ open, handleClose }) {
-
-  const { formRegister } = useRegister()
-  const [nextstep, setNextStep] = useState(false)
+  const { formRegister } = useRegister();
+  const [nextstep, setNextStep] = useState(false);
 
   const handleNextStep = () => {
-    setNextStep(true)
-  }
+    setNextStep(true);
+  };
 
   const handleReturn = () => {
-    setNextStep(false)
-  }
+    setNextStep(false);
+  };
 
   const onClose = () => {
-    handleClose()
-    formRegister.resetForm()
-  }
+    handleClose();
+    formRegister.resetForm();
+  };
 
   return (
     <>
@@ -38,31 +43,51 @@ function RegisterPage({ open, handleClose }) {
         closeAfterTransition
         slots={{ backdrop: StyledBackdrop }}
       >
-        <ModalContent sx={{ width: 600 }}>
+        <ModalContent sx={{ width: 450 }}>
           <form onSubmit={formRegister.handleSubmit}>
-
-          {
-            !nextstep && (
+            {!nextstep && (
               <div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <div>
-                    <p id="unstyled-modal-description" className="modal-description">
+                    <p
+                      id="unstyled-modal-description"
+                      className="modal-description"
+                    >
                       1 de 2 pasos
                     </p>
                     <h2 id="unstyled-modal-title" className="modal-title">
                       Crea tu cuenta
                     </h2>
                   </div>
-                  <Fab size="small" aria-label="add"
+                  <Fab
+                    size="small"
+                    aria-label="add"
                     onClick={onClose}
                     sx={{
                       backgroundColor: "#FFFDFA",
-                      boxShadow: "none"
-                    }}>
+                      boxShadow: "none",
+                    }}
+                  >
                     <ClearIcon />
                   </Fab>
                 </div>
-                <div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'  }}>
+                  <Fab
+                    sx={{
+                      margin: "20px 0px 20px 0px",
+                      width: "115px",
+                      height: "115px",
+                      fontSize: "12px",
+                      flexDirection: "column", // Colocar los elementos en una columna
+                      alignItems: "center", // Alinear en el centro horizontal
+                      justifyContent: "center", // Alinear en el centro vertical
+                    }}
+                  >
+                    <AddAPhotoIcon />
+                    <div>Agrega una foto</div>
+                  </Fab>
                   <TextField
                     margin="normal"
                     fullWidth
@@ -73,8 +98,14 @@ function RegisterPage({ open, handleClose }) {
                     value={formRegister.values.fullname}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
-                    error={formRegister.touched.fullname && Boolean(formRegister.errors.fullname)}
-                    helperText={formRegister.touched.fullname && formRegister.errors.fullname}
+                    error={
+                      formRegister.touched.fullname &&
+                      Boolean(formRegister.errors.fullname)
+                    }
+                    helperText={
+                      formRegister.touched.fullname &&
+                      formRegister.errors.fullname
+                    }
                     sx={CssTexField}
                   />
                   <TextField
@@ -88,8 +119,13 @@ function RegisterPage({ open, handleClose }) {
                     value={formRegister.values.email}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
-                    error={formRegister.touched.email && Boolean(formRegister.errors.email)}
-                    helperText={formRegister.touched.email && formRegister.errors.email}
+                    error={
+                      formRegister.touched.email &&
+                      Boolean(formRegister.errors.email)
+                    }
+                    helperText={
+                      formRegister.touched.email && formRegister.errors.email
+                    }
                     sx={CssTexField}
                   />
                   <TextField
@@ -103,33 +139,45 @@ function RegisterPage({ open, handleClose }) {
                     value={formRegister.values.password}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
-                    error={formRegister.touched.password && Boolean(formRegister.errors.password)}
-                    helperText={formRegister.touched.password && formRegister.errors.password}
+                    error={
+                      formRegister.touched.password &&
+                      Boolean(formRegister.errors.password)
+                    }
+                    helperText={
+                      formRegister.touched.password &&
+                      formRegister.errors.password
+                    }
                     sx={CssTexField}
                   />
                 </div>
                 <ButtonContained onClick={handleNextStep} text={"Siguiente"} />
               </div>
-            )
-          }
-          {
-            nextstep && (
+            )}
+            {nextstep && (
               <div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <div>
-                    <p id="unstyled-modal-description" className="modal-description">
+                    <p
+                      id="unstyled-modal-description"
+                      className="modal-description"
+                    >
                       2 de 2 pasos
                     </p>
                     <h2 id="unstyled-modal-title" className="modal-title">
                       Crea tu cuenta
                     </h2>
                   </div>
-                  <Fab size="small" aria-label="add"
+                  <Fab
+                    size="small"
+                    aria-label="add"
                     onClick={handleReturn}
                     sx={{
                       backgroundColor: "#FFFDFA",
-                      boxShadow: "none"
-                    }}>
+                      boxShadow: "none",
+                    }}
+                  >
                     <KeyboardReturnIcon />
                   </Fab>
                 </div>
@@ -144,8 +192,13 @@ function RegisterPage({ open, handleClose }) {
                     value={formRegister.values.nif}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
-                    error={formRegister.touched.nif && Boolean(formRegister.errors.nif)}
-                    helperText={formRegister.touched.nif && formRegister.errors.nif}
+                    error={
+                      formRegister.touched.nif &&
+                      Boolean(formRegister.errors.nif)
+                    }
+                    helperText={
+                      formRegister.touched.nif && formRegister.errors.nif
+                    }
                     sx={CssTexField}
                   />
                   <TextField
@@ -158,8 +211,14 @@ function RegisterPage({ open, handleClose }) {
                     value={formRegister.values.institute}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
-                    error={formRegister.touched.institute && Boolean(formRegister.errors.institute)}
-                    helperText={formRegister.touched.institute && formRegister.errors.institute}
+                    error={
+                      formRegister.touched.institute &&
+                      Boolean(formRegister.errors.institute)
+                    }
+                    helperText={
+                      formRegister.touched.institute &&
+                      formRegister.errors.institute
+                    }
                     sx={CssTexField}
                   />
                   <TextField
@@ -172,8 +231,14 @@ function RegisterPage({ open, handleClose }) {
                     value={formRegister.values.profesion}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
-                    error={formRegister.touched.profesion && Boolean(formRegister.errors.profesion)}
-                    helperText={formRegister.touched.profesion && formRegister.errors.profesion}
+                    error={
+                      formRegister.touched.profesion &&
+                      Boolean(formRegister.errors.profesion)
+                    }
+                    helperText={
+                      formRegister.touched.profesion &&
+                      formRegister.errors.profesion
+                    }
                     sx={CssTexField}
                   />
                   <TextField
@@ -186,26 +251,24 @@ function RegisterPage({ open, handleClose }) {
                     value={formRegister.values.number}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
-                    error={formRegister.touched.number && Boolean(formRegister.errors.number)}
-                    helperText={formRegister.touched.number && formRegister.errors.number}
+                    error={
+                      formRegister.touched.number &&
+                      Boolean(formRegister.errors.number)
+                    }
+                    helperText={
+                      formRegister.touched.number && formRegister.errors.number
+                    }
                     sx={CssTexField}
                   />
                 </div>
-                <ButtonContained
-                  text={"Guardar"}
-                  type="submit"
-                />
+                <ButtonContained text={"Guardar"} type="submit" />
               </div>
-            )
-          }
+            )}
           </form>
-
         </ModalContent>
-
       </Modal>
-
     </>
-  )
+  );
 }
 
-export default RegisterPage
+export default RegisterPage;
