@@ -26,7 +26,7 @@ function ResetPage({ open, handleClose }) {
 
     const onClose = () => {
         handleClose()
-        formRegister.resetForm()
+        formPassword.resetForm()
     }
 
     return (
@@ -38,7 +38,7 @@ function ResetPage({ open, handleClose }) {
                 closeAfterTransition
                 slots={{ backdrop: StyledBackdrop }}
             >
-                <ModalContent sx={{ width: 600 }}>
+                <ModalContent sx={{ width: 500 }}>
                     {
                         !nextstep && (
                             <form onSubmit={formPassword.handleSubmit}>
