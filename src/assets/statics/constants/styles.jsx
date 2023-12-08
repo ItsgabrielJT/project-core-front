@@ -52,6 +52,29 @@ export const CssButtonOutline = {
   },
 }
 
+export const CssNavOutline = {
+  marginTop: '10px',
+  boxShadow: 'none',
+  borderRadius: '50px',
+  color: '#319795',
+  textTransform: 'none',
+  borderColor: "#fff",
+  display: 'flex',
+  justifyContent: 'start ',
+  fontSize: 16,
+  padding: '6px 12px',
+  '&:hover': {
+    backgroundColor: 'rgba(92, 221, 219, 0.3)',
+    borderColor: '#5CDDDB',
+    boxShadow: 'none',
+  },
+  '&:active': {
+    boxShadow: 'none',
+    backgroundColor: 'rgba(92, 221, 219, 0.3)',
+    borderColor: '#5CDDDB',
+  },
+}
+
 
 export const CssTexField = {
 
@@ -73,7 +96,6 @@ export const CssTexField = {
     },
   },
 }
-
 
 const blue = {
   200: '#99CCFF',
