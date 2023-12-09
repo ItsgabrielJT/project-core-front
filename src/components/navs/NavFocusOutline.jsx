@@ -3,14 +3,13 @@ import { Button, Typography } from '@mui/material'
 import React from 'react'
 import { CssNavOutline } from '@constants/styles'
 import ClearIcon from "@mui/icons-material/Clear";
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function NavFocusOutline(props) {
 
-    const navigation = useNavigate()
 
     const handleRedirecTo = (path) => {
-        navigation(path)
+       return <Navigate  to={path} />
     }
 
     return (

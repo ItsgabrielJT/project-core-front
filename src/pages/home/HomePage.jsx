@@ -7,7 +7,8 @@ const HomePage = () => {
       <Paper
         sx={{
           height: '100vh',
-          backgroundColor: '#FFFDFA',
+          backgroundColor: 'blue',
+          position: 'overflow',
         }}
       />
     </Grid>

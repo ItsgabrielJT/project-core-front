@@ -1,14 +1,17 @@
 import { Fab, Grid, Paper, Typography } from '@mui/material'
 import React from 'react'
 import logo from "@images/logos/logo.png";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function Header() {
     return (
         <Grid item xs={12} sx={{
             backgroundColor: "#F2F1EE",
+            backdropFilter: 'blur(100px)',
             display: 'flex',
             justifyContent: 'space-between',
-
+            width: '99%',
+            position: 'fixed'
         }}>
 
             <div>
@@ -33,20 +36,18 @@ function Header() {
                         marginTop: '6px',
                         marginRight: '20px',
                         display: 'flex',
-                        justifyContent: 'space-between'
                     }
                 }>
-                    <img src={logo} alt=""
-                        style={{
-                            width: '30px',
-                            height: 'auto',
-                            borderRadius: '8px',
-                            marginTop: '6px',
-                            marginLeft: '20px'
-                        }}
+                    <AccountCircleIcon
+                    style={{
+                        width: '30px',
+                        height: 'auto',
+                        borderRadius: '8px',
+                    }}
                     />
                     <Typography variant='body2' sx={{
                         marginRight: '15px',
+                        marginLeft: '10px',
                     }}>
                         Joel Tates Asimbaya
 

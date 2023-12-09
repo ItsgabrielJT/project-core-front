@@ -7,6 +7,7 @@ function RightBar() {
         sx={{
             height: '30vh',
             backgroundColor: '#FFFDFA',
+            position: 'overflow',
         }}
          >
             
