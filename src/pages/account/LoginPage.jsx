@@ -119,7 +119,10 @@ const LoginPage = () => {
             >
               <div>o</div>
             </Grid>
-            <ButtonOutline text={"Crear cuenta"} onClick={handleOpen} />
+            
+            <ButtonOutline text={"Crear cuenta"} onClick={handleOpen} fullWidth style={{ 
+              marginTop: "20px"
+             }}/>
 
             <Grid
               item

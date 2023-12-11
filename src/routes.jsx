@@ -6,22 +6,22 @@ import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 export const routes = [
     {
         title: 'Home',
-        path: 'auth/home',
+        path: '/home',
         icon: <HomeRoundedIcon />
     },
     {
         title: 'Notificaciones',
-        path: 'auth/home',
+        path: '/home',
         icon: <MailOutlineIcon/>
     },
     {
         title: 'Mis proyectos',
-        path: 'auth/home',
+        path: '/home',
         icon: <FileCopyOutlinedIcon/>
     },
     {
         title: 'Perfil',
-        path: 'auth/home',
+        path: '/user',
         icon: <PersonRoundedIcon/>
     }
 ]

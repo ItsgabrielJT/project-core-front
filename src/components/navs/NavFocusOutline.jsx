@@ -9,7 +9,8 @@ function NavFocusOutline(props) {
 
 
     const handleRedirecTo = (path) => {
-       return <Navigate  to={path} />
+        window.location.href = path;
+        
     }
 
     return (

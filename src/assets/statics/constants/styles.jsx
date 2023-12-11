@@ -30,7 +30,6 @@ export const CssButtonContained = {
 }
 
 export const CssButtonOutline = {
-  marginTop: '20px',
   boxShadow: 'none',
   borderRadius: '50px',
   color: '#319795',
@@ -162,6 +161,40 @@ export const ModalContent = styled('div')(
   `,
 );
 
+export const ModalContentConfirm = styled('div')(
+  ({ theme }) => css`
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    text-align: start;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+    background-color: #F2F1EE;
+    border-radius: 30px;
+    border: 1px solid #F3F6F9;
+    box-shadow: 0 4px 12px
+      ${theme.palette.mode === 'dark' ? 'rgb(0 0 0 / 0.5)' : 'rgb(0 0 0 / 0.2)'};
+    padding: 24px;
+    color: ${theme.palette.mode === 'dark' ? grey[50] : grey[900]};
+
+    & .modal-title {
+      margin: 0;
+      line-height: 1.5rem;z
+      margin-bottom: 8px;
+    }
+
+    & .modal-description {
+      margin: 0;
+      line-height: 1.5rem;
+      font-weight: 400;
+      color: ${theme.palette.mode === 'dark' ? grey[400] : grey[800]};
+      margin-bottom: 4px;
+    }
+  `,
+);
+
 const Backdrop = forwardRef((props, ref) => {
   const { open, ...other } = props;
   return (
@@ -217,3 +250,10 @@ export const ModalButton = styled(Button)(
   }
 `,
 );
+
+export const CssContentInfo = {
+  backgroundColor: "#F2F1EE",
+  margin: '30px 30px 0px 30px',
+  borderRadius: "20px",
+  padding: "20px 30px 30px 30px",
+}

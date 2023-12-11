@@ -5,6 +5,7 @@ import HomePage from "./home/HomePage";
 import '@styles/App.css'
 import { AuthProvider } from "../context/AuthContext";
 import SideBar from "../layouts/SideBar";
+import UserPage from "./securities/UserPage";
 
 function App() {
   return (
@@ -15,10 +16,11 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
 
           <Route
-            path="/auth"
+            path="/"
             element={<SideBar/>}
           >
             <Route path="home" element={<HomePage/>} />
+            <Route path="user" element={<UserPage/>} />
           </Route>
 
         </Routes>

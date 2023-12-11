@@ -7,7 +7,6 @@ function ButtonOutline( props ) {
     return (
         <Button
             {...props}
-            fullWidth
             variant="outlined"
             sx={CssButtonOutline}
         >

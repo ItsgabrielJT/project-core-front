@@ -6,8 +6,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 function Header() {
     return (
         <Grid item xs={12} sx={{
-            backgroundColor: "#F2F1EE",
-            backdropFilter: 'blur(100px)',
+            backgroundColor: "rgba(242, 241, 238, 0.5)",
+            backdropFilter: 'blur(10px)',
             display: 'flex',
             justifyContent: 'space-between',
             width: '99%',
