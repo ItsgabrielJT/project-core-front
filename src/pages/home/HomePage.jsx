@@ -6,9 +6,11 @@ const HomePage = () => {
     <Grid item xs={12}>
       <Paper
         sx={{
-          height: '100vh',
-          backgroundColor: 'blue',
+          height: '100%',
+          backgroundColor: '#FFFDFA',
           position: 'overflow',
+          boxShadow: 'none',
+
         }}
       />
     </Grid>

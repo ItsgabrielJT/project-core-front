@@ -6,7 +6,7 @@ import {
 import ButtonContained from "@components/buttons/ButtonContained";
 import ButtonOutline from "@components/buttons/ButtonOutline";
 
-function ModalDialog({ open, onClose, onConfirm, title }) {
+function ModalDialog({ open, onClose, onConfirm, title, slots= {} }) {
 
 
 
@@ -16,6 +16,8 @@ function ModalDialog({ open, onClose, onConfirm, title }) {
             aria-describedby="unstyled-modal-description"
             open={open}
             closeAfterTransition
+            slots={slots}
+
         >
             <ModalContentConfirm sx={{ width: 250 }}>
                 <div>

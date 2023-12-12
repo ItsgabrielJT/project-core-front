@@ -28,6 +28,7 @@ const NotificationsPage = () => {
                     backgroundColor: '#FFFDFA',
                     position: 'overflow',
                     padding: '40px 25px 0px 25px',
+                    boxShadow: 'none',
 
                 }}
             >

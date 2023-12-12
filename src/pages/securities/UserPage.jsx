@@ -947,6 +947,7 @@ function UserPage() {
                     height: '100%',
                     backgroundColor: '#FFFDFA',
                     position: 'overflow',
+                    boxShadow: 'none',
                 }}
             >
                 <div style={{

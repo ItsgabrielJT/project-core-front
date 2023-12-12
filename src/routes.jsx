@@ -16,7 +16,7 @@ export const routes = [
     },
     {
         title: 'Mis proyectos',
-        path: '/home',
+        path: '/projects',
         icon: <FileCopyOutlinedIcon/>
     },
     {

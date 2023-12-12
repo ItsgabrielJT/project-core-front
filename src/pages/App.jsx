@@ -8,6 +8,7 @@ import SideBar from "../layouts/SideBar";
 import UserPage from "./securities/UserPage";
 import NotificationsPage from "./notifications/NotificationsPage";
 import EditProject from "./projects/EditProject";
+import ListProjects from "./projects/ListProjects";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           >
             <Route path="home" element={<HomePage/>} />
             <Route path="user" element={<UserPage/>} />
+            <Route path="projects" element={<ListProjects/>} />
             <Route path="notifications" element={<NotificationsPage/>} />
             <Route path="create/project" element={<EditProject/>} />
           </Route>
