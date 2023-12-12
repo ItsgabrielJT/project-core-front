@@ -10,6 +10,12 @@ import NavFocusOutline from '@components/navs/NavFocusOutline'
 import { routes } from '../routes'
 
 function SideBar({ children }) {
+
+    const handleRedirecTo = (path) => {
+        window.location.href = path;
+        
+    }
+
     return (
         <Grid container sx={{
             paddingY: '0px',
@@ -39,7 +45,11 @@ function SideBar({ children }) {
                             />
                         ))
                     }
-                    <ButtonContained text={"Crear proyecto"} type="submit" />
+                    <ButtonContained 
+                        text={"Crear proyecto"} 
+                        type="submit" 
+                        onClick={() => handleRedirecTo('/create/project')}
+                    />
                 </div>
             </Grid>
 

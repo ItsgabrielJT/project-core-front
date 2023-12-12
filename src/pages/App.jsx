@@ -6,6 +6,8 @@ import '@styles/App.css'
 import { AuthProvider } from "../context/AuthContext";
 import SideBar from "../layouts/SideBar";
 import UserPage from "./securities/UserPage";
+import NotificationsPage from "./notifications/NotificationsPage";
+import EditProject from "./projects/EditProject";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           >
             <Route path="home" element={<HomePage/>} />
             <Route path="user" element={<UserPage/>} />
+            <Route path="notifications" element={<NotificationsPage/>} />
+            <Route path="create/project" element={<EditProject/>} />
           </Route>
 
         </Routes>

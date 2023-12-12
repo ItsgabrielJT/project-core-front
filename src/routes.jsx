@@ -11,7 +11,7 @@ export const routes = [
     },
     {
         title: 'Notificaciones',
-        path: '/home',
+        path: '/notifications',
         icon: <MailOutlineIcon/>
     },
     {

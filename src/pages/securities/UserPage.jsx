@@ -944,7 +944,7 @@ function UserPage() {
             <Paper
                 sx={{
                     marginTop: "53px",
-                    height: '170vh',
+                    height: '100%',
                     backgroundColor: '#FFFDFA',
                     position: 'overflow',
                 }}

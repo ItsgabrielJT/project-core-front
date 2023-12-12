@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 import { Button } from '@mui/base';
-import { Fade } from '@mui/material';
+import { Fade, Popover } from '@mui/material';
 
 export const CssButtonContained = {
   marginTop: '20px',
@@ -95,6 +95,21 @@ export const CssTexField = {
     },
   },
 }
+
+export const CustomizedPopover = styled(Popover)`
+  color: #20b2aa;
+  .MuiPopover-paper {
+    margin-top: 10px;
+    background-color: #F2F1EE;
+    width: 244px;
+    border-radius: 20px;
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+    text-align: left;
+  }
+  
+`;
 
 const blue = {
   200: '#99CCFF',

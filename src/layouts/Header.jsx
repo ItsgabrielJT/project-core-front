@@ -1,13 +1,30 @@
-import { Fab, Grid, Paper, Typography } from '@mui/material'
-import React from 'react'
+import { Fab, Grid, Paper, Popover, Typography } from '@mui/material'
+import React, { useState } from 'react'
 import logo from "@images/logos/logo.png";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { CustomizedPopover } from '@constants/styles';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 
 function Header() {
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
     return (
         <Grid item xs={12} sx={{
             backgroundColor: "rgba(242, 241, 238, 0.5)",
             backdropFilter: 'blur(10px)',
+            zIndex: 1,
             display: 'flex',
             justifyContent: 'space-between',
             width: '99%',
@@ -26,24 +43,27 @@ function Header() {
                 />
             </div>
             <div>
-                <Fab sx={
-                    {
-                        width: '40vh',
-                        height: '10px',
-                        borderRadius: '20px',
-                        boxShadow: 'none',
-                        backgroundColor: "#F2F1EE",
-                        marginTop: '6px',
-                        marginRight: '20px',
-                        display: 'flex',
-                    }
-                }>
+                <Fab
+                    aria-describedby={id}
+                    onClick={handleClick}
+                    sx={
+                        {
+                            width: '40vh',
+                            height: '10px',
+                            borderRadius: '20px',
+                            boxShadow: 'none',
+                            backgroundColor: "#F2F1EE",
+                            marginTop: '6px',
+                            marginRight: '20px',
+                            display: 'flex',
+                        }
+                    }>
                     <AccountCircleIcon
-                    style={{
-                        width: '30px',
-                        height: 'auto',
-                        borderRadius: '8px',
-                    }}
+                        style={{
+                            width: '30px',
+                            height: 'auto',
+                            borderRadius: '8px',
+                        }}
                     />
                     <Typography variant='body2' sx={{
                         marginRight: '15px',
@@ -53,6 +73,31 @@ function Header() {
 
                     </Typography>
                 </Fab>
+                <CustomizedPopover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+
+                >
+                    <div style={{ display: 'flex' }}>
+                        <PowerSettingsNewIcon />
+                        <Typography variant='body2' style={{
+                            marginLeft: '10px',
+                            marginTop: '3px'
+                        }}>
+                            Cerrar sesion.
+                        </Typography>
+                    </div>
+                </CustomizedPopover>
             </div>
         </Grid>
     )
