@@ -5,9 +5,12 @@ function RightBar() {
     return (
         <Grid item
         sx={{
-            height: '30vh',
+            height: '89vh',
             backgroundColor: '#FFFDFA',
             position: 'overflow',
+            borderLeft : '3px solid #F2F1EE',
+            marginTop: '50px',
+            paddingTop: '50px',
         }}
          >
             

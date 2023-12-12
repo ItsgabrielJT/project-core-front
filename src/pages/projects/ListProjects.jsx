@@ -8,6 +8,7 @@ import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import ModalDialog from "@components/modals/ModalDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
+import { Link } from 'react-router-dom';
 
 function ListProjects() {
 
@@ -16,6 +17,11 @@ function ListProjects() {
 
     const handleConfirm = () => {
         setOpen(false);
+    }
+
+    const handleDetail = () => {
+        const id = "312313hk23h131231381092hhjhk";
+        window.location.href = `/projects/${id}`;
     }
 
 
@@ -37,13 +43,15 @@ function ListProjects() {
                     position: 'overflow',
                     padding: '40px 25px 0px 25px',
                     boxShadow: 'none',
+                    marginRight: '55px',
+
                 }}
             >
                 <Grid container sx={{
                     borderBottom: '2px solid #D9D9D9',
-                    borderRadius: '10px',
-                    padding: '40px 5px 0px 25px',
-
+                    borderRadius: '30px',
+                    padding: '40px 5px 15px 25px',
+                    marginLeft: '40px',
                 }}>
 
                     <Grid item xs={9}>
@@ -116,6 +124,7 @@ function ListProjects() {
                                 marginBottom: '10px',
 
                             }}
+                            onClick={handleDetail}
                         />
                     </Grid>
                     <Fade

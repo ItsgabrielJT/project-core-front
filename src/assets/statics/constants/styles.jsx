@@ -267,8 +267,9 @@ export const ModalButton = styled(Button)(
 );
 
 export const CssContentInfo = {
+  display: 'block',
   backgroundColor: "#F2F1EE",
-  margin: '30px 30px 0px 30px',
+  margin: '30px 30px 0px 60px',
   borderRadius: "20px",
   padding: "20px 30px 30px 30px",
 }

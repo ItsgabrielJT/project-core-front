@@ -952,6 +952,8 @@ function UserPage() {
             >
                 <div style={{
                     backgroundColor: "#ACCDDC",
+                    marginLeft: "27px",
+
                     height: '200px'
                 }} />
                 <div style={{
@@ -960,7 +962,7 @@ function UserPage() {
                     marginTop: "20px"
                 }}>
                     <div style={{
-                        paddingLeft: "30px"
+                        paddingLeft: "65px"
                     }}>
 
                         <Typography variant="h6">
@@ -1068,7 +1070,7 @@ function UserPage() {
                         'tiramisu'
                     ]}
                     indexBy="country"
-                    margin={{ top: 50, right: 60, bottom: 50, left: 60 }}
+                    margin={{ top: 50, right: 60, bottom: 50, left: 100 }}
                     pixelRatio={1.25}
                     padding={0.15}
                     innerPadding={0}

@@ -57,7 +57,7 @@ function EditProject() {
         <div style={{
           backgroundColor: "#D9D9D9",
           height: '200px',
-          margin: '40px 40px 0px 40px',
+          margin: '40px 40px 0px 65px',
           borderRadius: "30px",
           display: 'flex',
           flexDirection: 'column',
@@ -100,7 +100,8 @@ function EditProject() {
         <Grid component='form'
           onSubmit={formProject.handleSubmit}
           sx={{
-            paddingX: '40px',
+            paddingLeft: '65px',
+            paddingRight: '40px',
             marginTop: '10px',
           }}>
           <TextField

@@ -31,9 +31,14 @@ function SideBar({ children }) {
             <Grid item xs={3}>
                 <div style={{
                     width: '22%',
-                    paddingLeft: '10px',
-                    marginTop: '70px',
-                    position: 'fixed'
+                    height: '100%',
+                    paddingLeft: '30px',
+                    paddingRight: '30px',
+                    marginTop: '50px',
+                    paddingTop: '50px',
+                    position: 'fixed',
+                    borderRight: '3px solid #F2F1EE'
+
                 }}>
                     {
                         routes.map( (item, index) => (

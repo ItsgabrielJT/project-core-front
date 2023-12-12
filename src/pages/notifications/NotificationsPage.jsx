@@ -29,14 +29,16 @@ const NotificationsPage = () => {
                     position: 'overflow',
                     padding: '40px 25px 0px 25px',
                     boxShadow: 'none',
+                    marginRight: '55px',
 
                 }}
             >
                 <Grid container sx={{
                     borderBottom: '2px solid #D9D9D9',
-                    borderRadius: '10px',
-                    padding: '40px 5px 0px 25px',
-
+                    borderRadius: '30px',
+                    padding: '40px 5px 15px 25px',
+                    marginLeft: '40px',
+                    
                 }}>
 
                     <Grid item xs={9}>
