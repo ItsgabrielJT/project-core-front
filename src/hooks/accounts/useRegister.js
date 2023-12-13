@@ -3,47 +3,55 @@ import * as yup from 'yup';
 import notificationService from "@services/notificationService"
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 
 const FORM_VALUES = {
-    fullname: "",
+    nombres: "",
     email: "",
-    password: "",
-    nif: "",
-    institute: "",
-    profesion: "",
-    number: "",
-    image_url: "",
+    contrasenia: "",
+    ocupacion: "",
+    universidad: "",
+    carrera: "",
+    numero_celular: "",
+    link_imagen_perfil: "",
 }
 
-export const useRegister = () => {
+export const useRegister = (handleClose) => {
 
     const { singUp, isAuthenticated } = useAuth()
-    const navigate = useNavigate()
+
+    useEffect   (() => {
+        if (isAuthenticated) {
+            handleClose();
+            formRegister.resetForm();
+            notificationService.success("Revisa tu correo para confirmar tu cuenta")
+        }
+    }, [isAuthenticated])
 
     const validationSchema = yup.object({
-        fullname: yup
+        nombres: yup
             .string('Enter your fullname')
             .required('Fullname is required'),
         email: yup
             .string('Enter your email')
             .email('Enter a valid email')
             .required('Email is required'),
-        password: yup
+        contrasenia: yup
             .string('Enter your password')
             .min(8, 'Password should be of minimum 8 characters length')
             .required('Password is required'),
-        nif: yup
-            .string('Enter your ruc or nif')
-            .required('Ruc or Nif is required'),
-        institute: yup
+        ocupacion: yup
+            .string('Enter your ocupation')
+            .required('Ocupation is required'),
+        universidad: yup
             .string('Enter your institute')
             .required('Institute is required'),
-        profesion: yup
+        carrera: yup
             .string('Enter your carrer')
             .required('Carrer is required'),
-        number: yup
-            .string('Enter your phone number')
+        numero_celular: yup
+            .number('Enter your phone number')
             .required('Phone number is required'),
     });
 
@@ -51,9 +59,8 @@ export const useRegister = () => {
         initialValues: FORM_VALUES,
         validationSchema,
         onSubmit: async (values) => {
-            console.log(values)
-            singUp("value");
-            navigate("/home")
+            singUp(values);
+
         }
     });
 

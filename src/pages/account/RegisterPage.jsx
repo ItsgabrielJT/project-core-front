@@ -18,7 +18,7 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 const tab = false;
 
 function RegisterPage({ open, handleClose }) {
-  const { formRegister } = useRegister();
+  const { formRegister } = useRegister(handleClose);
   const [nextstep, setNextStep] = useState(false);
 
   const handleNextStep = () => {
@@ -91,20 +91,20 @@ function RegisterPage({ open, handleClose }) {
                   <TextField
                     margin="normal"
                     fullWidth
-                    name="fullname"
+                    name="nombres"
                     label="Full Name"
-                    id="fullname"
+                    id="nombres"
                     autoComplete="current-name"
-                    value={formRegister.values.fullname}
+                    value={formRegister.values.nombres}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
                     error={
-                      formRegister.touched.fullname &&
-                      Boolean(formRegister.errors.fullname)
+                      formRegister.touched.nombres &&
+                      Boolean(formRegister.errors.nombres)
                     }
                     helperText={
-                      formRegister.touched.fullname &&
-                      formRegister.errors.fullname
+                      formRegister.touched.nombres &&
+                      formRegister.errors.nombres
                     }
                     sx={CssTexField}
                   />
@@ -131,21 +131,21 @@ function RegisterPage({ open, handleClose }) {
                   <TextField
                     margin="normal"
                     fullWidth
-                    name="password"
+                    name="contrasenia"
                     label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    value={formRegister.values.password}
+                    type="contrasenia"
+                    id="contrasenia"
+                    autoComplete="current-contrasenia"
+                    value={formRegister.values.contrasenia}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
                     error={
-                      formRegister.touched.password &&
-                      Boolean(formRegister.errors.password)
+                      formRegister.touched.contrasenia &&
+                      Boolean(formRegister.errors.contrasenia)
                     }
                     helperText={
-                      formRegister.touched.password &&
-                      formRegister.errors.password
+                      formRegister.touched.contrasenia &&
+                      formRegister.errors.contrasenia
                     }
                     sx={CssTexField}
                   />
@@ -185,78 +185,78 @@ function RegisterPage({ open, handleClose }) {
                   <TextField
                     margin="normal"
                     fullWidth
-                    name="nif"
-                    label="Ruc o Nif"
-                    id="nif"
+                    name="ocupacion"
+                    label="Ocupation"
+                    id="ocupacion"
                     autoComplete="current-name"
-                    value={formRegister.values.nif}
+                    value={formRegister.values.ocupacion}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
                     error={
-                      formRegister.touched.nif &&
-                      Boolean(formRegister.errors.nif)
+                      formRegister.touched.ocupacion &&
+                      Boolean(formRegister.errors.ocupacion)
                     }
                     helperText={
-                      formRegister.touched.nif && formRegister.errors.nif
+                      formRegister.touched.ocupacion && formRegister.errors.ocupacion
                     }
                     sx={CssTexField}
                   />
                   <TextField
                     margin="normal"
                     fullWidth
-                    name="institute"
+                    name="universidad"
                     label="Institute"
-                    id="institute"
-                    autoComplete="current-institute"
-                    value={formRegister.values.institute}
+                    id="universidad"
+                    autoComplete="current-universidad"
+                    value={formRegister.values.universidad}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
                     error={
-                      formRegister.touched.institute &&
-                      Boolean(formRegister.errors.institute)
+                      formRegister.touched.universidad &&
+                      Boolean(formRegister.errors.universidad)
                     }
                     helperText={
-                      formRegister.touched.institute &&
-                      formRegister.errors.institute
+                      formRegister.touched.universidad &&
+                      formRegister.errors.universidad
                     }
                     sx={CssTexField}
                   />
                   <TextField
                     margin="normal"
                     fullWidth
-                    name="profesion"
+                    name="carrera"
                     label="Carrer"
-                    id="profesion"
-                    autoComplete="current-profesion"
-                    value={formRegister.values.profesion}
+                    id="carrera"
+                    autoComplete="current-carrera"
+                    value={formRegister.values.carrera}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
                     error={
-                      formRegister.touched.profesion &&
-                      Boolean(formRegister.errors.profesion)
+                      formRegister.touched.carrera &&
+                      Boolean(formRegister.errors.carrera)
                     }
                     helperText={
-                      formRegister.touched.profesion &&
-                      formRegister.errors.profesion
+                      formRegister.touched.carrera &&
+                      formRegister.errors.carrera
                     }
                     sx={CssTexField}
                   />
                   <TextField
                     margin="normal"
                     fullWidth
-                    name="number"
+                    name="numero_celular"
                     label="Number phone"
-                    id="number"
-                    autoComplete="current-number"
-                    value={formRegister.values.number}
+                    id="numero_celular"
+                    autoComplete="current-numero_celular"
+                    value={formRegister.values.numero_celular}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
                     error={
-                      formRegister.touched.number &&
-                      Boolean(formRegister.errors.number)
+                      formRegister.touched.numero_celular &&
+                      Boolean(formRegister.errors.numero_celular)
                     }
                     helperText={
-                      formRegister.touched.number && formRegister.errors.number
+                      formRegister.touched.numero_celular && formRegister.errors.numero_celular
                     }
                     sx={CssTexField}
                   />

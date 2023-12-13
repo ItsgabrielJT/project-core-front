@@ -10,18 +10,16 @@ const success = (msg) => MySwal.fire({
   text: msg,
   position: "center",
   icon: "success",
-  timer: 2000,
   background: "#FFFDFA",
-  showConfirmButton: false
+  showConfirmButton: true
 })
 
 const error = (msg) => MySwal.fire({
   text: msg,
   position: "center",
   icon: "error",
-  timer: 2000,
+  timer: 3000,
   background: "#FFFDFA",
-
   showConfirmButton: false
 })
 
@@ -29,7 +27,7 @@ const warning = (msg) => MySwal.fire({
   text: msg,
   position: "center",
   icon: "warning",
-  timer: 2000,
+  timer: 2500,
   background: "#FFFDFA",
   showConfirmButton: false
 })

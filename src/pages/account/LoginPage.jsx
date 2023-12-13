@@ -92,19 +92,19 @@ const LoginPage = () => {
             <TextField
               margin="normal"
               fullWidth
-              name="password"
+              name="contrasenia"
               label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={formLogin.values.password}
+              type="contrasenia"
+              id="contrasenia"
+              autoComplete="current-contrasenia"
+              value={formLogin.values.contrasenia}
               onChange={formLogin.handleChange}
               onBlur={formLogin.handleBlur}
               error={
-                formLogin.touched.password && Boolean(formLogin.errors.password)
+                formLogin.touched.contrasenia && Boolean(formLogin.errors.contrasenia)
               }
               helperText={
-                formLogin.touched.password && formLogin.errors.password
+                formLogin.touched.contrasenia && formLogin.errors.contrasenia
               }
               sx={CssTexField}
             />
