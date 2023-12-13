@@ -7,10 +7,10 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 function NavFocusOutline(props) {
 
+    const navigate = useNavigate();
 
     const handleRedirecTo = (path) => {
-        window.location.href = path;
-        
+        navigate(path);        
     }
 
     return (

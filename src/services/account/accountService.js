@@ -20,6 +20,15 @@ export const accountService = {
         } catch (error) {
             throw new Error("El email ya existe")
         }
+    },
+
+    getPerfilById: async function (id) {
+        try {
+            const res = await axios.post(URL_BASE + "api/perfil/", id)
+            return res
+        } catch (error) {
+            throw new Error("Ha ocurrido un error, intentelo mas tarde")
+        }
     }
 
 }

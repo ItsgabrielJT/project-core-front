@@ -99,13 +99,10 @@ export const CssTexField = {
 export const CustomizedPopover = styled(Popover)`
   color: #20b2aa;
   .MuiPopover-paper {
-    margin-top: 10px;
+    margin-top: 20px;
     background-color: #F2F1EE;
     width: 244px;
     border-radius: 20px;
-    padding-top: 10px;
-    padding-left: 15px;
-    padding-bottom: 10px;
     text-align: left;
   }
   

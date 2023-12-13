@@ -19,7 +19,6 @@ export const useLogin = () => {
     useEffect(() => {
         
         if (isAuthenticated) {
-            notificationService.success("Logueado correctamente")
             navigate("/home")
         }
     }, [isAuthenticated])

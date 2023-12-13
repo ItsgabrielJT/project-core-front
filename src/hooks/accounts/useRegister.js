@@ -25,7 +25,6 @@ export const useRegister = (handleClose) => {
         if (isAuthenticated) {
             handleClose();
             formRegister.resetForm();
-            notificationService.success("Revisa tu correo para confirmar tu cuenta")
         }
     }, [isAuthenticated])
 

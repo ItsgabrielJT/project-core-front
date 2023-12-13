@@ -4,6 +4,7 @@ import ButtonOutline from "@components/buttons/ButtonOutline";
 import { CssContentInfo } from "@constants/styles";
 import EditUser from './EditUser';
 import { ResponsiveBarCanvas } from '@nivo/bar'
+import { useUser } from '@hooks/accounts/useUser';
 
 const data = [
     {
@@ -931,6 +932,7 @@ const data = [
 function UserPage() {
 
     const [open, setOpen] = useState(false);
+    const { user } = useUser()
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

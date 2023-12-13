@@ -10,6 +10,7 @@ import NotificationsPage from "./notifications/NotificationsPage";
 import EditProject from "./projects/EditProject";
 import ListProjects from "./projects/ListProjects";
 import DetailProject from "./projects/DetailProject";
+import { ProtectedRoute } from "../_routes";
 
 function App() {
   return (
@@ -20,8 +21,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
 
           <Route
-            path="/"
-            element={<SideBar/>}
+            element={<ProtectedRoute/>}
           >
             <Route path="home" element={<HomePage/>} />
             <Route path="user" element={<UserPage/>} />
