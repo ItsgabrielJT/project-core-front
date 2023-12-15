@@ -8,16 +8,16 @@ import {
 import Fab from "@mui/material/Fab";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button, Collapse, TextField } from "@mui/material";
-import { useUser } from "@hook/securities/useUser";
 import ButtonContained from "@components/buttons/ButtonContained";
 import ModalDialog from "@components/modals/ModalDialog";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import { useEdit } from "@hook/securities/useEdit";
 
 function EditUser({ open, handleClose }) {
 
 
     const [ close, setClose] = useState(false);
-    const { formUser } = useUser(handleClose);
+    const { formUser } = useEdit(handleClose);
 
 
 
@@ -94,59 +94,59 @@ function EditUser({ open, handleClose }) {
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="institute"
+                                    name="universidad"
                                     label="Institute"
-                                    id="institute"
+                                    id="universidad"
                                     autoComplete="current-name"
-                                    value={formUser.values.institute}
+                                    value={formUser.values.universidad}
                                     onChange={formUser.handleChange}
                                     onBlur={formUser.handleBlur}
                                     error={
-                                        formUser.touched.institute &&
-                                        Boolean(formUser.errors.institute)
+                                        formUser.touched.universidad &&
+                                        Boolean(formUser.errors.universidad)
                                     }
                                     helperText={
-                                        formUser.touched.institute &&
-                                        formUser.errors.institute
+                                        formUser.touched.universidad &&
+                                        formUser.errors.universidad
                                     }
                                     sx={CssTexField}
                                 />
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="profesion"
+                                    name="carrera"
                                     label="Carrer"
-                                    id="profesion"
-                                    autoComplete="current-profesion"
-                                    value={formUser.values.profesion}
+                                    id="carrera"
+                                    autoComplete="current-carrera"
+                                    value={formUser.values.carrera}
                                     onChange={formUser.handleChange}
                                     onBlur={formUser.handleBlur}
                                     error={
-                                        formUser.touched.profesion &&
-                                        Boolean(formUser.errors.profesion)
+                                        formUser.touched.carrera &&
+                                        Boolean(formUser.errors.carrera)
                                     }
                                     helperText={
-                                        formUser.touched.profesion && formUser.errors.profesion
+                                        formUser.touched.carrera && formUser.errors.carrera
                                     }
                                     sx={CssTexField}
                                 />
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="number"
-                                    label="Phone number"
-                                    id="number"
-                                    autoComplete="current-number"
-                                    value={formUser.values.number}
+                                    name="numero_celular"
+                                    label="Phone numero_celular"
+                                    id="numero_celular"
+                                    autoComplete="current-numero_celular"
+                                    value={formUser.values.numero_celular}
                                     onChange={formUser.handleChange}
                                     onBlur={formUser.handleBlur}
                                     error={
-                                        formUser.touched.number &&
-                                        Boolean(formUser.errors.number)
+                                        formUser.touched.numero_celular &&
+                                        Boolean(formUser.errors.numero_celular)
                                     }
                                     helperText={
-                                        formUser.touched.number &&
-                                        formUser.errors.number
+                                        formUser.touched.numero_celular &&
+                                        formUser.errors.numero_celular
                                     }
                                     sx={CssTexField}
                                 />

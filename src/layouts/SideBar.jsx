@@ -39,10 +39,9 @@ function SideBar({ children }) {
         <Grid item xs={3}>
           <div
             style={{
-              width: "22%",
+              width: '19.3%',
+
               height: "100%",
-              paddingLeft: "30px",
-              paddingRight: "30px",
               marginTop: "50px",
               paddingTop: "50px",
               position: "fixed",
@@ -67,7 +66,7 @@ function SideBar({ children }) {
 
         {/* Contenido principal */}
         <Grid item xs={6}>
-          <Grid container spacing={2}>
+          <Grid container>
             <Outlet />
           </Grid>
         </Grid>

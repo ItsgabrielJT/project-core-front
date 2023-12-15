@@ -173,6 +173,7 @@ function ResetPage({ open, handleClose }) {
                   </div>
                 </div>
                 <ButtonContained
+                fullWidth
                   onClick={handleNextStep}
                   text={"Verificar Codigo"}
                 />
@@ -242,6 +243,7 @@ function ResetPage({ open, handleClose }) {
                   />
                 </div>
                 <ButtonContained
+                fullWidth
                   onClick={handleNextStep}
                   text={"Guardar cambios"}
                 />

@@ -150,7 +150,7 @@ function RegisterPage({ open, handleClose }) {
                     sx={CssTexField}
                   />
                 </div>
-                <ButtonContained onClick={handleNextStep} text={"Siguiente"} />
+                <ButtonContained fullWidth onClick={handleNextStep} text={"Siguiente"} />
               </div>
             )}
             {nextstep && (
@@ -261,7 +261,7 @@ function RegisterPage({ open, handleClose }) {
                     sx={CssTexField}
                   />
                 </div>
-                <ButtonContained text={"Guardar"} type="submit" />
+                <ButtonContained fullWidth text={"Guardar"} type="submit" />
               </div>
             )}
           </form>

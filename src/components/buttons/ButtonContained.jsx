@@ -7,7 +7,7 @@ function ButtonContained( props ) {
     return (
         <Button
             {...props}
-            fullWidth
+            
             variant="contained"
             sx={CssButtonContained}
         >

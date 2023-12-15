@@ -8,12 +8,13 @@ import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import ModalDialog from "@components/modals/ModalDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function ListProjects() {
 
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
 
     const handleConfirm = () => {
         setOpen(false);
@@ -21,7 +22,7 @@ function ListProjects() {
 
     const handleDetail = () => {
         const id = "312313hk23h131231381092hhjhk";
-        window.location.href = `/projects/${id}`;
+        navigate(`/projects/${id}`)
     }
 
 

@@ -108,7 +108,7 @@ const LoginPage = () => {
               }
               sx={CssTexField}
             />
-            <ButtonContained text={"Iniciar sesion"} type="submit" />
+            <ButtonContained fullWidth text={"Iniciar sesion"} type="submit" />
             <Grid
               sx={{
                 mt: 3,
@@ -120,7 +120,7 @@ const LoginPage = () => {
               <div>o</div>
             </Grid>
             
-            <ButtonOutline text={"Crear cuenta"} onClick={handleOpen} fullWidth style={{ 
+            <ButtonOutline  text={"Crear cuenta"} onClick={handleOpen} fullWidth style={{ 
               marginTop: "20px"
              }}/>
 

@@ -8,28 +8,24 @@ import { useState } from "react";
 
 const FORM_VALUES = {
     password: "",
-    institute: "",
-    profesion: "",
-    number: "",
+    universidad: "",
+    carrera: "",
+    numero_celular: "",
     image_url: "",
 }
 
-export const useUser = ( handleClose ) => {
+export const useEdit = ( handleClose ) => {
 
     const validationSchema = yup.object({
         
-        password: yup
-            .string('Enter your password')
-            .min(8, 'Password should be of minimum 8 characters length')
-            .required('Password is required'),
-       
-        institute: yup
+        universidad: yup
             .string('Enter your institute')
             .required('Institute is required'),
-        profesion: yup
+            
+        carrera: yup
             .string('Enter your carrer')
             .required('Carrer is required'),
-        number: yup
+        numero_celular: yup
             .string('Enter your phone number')
             .required('Phone number is required'),
     });
