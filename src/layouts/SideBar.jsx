@@ -23,29 +23,22 @@ function SideBar({ children }) {
         <CircularProgress color="inherit" />
       </Backdrop>
       <Grid
-        container
-        sx={{
-          paddingY: "0px",
-          marginTop: "0px",
-          backgroundColor: "#FFFDFA",
-        }}
-      >
+        container >
         {/* Header */}
         <Grid item xs={12}>
           <Header />
         </Grid>
 
         {/* Sidebar */}
-        <Grid item xs={3}>
-          <div
+        <Grid item xs={false} md={3} >
+          <Paper
             style={{
-              width: '19.3%',
-
-              height: "100%",
-              marginTop: "50px",
-              paddingTop: "50px",
-              position: "fixed",
-              borderRight: "3px solid #F2F1EE",
+              width: '20%',
+              height: '89vh',
+              backgroundColor: '#FFFDFA',
+              borderLeft: '3px solid #F2F1EE',
+              marginTop: '50px',
+              paddingTop: '50px',
             }}
           >
             {routes.map((item, index) => (
@@ -61,19 +54,17 @@ function SideBar({ children }) {
               type="submit"
               onClick={() => navigate("/create/project")}
             />
-          </div>
+          </Paper>
         </Grid>
 
         {/* Contenido principal */}
-        <Grid item xs={6}>
-          <Grid container>
-            <Outlet />
-          </Grid>
+        <Grid item xs={12} md={6} square>
+          <Outlet />
         </Grid>
 
         {/* Rightbar */}
 
-        <Grid item xs={3}>
+        <Grid item xs={false} md={3}>
           <RightBar />
         </Grid>
       </Grid>

@@ -3,18 +3,18 @@ import React from 'react'
 
 function RightBar() {
     return (
-        <Grid item
+        <Paper 
         sx={{
             height: '89vh',
             backgroundColor: '#FFFDFA',
-            position: 'overflow',
+            position: 'fixed',
             borderLeft : '3px solid #F2F1EE',
             marginTop: '50px',
             paddingTop: '50px',
         }}
          >
             
-        </Grid>
+        </Paper>
     )
 }
 
