@@ -12,6 +12,7 @@ const HomePage = () => {
           backgroundColor: '#FFFDFA',
           position: 'overflow',
           boxShadow: 'none',
+          paddingX: '15px',
         }}
       >
         <Grid content sx={{
@@ -46,12 +47,12 @@ const HomePage = () => {
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda id veritatis mollitia aliquid culpa! Possimus accusamus eum cumque voluptatibus nostrum aspernatur, unde pariatur et, magni consequatur aut inventore, ipsa ducimus.
                 </Typography>
                 <img  
-                style={{ width: '100%', maxWidth: '100%' }}
+                style={{ width: '100%', maxWidth: '100%', borderRadius: '25px' }}
                 alt="Biotechnology"
                 src='https://concepto.de/wp-content/uploads/2020/04/biotecnologia-e1585967651782.jpg'/>
           </div>
-          <div style={{ display: "flex", justifyContent: 'end'}}>
-            <ButtonContained text={"Unirse"}  style={{ width: '25px', height: '30px' }} />
+          <div style={{ display: "flex", justifyContent: 'end', marginTop: '10px', marginBottom: '15px'}}>
+            <ButtonContained text={"Unirse"}  style={{ width: '25px', height: '30px', marginRight: '10px' }} />
             <ButtonOutline text={"Ver"} style={{ width: '25px', height: '30px' }} />
           </div>
         </Grid>

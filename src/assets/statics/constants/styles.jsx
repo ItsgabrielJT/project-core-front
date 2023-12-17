@@ -7,7 +7,6 @@ import { Button } from '@mui/base';
 import { Fade, Popover } from '@mui/material';
 
 export const CssButtonContained = {
-  marginTop: '20px',
   boxShadow: 'none',
   borderRadius: '50px',
   textTransform: 'none',
