@@ -1,4 +1,4 @@
-import { ButtonGroup, Divider, Grid, Paper, TextField, Typography } from '@mui/material'
+import { Box, ButtonGroup, Divider, Grid, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import ButtonContained from "@components/buttons/ButtonContained";
@@ -44,20 +44,21 @@ function EditProject() {
   return (
     <Grid item xs={12}>
 
-      <Paper
+      <Box
         sx={{
           marginTop: "90px",
           height: '100%',
           backgroundColor: '#FFFDFA',
           position: 'overflow',
           boxShadow: 'none',
+          paddingX: '15px',
 
         }}
       >
         <div style={{
           backgroundColor: "#D9D9D9",
-          height: '200px',
-          margin: '40px 40px 0px 65px',
+          height: '250px',
+          margin: '40px 0px 15px 0px',
           borderRadius: "30px",
           display: 'flex',
           flexDirection: 'column',
@@ -79,16 +80,16 @@ function EditProject() {
             style={{
               display: 'flex',
               justifyContent: "end",
-              paddingRight: '40px',
             }}
           >
             <ButtonContained text={"Invitar"} style={{
               width: '100px',
-              marginLeft: '10px'
+              marginLeft: '10px',
+              height: '40px',
+
             }} >
             </ButtonContained>
             <ButtonOutline text={"Guardar"} style={{
-              marginTop: '17px',
               width: '100px',
               height: '40px',
               marginLeft: '10px'
@@ -100,8 +101,6 @@ function EditProject() {
         <Grid component='form'
           onSubmit={formProject.handleSubmit}
           sx={{
-            paddingLeft: '65px',
-            paddingRight: '40px',
             marginTop: '10px',
           }}>
           <TextField
@@ -243,7 +242,7 @@ function EditProject() {
           ))}
         </Grid>
 
-      </Paper>
+      </Box>
     </Grid>
   )
 }

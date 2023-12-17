@@ -50,6 +50,9 @@ function SideBar({ children }) {
                 icon={item.icon}
                 title={item.title}
                 path={item.path}
+                style={{
+                  marginBottom: '17px',
+                }}
               />
             ))}
             <ButtonContained

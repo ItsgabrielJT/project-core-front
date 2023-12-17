@@ -1,4 +1,4 @@
-import { CircularProgress, Fab, Fade, Grid, Paper, Typography } from '@mui/material'
+import { Box, CircularProgress, Fab, Fade, Grid, Paper, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -21,15 +21,15 @@ const NotificationsPage = () => {
                 onClose={() => setOpen(false)}
                 onConfirm={handleConfirm}
             />
-            <Paper
+            <Box
                 sx={{
-                    marginTop: "53px",
+                    marginTop: "60px",
                     height: '100%',
                     backgroundColor: '#FFFDFA',
                     position: 'overflow',
-                    padding: '40px 25px 0px 25px',
+                    paddingX: '15px',
+
                     boxShadow: 'none',
-                    marginRight: '55px',
 
                 }}
             >
@@ -37,8 +37,7 @@ const NotificationsPage = () => {
                     borderBottom: '2px solid #D9D9D9',
                     borderRadius: '30px',
                     padding: '40px 5px 15px 25px',
-                    marginLeft: '40px',
-                    
+
                 }}>
 
                     <Grid item xs={9}>
@@ -85,7 +84,7 @@ const NotificationsPage = () => {
                         <CircularProgress />
                     </Fade>
                 </Grid>
-            </Paper>
+            </Box>
         </Grid>
     )
 }

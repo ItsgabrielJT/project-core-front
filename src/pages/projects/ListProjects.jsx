@@ -1,4 +1,4 @@
-import { CircularProgress, Fab, Fade, Grid, Paper, Typography } from '@mui/material'
+import { Box, CircularProgress, Fab, Fade, Grid, Paper, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import {
     StyledBackdrop,
@@ -36,23 +36,22 @@ function ListProjects() {
                 onConfirm={handleConfirm}
                 slots={{ backdrop: StyledBackdrop }}
             />
-            <Paper
+            <Box
                 sx={{
-                    marginTop: "53px",
+                    marginTop: "60px",
                     height: '100%',
                     backgroundColor: '#FFFDFA',
                     position: 'overflow',
-                    padding: '40px 25px 0px 25px',
+                    paddingX: '15px',
                     boxShadow: 'none',
-                    marginRight: '55px',
 
                 }}
             >
                 <Grid container sx={{
+                    marginTop: '20px',
                     borderBottom: '2px solid #D9D9D9',
                     borderRadius: '30px',
                     padding: '40px 5px 15px 25px',
-                    marginLeft: '40px',
                 }}>
 
                     <Grid item xs={9}>
@@ -128,17 +127,9 @@ function ListProjects() {
                             onClick={handleDetail}
                         />
                     </Grid>
-                    <Fade
-                        in={loading}
-                        style={{
-                            transitionDelay: loading ? '800ms' : '0ms',
-                        }}
-                        unmountOnExit
-                    >
-                        <CircularProgress />
-                    </Fade>
+                    
                 </Grid>
-            </Paper>
+            </Box>
         </Grid>
     )
 }
