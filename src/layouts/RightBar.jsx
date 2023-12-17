@@ -5,12 +5,13 @@ function RightBar() {
     return (
         <Paper 
         sx={{
-            height: '89vh',
+            height: '100vh',
             backgroundColor: '#FFFDFA',
             position: 'fixed',
-            borderLeft : '3px solid #F2F1EE',
+            borderLeft : '2px solid #F2F1EE',
             marginTop: '50px',
             paddingTop: '50px',
+            marginLeft: '35px',
         }}
          >
             

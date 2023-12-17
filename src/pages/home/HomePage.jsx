@@ -1,4 +1,4 @@
-import { Container, Grid, Paper, Typography } from '@mui/material'
+import { Box, Container, Grid, Paper, Typography } from '@mui/material'
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import ButtonContained from "@components/buttons/ButtonContained";
 
@@ -6,7 +6,7 @@ import React from 'react'
 
 const HomePage = () => {
   return (
-      <Paper
+      <Box
         sx={{
           height: '100%',
           backgroundColor: '#FFFDFA',
@@ -55,7 +55,7 @@ const HomePage = () => {
             <ButtonOutline text={"Ver"} style={{ width: '25px', height: '30px' }} />
           </div>
         </Grid>
-      </Paper>
+      </Box>
   )
 }
 

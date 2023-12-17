@@ -33,12 +33,15 @@ function SideBar({ children }) {
         <Grid item xs={false} md={3} >
           <Paper
             style={{
-              width: '20%',
-              height: '89vh',
+              height: '100vh',
+              width: '19vw',
               backgroundColor: '#FFFDFA',
-              borderLeft: '3px solid #F2F1EE',
+              position: 'fixed',
+              borderRight: '2px solid #F2F1EE',
               marginTop: '50px',
               paddingTop: '50px',
+              paddingRight: '20px',
+              paddingLeft: '20px',
             }}
           >
             {routes.map((item, index) => (
@@ -50,6 +53,7 @@ function SideBar({ children }) {
               />
             ))}
             <ButtonContained
+            fullWidth
               text={"Crear proyecto"}
               type="submit"
               onClick={() => navigate("/create/project")}
@@ -58,7 +62,8 @@ function SideBar({ children }) {
         </Grid>
 
         {/* Contenido principal */}
-        <Grid item xs={12} md={6} square>
+        <Grid item xs={12} md={6} sx={{
+        }}>
           <Outlet />
         </Grid>
 
