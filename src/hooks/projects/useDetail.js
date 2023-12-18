@@ -22,19 +22,20 @@ export const useDetail = (id = null) => {
                             general_objetive: res.data.proyecto.general_objetive,
                             specific_object: res.data.proyecto.specific_object,
                             bibliographic_references: res.data.proyecto.bibliographic_references,
-                            userId: res.data.proyecto.users[0].id,
-                            full_name: res.data.proyecto.users[0].full_name,
-                            link_image: res.data.proyecto.users[0].link_image,
-                            occupation: res.data.proyecto.users[0].occupation,
-                            university_name: res.data.proyecto.users[0].university_name
+                            userId: res.data.proyecto.users[0].user.id,
+                            full_name: res.data.proyecto.users[0].user.full_name,
+                            link_image: res.data.proyecto.users[0].user.link_image,
+                            occupation: res.data.proyecto.users[0].user.occupation,
+                            university_name: res.data.proyecto.users[0].user.university_name
                         }
-                        setDataHome(data)
+                        console.log(data)
+                        setProject(data)
                     } else {
                         notificationService.warning("Intentlo mas tarde")
                     }
                 })
                 .catch((err) => {
-                    notifificationService.error(err.messsage);
+                    notificationService.error(err.message);
                 })
                 .finally(() => [
                     setLoading(false)

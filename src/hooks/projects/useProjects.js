@@ -32,7 +32,7 @@ export const useProjects = () => {
                 }
             })
             .catch((err) => {
-                notifificationService.error(err.messsage);
+                notificationService.error(err.message);
             })
             .finally(() => [
                 setLoading(false)
