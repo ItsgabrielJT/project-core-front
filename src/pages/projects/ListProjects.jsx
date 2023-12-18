@@ -27,7 +27,7 @@ function ListProjects() {
 
 
     return (
-        <Grid item xs={12}>
+        <>
             
             <ModalDialog
                 title={"Quieres eliminar este proyecto ?"}
@@ -130,7 +130,7 @@ function ListProjects() {
                     
                 </Grid>
             </Box>
-        </Grid>
+        </>
     )
 }
 

@@ -25,7 +25,7 @@ function Header() {
 
   return (
     <Grid
-      item
+      content
       xs={12}
       sx={{
         backgroundColor: "rgba(242, 241, 238, 0.5)",
@@ -37,7 +37,7 @@ function Header() {
         position: "fixed",
       }}
     >
-      <div>
+      <Grid item  xs={9}  md={9}>
         <img
           src={logo}
           alt=""
@@ -49,19 +49,19 @@ function Header() {
             marginLeft: "20px",
           }}
         />
-      </div>
-      <div>
+      </Grid>
+      <Grid item xs={false} md={3}>
         <Fab
           aria-describedby={id}
           onClick={handleClick}
           sx={{
-            width: "40vh",
+            width: "70%",
             height: "10px",
             borderRadius: "20px",
             boxShadow: "none",
             backgroundColor: "#F2F1EE",
             marginTop: "6px",
-            marginRight: "20px",
+            marginLeft: "60px",
             display: "flex",
           }}
         >
@@ -120,7 +120,8 @@ function Header() {
             </Typography>
           </Fab>
         </CustomizedPopover>
-      </div>
+      </Grid>
+      
     </Grid>
   );
 }

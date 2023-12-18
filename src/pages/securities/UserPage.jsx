@@ -4,7 +4,7 @@ import ButtonOutline from "@components/buttons/ButtonOutline";
 import { CssContentInfo } from "@constants/styles";
 import EditUser from './EditUser';
 import { ResponsiveBarCanvas } from '@nivo/bar'
-import { useUser } from '@hook/accounts/useUser';
+import { useUser } from '@hook/securities/useUser';
 
 
 function UserPage() {

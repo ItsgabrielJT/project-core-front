@@ -6,7 +6,7 @@ import {
 import ButtonContained from "@components/buttons/ButtonContained";
 import ButtonOutline from "@components/buttons/ButtonOutline";
 
-function ModalDialog({ open, onClose, onConfirm, title, slots= {} }) {
+function ModalDialog({ open, onClose, onConfirm, title, slots = {} }) {
 
 
 
@@ -32,15 +32,18 @@ function ModalDialog({ open, onClose, onConfirm, title, slots= {} }) {
                         </div>
 
                     </div>
-                    <ButtonContained text={"Descartar"} 
+                    <ButtonContained text={"Descartar"}
+                        fullWidth
+
                         onClick={onConfirm}
                         style={{
-                        backgroundColor: '#DC3545',
-                        borderColor: '#DC3545'
-                    }} />
-                    <ButtonOutline text={"Cancelar"} 
-                    fullWidth
-                    
+                            backgroundColor: '#DC3545',
+                            borderColor: '#DC3545',
+                            marginTop: '20px',
+                        }} />
+                    <ButtonOutline text={"Cancelar"}
+                        fullWidth
+
                         onClick={onClose}
                         style={{
                             marginTop: '10px',
