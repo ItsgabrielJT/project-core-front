@@ -25,8 +25,7 @@ function Header() {
 
   return (
     <Grid
-      content
-      xs={12}
+      item
       sx={{
         backgroundColor: "rgba(242, 241, 238, 0.5)",
         backdropFilter: "blur(10px)",
@@ -37,7 +36,7 @@ function Header() {
         position: "fixed",
       }}
     >
-      <Grid item  xs={9}  md={9}>
+      <Grid item >
         <img
           src={logo}
           alt=""
@@ -50,7 +49,7 @@ function Header() {
           }}
         />
       </Grid>
-      <Grid item xs={false} md={3}>
+      <Grid item >
         <Fab
           aria-describedby={id}
           onClick={handleClick}
