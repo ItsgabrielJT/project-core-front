@@ -14,6 +14,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import { useDetail } from "@hook/projects/useDetail";
 import { useParams } from "react-router";
+import { projectService } from "@services/projects/projectService";
+import notificationService from "@services/notificationService"
+import { useNavigate } from "react-router";
+
 
 var idLogin = JSON.parse(localStorage.getItem("id"));
 
@@ -21,10 +25,27 @@ function DetailProject() {
   const [open, setOpen] = useState(false);
   const { id } = useParams();
   const { project, loading } = useDetail(id);
+  const navigate = useNavigate()
 
   const handleConfirm = () => {
-    setOpen(false);
+    projectService.deleteProject(id)
+      .then((res) => {
+        if (res.data.status) {
+          notificationService.success("Se ha eliminado correctamente")
+          navigate("/home")
+        }
+      })
+      .catch((err) => {
+        notificationService.error(err.message)
+      })
+      .finally(() => {
+        setOpen(false );
+      })
   };
+
+  const editProject = () => {
+    navigate(`/projects/${id}/edit`)
+  }
 
   return (
     <Grid item xs={12}>
@@ -147,6 +168,7 @@ function DetailProject() {
                 <Fab
                   size="small"
                   aria-label="edit"
+                  onClick={editProject}
                   style={{
                     backgroundColor: "#FFFDFA",
                     boxShadow: "none",

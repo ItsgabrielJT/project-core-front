@@ -1,24 +1,33 @@
-import { Box, ButtonGroup, Divider, Grid, Paper, TextField, Typography } from '@mui/material'
+import { Backdrop, Box, ButtonGroup, CircularProgress, Divider, Grid, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import ButtonContained from "@components/buttons/ButtonContained";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import {
   CssTexField,
-  Modal,
-  ModalContent,
-  ModalButton,
-  StyledBackdrop,
 } from "@constants/styles";
 import { useEdit } from "@hook/projects/useEdit";
 import Fab from "@mui/material/Fab";
 import ClearIcon from "@mui/icons-material/Clear";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useParams } from 'react-router-dom';
 
 function EditProject() {
 
-  const { formProject } = useEdit();
+  const { id } = useParams();
+  const {
+    formProject,
+    specifics,
+    references,
+    loading,
+    handleObjectSpecifics,
+    cleanObjectSpecifics,
+    handleReferences,
+    cleanReferences
+  } = useEdit(id);
   const [inputs, setInputs] = useState(['']);
   const [links, setLinks] = useState(['']);
+
 
   const handleAddInput = () => {
     setInputs([...inputs, '']);
@@ -28,6 +37,7 @@ function EditProject() {
     const newInputs = [...inputs];
     newInputs.splice(index, 1);
     setInputs(newInputs);
+    cleanObjectSpecifics(index)
   };
 
   const handleAddLink = () => {
@@ -38,6 +48,7 @@ function EditProject() {
     const newInputs = [...links];
     newInputs.splice(index, 1);
     setLinks(newInputs);
+    cleanReferences(index)
   };
 
 
@@ -73,54 +84,55 @@ function EditProject() {
           </Typography>
         </div>
 
-        <div style={{
-          justifyContent: "end",
-        }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: "end",
-            }}
-          >
-            <ButtonContained text={"Invitar"} style={{
-              width: '100px',
-              marginLeft: '10px',
-              height: '40px',
-
-            }} >
-            </ButtonContained>
-            <ButtonOutline text={"Guardar"} style={{
-              width: '100px',
-              height: '40px',
-              marginLeft: '10px'
-            }} />
-          </div>
-
-        </div>
 
         <Grid component='form'
           onSubmit={formProject.handleSubmit}
           sx={{
             marginTop: '10px',
           }}>
+
+          <div style={{
+            justifyContent: "end",
+          }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: "end",
+              }}
+            >
+              <ButtonContained text={"Invitar"} style={{
+                width: '100px',
+                marginLeft: '10px',
+                height: '40px',
+
+              }} >
+              </ButtonContained>
+              <ButtonOutline type='submit' text={"Guardar"} style={{
+                width: '100px',
+                height: '40px',
+                marginLeft: '10px'
+              }} />
+            </div>
+
+          </div>
           <TextField
             margin="normal"
             fullWidth
             multiline
-            name="title"
-            label="Title"
-            id="title"
+            name="titulo"
+            label="Titulo"
+            id="titulo"
             autoComplete="current-name"
-            value={formProject.values.title}
+            value={formProject.values.titulo}
             onChange={formProject.handleChange}
             onBlur={formProject.handleBlur}
             error={
-              formProject.touched.title &&
-              Boolean(formProject.errors.title)
+              formProject.touched.titulo &&
+              Boolean(formProject.errors.titulo)
             }
             helperText={
-              formProject.touched.title &&
-              formProject.errors.title
+              formProject.touched.titulo &&
+              formProject.errors.titulo
             }
             sx={CssTexField}
           />
@@ -128,20 +140,20 @@ function EditProject() {
             margin="normal"
             fullWidth
             multiline
-            name="description"
-            label="Description"
-            id="description"
+            name="descripcion"
+            label="Descripcion"
+            id="descripcion"
             autoComplete="current-name"
-            value={formProject.values.description}
+            value={formProject.values.descripcion}
             onChange={formProject.handleChange}
             onBlur={formProject.handleBlur}
             error={
-              formProject.touched.description &&
-              Boolean(formProject.errors.description)
+              formProject.touched.descripcion &&
+              Boolean(formProject.errors.descripcion)
             }
             helperText={
-              formProject.touched.description &&
-              formProject.errors.description
+              formProject.touched.descripcion &&
+              formProject.errors.descripcion
             }
             sx={CssTexField}
           />
@@ -149,35 +161,67 @@ function EditProject() {
             margin="normal"
             fullWidth
             multiline
-            name="generalObjective"
-            label="General Objective"
-            id="generalObjective"
+            name="objetivos_generales"
+            label="Objetivo General"
+            id="objetivos_generales"
             autoComplete="current-name"
-            value={formProject.values.generalObjective}
+            value={formProject.values.objetivos_generales}
             onChange={formProject.handleChange}
             onBlur={formProject.handleBlur}
             error={
-              formProject.touched.generalObjective &&
-              Boolean(formProject.errors.generalObjective)
+              formProject.touched.objetivos_generales &&
+              Boolean(formProject.errors.objetivos_generales)
             }
             helperText={
-              formProject.touched.generalObjective &&
-              formProject.errors.generalObjective
+              formProject.touched.objetivos_generales &&
+              formProject.errors.objetivos_generales
+            }
+            sx={CssTexField}
+          />
+          <TextField
+            margin="normal"
+            fullWidth
+            multiline
+            name="alcance"
+            label="Alcance"
+            id="alcance"
+            autoComplete="current-name"
+            value={formProject.values.alcance}
+            onChange={formProject.handleChange}
+            onBlur={formProject.handleBlur}
+            error={
+              formProject.touched.alcance &&
+              Boolean(formProject.errors.alcance)
+            }
+            helperText={
+              formProject.touched.alcance &&
+              formProject.errors.alcance
             }
             sx={CssTexField}
           />
           <Divider textAlign="right">
-            <ButtonContained text={"Agregar obejtivos"}
+            <Fab
+              size="small"
+              aria-label="edit"
               onClick={handleAddInput}
               style={{
-                width: '190px',
-              }} >
-            </ButtonContained>
+                backgroundColor: "#FFFDFA",
+                boxShadow: "none",
+                zIndex: 0,
+              }}
+            >
+              <AddCircleIcon sx={{
+                color: '#319795',
+                fontSize: '35px',
+              }} />
+            </Fab>
+
           </Divider>
           {inputs.map((value, index) => (
             <div key={index} style={{
               display: 'flex'
             }}>
+
               <Fab
                 size="small"
                 aria-label="add"
@@ -194,22 +238,32 @@ function EditProject() {
                 margin="normal"
                 fullWidth
                 multiline
-                name="specificObjective"
-                label="Specific Objective"
-                id="specificObjective"
+                label="Objetivo Specifico"
                 autoComplete="current-name"
-
+                value={specifics[index]}
+                onChange={(event) => handleObjectSpecifics(event, index)}
                 sx={CssTexField}
               />
             </div>
           ))}
           <Divider textAlign="right">
-            <ButtonContained text={"Agregar referencias"}
+            <Fab
+              size="small"
+              aria-label="edit"
               onClick={handleAddLink}
+
               style={{
-                width: '190px',
-              }} >
-            </ButtonContained>
+                backgroundColor: "#FFFDFA",
+                boxShadow: "none",
+                zIndex: 0,
+              }}
+            >
+              <AddCircleIcon sx={{
+                color: '#319795',
+                fontSize: '35px',
+              }} />
+            </Fab>
+
           </Divider>
           {links.map((value, index) => (
             <div key={index} style={{
@@ -231,11 +285,10 @@ function EditProject() {
                 margin="normal"
                 fullWidth
                 multiline
-                name="specificObjective"
-                label="Specific Objective"
-                id="specificObjective"
+                label="Referencia Bibliografica"
                 autoComplete="current-name"
-
+                value={references[index]}
+                onChange={(event) => handleReferences(event, index)}
                 sx={CssTexField}
               />
             </div>
@@ -243,6 +296,12 @@ function EditProject() {
         </Grid>
 
       </Box>
+      <Backdrop
+        sx={{ backgroundColor: "rgba(155, 190, 200, 0.3)", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="primary" size={40} />
+      </Backdrop>
     </Grid>
   )
 }

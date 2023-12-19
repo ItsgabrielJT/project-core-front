@@ -11,14 +11,15 @@ const success = (msg) => MySwal.fire({
   position: "center",
   icon: "success",
   background: "#FFFDFA",
-  showConfirmButton: true
+  timer: 2700,
+  showConfirmButton: false
 })
 
 const error = (msg) => MySwal.fire({
   text: msg,
   position: "center",
   icon: "error",
-  timer: 3000,
+  timer: 2700,
   background: "#FFFDFA",
   showConfirmButton: false
 })

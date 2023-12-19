@@ -26,7 +26,7 @@ const HomePage = () => {
         dataHome ? (
           <Box
             sx={{
-              marginTop: "60px",
+              marginTop: "90px",
               height: '100%',
               backgroundColor: '#FFFDFA',
               position: 'overflow',

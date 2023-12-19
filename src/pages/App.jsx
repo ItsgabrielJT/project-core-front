@@ -28,6 +28,7 @@ function App() {
             <Route path="projects" element={<ListProjects/>} />
             <Route path="notifications" element={<NotificationsPage/>} />
             <Route path="create/project" element={<EditProject/>} />
+            <Route path="projects/:id/edit" element={<EditProject/>} />
             <Route path="projects/:id" element={<DetailProject/>} />
           </Route>
 

@@ -9,11 +9,12 @@ function InfoCard({ key, occupation, full_name, description, title_project, onDe
       key={key}
       sx={{
         borderBottom: '1px solid gray',
+        marginTop: "30px",
+
       }}>
       <div style={{
         display: 'flex',
         justifyContent: "space-between",
-        marginTop: "90px",
         marginBottom: "25px",
       }}>
         <Typography variant="body1">

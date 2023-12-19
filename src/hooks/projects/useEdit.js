@@ -1,51 +1,152 @@
 import { useFormik } from "formik"
 import * as yup from 'yup';
 import notificationService from "@services/notificationService"
-import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router";
-import { useState } from "react";
+import { projectService } from "@services/projects/projectService";
+import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom'
 
 
 const FORM_VALUES = {
-    title: "",
-    description: "",
-    generalObjective: "",
-    specificObjective: [],
-    references: [],
-    image_url: "",
+    id_usuario: 0,
+    estado: 0,
+    titulo: "",
+    descripcion: "",
+    objetivos_generales: [],
+    alcance: "",
+    objetivos_especificos: [],
+    referencias_bibliograficas: [],
+    link_imagen: "Link_imagen3"
 }
 
-export const useEdit = () => {
+export const useEdit = (id = null) => {
+
     const validationSchema = yup.object({
-        
-        password: yup
+
+        titulo: yup
             .string('Enter your password')
-            .min(8, 'Password should be of minimum 8 characters length')
-            .required('Password is required'),
-       
-        institute: yup
+            .required('El titulo es requerido'),
+
+        descripcion: yup
             .string('Enter your institute')
-            .required('Institute is required'),
-        profesion: yup
+            .required('La descripcion es requerido'),
+        alcance: yup
             .string('Enter your carrer')
-            .required('Carrer is required'),
-        number: yup
+            .required('El alcance es requerido'),
+        objetivos_generales: yup
             .string('Enter your phone number')
-            .required('Phone number is required'),
+            .required('El obejtivo general es requerido'),
     });
+
+    const [specifics, setSpecifics] = useState([''])
+    const [loading, setLoading] = useState(true)
+    const [references, setReferences] = useState([''])
+    const navigate = useNavigate()
+
+
+    useEffect(() => {
+        if (id != null) {
+            projectService.getProjectById(id)
+                .then((res) => {
+                    if (res.data.status) {
+                        formProject.setValues({
+                            titulo: res.data.proyecto.title_project,
+                            estado: res.data.proyecto.state,
+                            descripcion: res.data.proyecto.description,
+                            link_imagen: res.data.proyecto.link_image,
+                            alcance: res.data.proyecto.scope,
+                            id_usuario: res.data.proyecto.users[0].user.id,
+                            objetivos_generales: res.data.proyecto.general_objetive[0],
+                        })
+                        setSpecifics(res.data.proyecto.specific_object)
+                        setReferences(res.data.proyecto.bibliographic_references)
+                    }
+                })
+                .catch((err) => {
+                    notificationService.error(err.message);
+                })
+                .finally(() => [
+                    setLoading(false)
+                ])
+        }
+    }, [id])
+
+    const handleObjectSpecifics = (event, index) => {
+        const newSpecifics = [...specifics];
+        newSpecifics[index] = event.target.value;
+        setSpecifics(newSpecifics);
+    }
+
+    const cleanObjectSpecifics = (index) => {
+        const newInputs = [...specifics];
+        newInputs.splice(index, 1);
+        setSpecifics(newInputs);
+    }
+
+    const handleReferences = (event, index) => {
+        const newSpecifics = [...references];
+        newSpecifics[index] = event.target.value;
+        setReferences(newSpecifics);
+    }
+
+    const cleanReferences = (index) => {
+        const newInputs = [...references];
+        newInputs.splice(index, 1);
+        setReferences(newInputs);
+    }
 
     const formProject = useFormik({
         initialValues: FORM_VALUES,
         validationSchema,
         onSubmit: async (values) => {
-            console.log(values)
-            handleClose()
-        formProject.resetForm();
+            let json = { ...values };
+            json.objetivos_especificos = specifics
+            json.referencias_bibliograficas = references
+            json.objetivos_generales = [json.objetivos_generales]
+
+            if (id != null) {
+                delete json.id_usuario;
+                projectService.updateProject(id, json)
+                    .then((res) => {
+                        if (res.data.status) {
+                            notificationService.success("Se ha actulizado el proyecto")
+                            formProject.resetForm();
+                            setReferences([''])
+                            setSpecifics([''])
+                            navigate(`/projects/${id}`)
+
+                        } 
+                    })
+                    .catch((err) => {
+                        notificationService.error(err.message)
+                    })
+            } else {
+                json.id_usuario = JSON.parse(localStorage.getItem("id"));
+                json.estado = 1
+                projectService.createProject(json)
+                    .then((res) => {
+                        if (res.data.status) {
+                            notificationService.success("Se ha creado el proyecto")
+                            formProject.resetForm();
+                            setReferences([''])
+                            setSpecifics([''])
+                        } 
+                    })
+                    .catch((err) => {
+                        notificationService.error(err.message)
+                    })
+            }
 
         }
     });
 
     return {
         formProject,
+        specifics,
+        references,
+        loading,
+        handleObjectSpecifics,
+        cleanObjectSpecifics,
+        handleReferences,
+        cleanReferences
     }
 }
