@@ -156,42 +156,47 @@ function DetailProject() {
                   marginTop: "20px",
                 }}
               ></ButtonContained>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "end",
-                  marginTop: "15px",
-                }}
-              >
-                <Fab
-                  size="small"
-                  aria-label="edit"
-                  onClick={editProject}
-                  style={{
-                    backgroundColor: "#FFFDFA",
-                    boxShadow: "none",
-                    zIndex: 0,
-                  }}
-                >
-                  <CreateIcon />
-                </Fab>
-                <Fab
-                  size="small"
-                  aria-label="edit"
-                  onClick={() => setOpen(true)}
-                  style={{
-                    backgroundColor: "#FFFDFA",
-                    boxShadow: "none",
-                    zIndex: 0,
-                  }}
-                >
-                  <DeleteIcon
-                    sx={{
-                      color: "#DC3545",
+              {project.userId == idLogin && (
+                <>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "end",
+                      marginTop: "15px",
                     }}
-                  />
-                </Fab>
-              </div>
+                  >
+                    <Fab
+                      size="small"
+                      aria-label="edit"
+                      onClick={editProject}
+                      style={{
+                        backgroundColor: "#FFFDFA",
+                        boxShadow: "none",
+                        zIndex: 0,
+                      }}
+                    >
+                      <CreateIcon />
+                    </Fab>
+                    <Fab
+                      size="small"
+                      aria-label="edit"
+                      onClick={() => setOpen(true)}
+                      style={{
+                        backgroundColor: "#FFFDFA",
+                        boxShadow: "none",
+                        zIndex: 0,
+                      }}
+                    >
+                      <DeleteIcon
+                        sx={{
+                          color: "#DC3545",
+                        }}
+                      />
+                    </Fab>
+                  </div>
+                </>
+              )}
+
             </div>
           </div>
 
