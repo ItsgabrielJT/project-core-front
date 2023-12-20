@@ -13,15 +13,11 @@ import ModalDialog from "@components/modals/ModalDialog";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useEdit } from "@hook/securities/useEdit";
 
-function EditUser({ open, handleClose }) {
-
+function EditUser({ open, handleClose, onSuccess }) {
 
     const [ close, setClose] = useState(false);
-    const { formUser } = useEdit(handleClose);
+    const { formUser } = useEdit(handleClose, onSuccess);
 
-
-
-    
     const onClose = () => {
         handleClose();
         setClose(false);
@@ -95,7 +91,7 @@ function EditUser({ open, handleClose }) {
                                     margin="normal"
                                     fullWidth
                                     name="universidad"
-                                    label="Institute"
+                                    label="Universidad"
                                     id="universidad"
                                     autoComplete="current-name"
                                     value={formUser.values.universidad}
@@ -115,7 +111,7 @@ function EditUser({ open, handleClose }) {
                                     margin="normal"
                                     fullWidth
                                     name="carrera"
-                                    label="Carrer"
+                                    label="Carrera"
                                     id="carrera"
                                     autoComplete="current-carrera"
                                     value={formUser.values.carrera}
@@ -134,7 +130,7 @@ function EditUser({ open, handleClose }) {
                                     margin="normal"
                                     fullWidth
                                     name="numero_celular"
-                                    label="Phone numero_celular"
+                                    label="Numero celular"
                                     id="numero_celular"
                                     autoComplete="current-numero_celular"
                                     value={formUser.values.numero_celular}

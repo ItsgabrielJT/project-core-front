@@ -1,8 +1,7 @@
 import { useFormik } from "formik"
 import * as yup from 'yup';
 import notificationService from "@services/notificationService"
-import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router";
+import { accountService } from "@services/account/accountService";
 import { useState } from "react";
 
 
@@ -11,33 +10,44 @@ const FORM_VALUES = {
     universidad: "",
     carrera: "",
     numero_celular: "",
-    image_url: "",
+    link_imagen_perfil: "",
 }
 
-export const useEdit = ( handleClose ) => {
+export const useEdit = (handleClose, onSuccess) => {
+
+
 
     const validationSchema = yup.object({
-        
+
         universidad: yup
             .string('Enter your institute')
             .required('Institute is required'),
-            
+
         carrera: yup
             .string('Enter your carrer')
             .required('Carrer is required'),
-        numero_celular: yup
-            .string('Enter your phone number')
-            .required('Phone number is required'),
     });
 
     const formUser = useFormik({
         initialValues: FORM_VALUES,
         validationSchema,
         onSubmit: async (values) => {
-            console.log(values)
-            handleClose()
-        formUser.resetForm();
+            var id = JSON.parse(localStorage.getItem("id"));
+            let json = {...values};
+            delete json.password
 
+            accountService.updateUser(id, json)
+                .then((res) => {
+                    if (res.data.status) {
+                        handleClose()
+                        formUser.resetForm();
+                        notificationService.success("Perfil actualizado")
+                        onSuccess(true);
+                    }
+                })
+                .catch((err) => {
+                    notificationService.error(err.message)
+                })
         }
     });
 

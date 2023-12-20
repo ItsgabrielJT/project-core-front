@@ -10,10 +10,14 @@ import { useUser } from '@hook/securities/useUser';
 function UserPage() {
 
   const [open, setOpen] = useState(false);
-  const { user, loading } = useUser()
+  const [ success, setSuccess] = useState(false);
+  const { user, loading } = useUser(success)
 
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true)
+    setSuccess(false)
+  };
   const handleClose = () => setOpen(false);
 
   return (
@@ -24,6 +28,7 @@ function UserPage() {
             <EditUser
               open={open}
               handleClose={handleClose}
+              onSuccess={setSuccess}
             />
             <Box
               sx={{

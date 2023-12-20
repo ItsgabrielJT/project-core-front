@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { accountService } from "@services/account/accountService";
 import notificationService from "@services/notificationService"
 
-export const useUser = () => {
+export const useUser = (success) => {
 
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -22,7 +22,7 @@ export const useUser = () => {
         setLoading(false)
       })
 
-  }, []);
+  }, [success]);
 
   return {
     user,
