@@ -2,15 +2,16 @@ import {
   Backdrop,
   Badge,
   Box,
+  Button,
   CircularProgress,
   Grid,
   List,
   ListItem,
+  ListItemButton,
   ListItemText,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import ButtonContained from "@components/buttons/ButtonContained";
 import Fab from "@mui/material/Fab";
 import { CssContentInfo, StyledBackdrop } from "@constants/styles";
 import ModalDialog from "@components/modals/ModalDialog";
@@ -21,15 +22,37 @@ import { useParams } from "react-router";
 import { projectService } from "@services/projects/projectService";
 import notificationService from "@services/notificationService"
 import { useNavigate } from "react-router";
+import {
+  CssButtonContained
+} from "@constants/styles";
+import GroupIcon from '@mui/icons-material/Group';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import EditColaborators from "./EditColaborators";
+import { CustomizedPopover } from "../../assets/statics/constants/styles";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 
 var idLogin = JSON.parse(localStorage.getItem("id"));
 
 function DetailProject() {
-  const [open, setOpen] = useState(false);
-  const { id } = useParams();
-  const { project, loading } = useDetail(id);
   const navigate = useNavigate()
+  const { id } = useParams();
+  const [open, setOpen] = useState(false);
+  const { project, loading } = useDetail(id);
+  const [openModal, setOpenModal] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const openPopover = Boolean(anchorEl);
+  const idPopover = openPopover ? "simple-popover" : undefined;
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleConfirm = () => {
     projectService.deleteProject(id)
@@ -51,8 +74,62 @@ function DetailProject() {
     navigate(`/projects/${id}/edit`)
   }
 
+  const handleOpenModal = (event) => {
+    if (project.userId != idLogin) {
+      handleClick(event)
+    } else {
+      setOpenModal(true)
+      setSuccess(false)
+    }
+  };
+
+  const handleCloseModal = () => setOpenModal(false);
+
   return (
     <Grid item xs={12}>
+      <EditColaborators
+        open={openModal}
+        handleClose={handleCloseModal}
+        onSuccess={setSuccess}
+      />
+      <CustomizedPopover
+        id={idPopover}
+        open={openPopover}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        <List>
+          <ListItem
+            sx={{
+              borderRadius: '30px',
+              marginBottom: '10px',
+
+              '&.Mui-selected': {
+                backgroundColor: 'rgba(92, 221, 219, 0.3)',
+              }
+            }}
+
+          >
+            <AccountCircleIcon
+              style={{
+                width: "30px",
+                height: "auto",
+                borderRadius: "8px",
+                marginRight: '7px'
+              }}
+            />
+            <ListItemText primary="Roberto Andrade" />
+          </ListItem>
+        </List>
+      </CustomizedPopover>
       <ModalDialog
         title={"Quieres eliminar este proyecto ?"}
         open={open}
@@ -122,6 +199,7 @@ function DetailProject() {
               <div
                 style={{
                   display: "flex",
+                  justifyContent: 'end',
                   marginTop: "20px",
                 }}
               >
@@ -148,16 +226,36 @@ function DetailProject() {
                         : "En revision"}
                 </Typography>
               </div>
-              <ButtonContained
-                text={"Colaboradores"}
+              {/* <Button
                 style={{
-                  width: "120px",
-                  height: "32px",
-                  marginTop: "20px",
+                  color: "white",
+                  width: "110px",
+                  height: "30px",
+                  marginTop: '15px'
                 }}
-              ></ButtonContained>
+                sx={CssButtonContained}
+              >
+                <PersonAddIcon />
+                Invitar
+              </Button> */}
+
+              <Button
+                aria-describedby={idPopover}
+                style={{
+                  color: "white",
+                  width: "170px",
+                  height: "30px",
+                  marginTop: '15px'
+                }}
+                onClick={handleOpenModal}
+                sx={CssButtonContained}
+              >
+                <GroupIcon />
+                Colaboradores
+              </Button>
               {project.userId == idLogin && (
                 <>
+
                   <div
                     style={{
                       display: "flex",
