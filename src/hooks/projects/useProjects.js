@@ -18,6 +18,7 @@ export const useProjects = () => {
                         data.push({
                             idProject: item.id,
                             title_project: item.title_project,
+                            fecha: item.updatedAt,
                             description: item.description,
                             link_image: item.link_image,
                             userId: item.users[0].id,

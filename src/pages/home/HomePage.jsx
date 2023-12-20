@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { colaboratorService } from "../../services/colaborators/colaboratorService";
 import notificationService from "@services/notificationService";
+import { format } from 'date-fns';
 
 const HomePage = () => {
   const { dataHome, loading } = useProjects();
@@ -55,6 +56,7 @@ const HomePage = () => {
               key={index}
               occupation={item.occupation}
               full_name={item.full_name}
+              fecha={format(new Date(item.fecha), 'EEEE, d MMMM yyyy')}
               description={item.description}
               title_project={item.title_project}
               onDetail={() => handleDetail(item.idProject)}

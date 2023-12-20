@@ -7,6 +7,7 @@ var idLogin = JSON.parse(localStorage.getItem("id"));
 function InfoCard({
   occupation,
   full_name,
+  fecha,
   description,
   title_project,
   onDetail,
@@ -47,6 +48,12 @@ function InfoCard({
         </Typography>
       </Link>
       <div>
+      <Typography
+          variant="body1"
+          sx={{ fontSize: 13, marginBottom: "3px", color: "#9BBEC8", fontWeight: 19 }}
+        >
+          {fecha}
+        </Typography>
         <Typography
           variant="body1"
           sx={{ fontWeight: "bold", marginBottom: "10px" }}

@@ -19,6 +19,7 @@
     "@nivo/core": "^0.84.0",
     "@sweetalert2/theme-material-ui": "^5.0.15",
     "axios": "^1.6.2",
+    "date-fns": "^3.0.1",
     "formik": "^2.4.5",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",

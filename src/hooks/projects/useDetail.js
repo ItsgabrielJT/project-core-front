@@ -15,6 +15,7 @@ export const useDetail = (id = null) => {
                     if (res.data.status) {
                         let data = {
                             title_project: res.data.proyecto.title_project,
+                            fecha: res.data.proyecto.updatedAt,
                             state: res.data.proyecto.state,
                             description: res.data.proyecto.description,
                             link_image: res.data.proyecto.link_image,

@@ -2,6 +2,7 @@ import {
     Backdrop,
   Box,
   CircularProgress,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { StyledBackdrop } from "@constants/styles";
@@ -11,7 +12,7 @@ import { useUserProjects } from "@hook/projects/useUserProjects";
 import LargeCard from "@components/cards/LargeCard";
 import { projectService } from "@services/projects/projectService";
 import notificationService from "@services/notificationService"
-
+import WorkOffIcon from '@mui/icons-material/WorkOff';
 
 function ListProjects() {
   const navigate = useNavigate();
@@ -82,6 +83,24 @@ function ListProjects() {
           />
             ) )
           }
+          {projects.length === 0 && (
+            <center>
+                <WorkOffIcon sx={{
+                  color: "#9BBEC8",
+                    fontSize: "80px",
+                    marginTop: "160px",
+                }}/>
+
+              <Typography
+                variant="h5"
+                sx={{
+                  color: "#9BBEC8",
+                }}
+              >
+                 Aun no has creado ningun proyecto !
+              </Typography>
+            </center>
+          )}
         </Box>
       ) : (
         <Box

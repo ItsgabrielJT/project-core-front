@@ -1,10 +1,17 @@
-import { Backdrop, Box, CircularProgress, Grid } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  CircularProgress,
+  Grid,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import ModalDialog from "@components/modals/ModalDialog";
 import { useNotifications } from "@hook/colaborators/useNotifications";
 import MediumCard from "@components/cards/MediumCard";
 import { colaboratorService } from "@services/colaborators/colaboratorService";
 import notificationService from "@services/notificationService";
+import Inventory2Icon from '@mui/icons-material/Inventory2';
 
 const NotificationsPage = () => {
   const [open, setOpen] = useState(false);
@@ -17,15 +24,16 @@ const NotificationsPage = () => {
 
   const handleRefuse = (id) => {
     colaboratorService
-    .refuseColaborator(id)
-    .then((res) => {
-      if (res.data.status) {
-        notificationService.success("Se le notificara tu decision");
-      }
-    })
-    .catch((err) => {
-      notificationService.error(err.message);
-    });
+      .refuseColaborator(id)
+      .then((res) => {
+        if (res.data.status) {
+          notificationService.success("Se le notificara tu decision");
+          setSuccess(true)
+        }
+      })
+      .catch((err) => {
+        notificationService.error(err.message);
+      });
   };
 
   const handleAceppt = (id) => {
@@ -34,6 +42,8 @@ const NotificationsPage = () => {
       .then((res) => {
         if (res.data.status) {
           notificationService.success("Se agrego un colaborador a tu proyecto");
+          setSuccess(true)
+
         }
       })
       .catch((err) => {
@@ -62,13 +72,31 @@ const NotificationsPage = () => {
         >
           {notifications.map((item, index) => (
             <MediumCard
-            key={index}
-            user={item.full_name}
-            content={item.content}
-            onRefuse={() => handleRefuse(item.idNotification)}
-            onConfirm={() => handleAceppt(item.idNotification)}
-          />
+              key={index}
+              user={item.full_name}
+              content={item.content}
+              onRefuse={() => handleRefuse(item.idNotification)}
+              onConfirm={() => handleAceppt(item.idNotification)}
+            />
           ))}
+          {notifications.length === 0 && (
+            <center>
+                <Inventory2Icon sx={{
+                  color: "#9BBEC8",
+                    fontSize: "80px",
+                    marginTop: "160px",
+                }}/>
+
+              <Typography
+                variant="h5"
+                sx={{
+                  color: "#9BBEC8",
+                }}
+              >
+                Tu bandeja de notificaciones esta vacia
+              </Typography>
+            </center>
+          )}
         </Box>
       ) : (
         <Box

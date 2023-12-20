@@ -30,6 +30,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import EditColaborators from "./EditColaborators";
 import { CustomizedPopover } from "../../assets/statics/constants/styles";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { format } from "date-fns";
 
 
 var idLogin = JSON.parse(localStorage.getItem("id"));
@@ -175,6 +176,12 @@ function DetailProject() {
               </Typography>
             </>
           )}
+          <Typography
+          variant="body1"
+          sx={{ fontSize: 13, marginBottom: "3px", color: "#9BBEC8", fontWeight: 19 }}
+        >
+          {format(new Date(project.fecha), 'EEEE, d MMMM yyyy')}
+        </Typography>
 
           <div
             style={{
