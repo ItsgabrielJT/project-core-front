@@ -1,92 +1,97 @@
-import { Box, CircularProgress, Fab, Fade, Grid, Paper, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import ButtonOutline from "@components/buttons/ButtonOutline";
-import ClearIcon from "@mui/icons-material/Clear";
+import { Backdrop, Box, CircularProgress, Grid } from "@mui/material";
+import React, { useState } from "react";
 import ModalDialog from "@components/modals/ModalDialog";
+import { useNotifications } from "@hook/colaborators/useNotifications";
+import MediumCard from "@components/cards/MediumCard";
+import { colaboratorService } from "@services/colaborators/colaboratorService";
+import notificationService from "@services/notificationService";
 
 const NotificationsPage = () => {
+  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { notifications, loading } = useNotifications(success, setSuccess);
 
-    const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
+  const handleConfirm = () => {
+    setOpen(false);
+  };
 
-    const handleConfirm = () => {
-        setOpen(false);
-    }
+  const handleRefuse = (id) => {
+    colaboratorService
+    .refuseColaborator(id)
+    .then((res) => {
+      if (res.data.status) {
+        notificationService.success("Se le notificara tu decision");
+      }
+    })
+    .catch((err) => {
+      notificationService.error(err.message);
+    });
+  };
 
-    return (
-        <Grid item xs={12}>
-            <ModalDialog
-                title={"Quieres eliminar esta notificacion ?"}
-                open={open}
-                onClose={() => setOpen(false)}
-                onConfirm={handleConfirm}
-            />
-            <Box
-                sx={{
-                    marginTop: "60px",
-                    height: '100%',
-                    backgroundColor: '#FFFDFA',
-                    position: 'overflow',
-                    paddingX: '15px',
+  const handleAceppt = (id) => {
+    colaboratorService
+      .aceptColaborator(id)
+      .then((res) => {
+        if (res.data.status) {
+          notificationService.success("Se agrego un colaborador a tu proyecto");
+        }
+      })
+      .catch((err) => {
+        notificationService.error(err.message);
+      });
+  };
 
-                    boxShadow: 'none',
+  return (
+    <>
+      <ModalDialog
+        title={"Quieres eliminar esta notificacion ?"}
+        open={open}
+        onClose={() => setOpen(false)}
+        onConfirm={handleConfirm}
+      />
+      {notifications ? (
+        <Box
+          sx={{
+            marginTop: "90px",
+            height: "100%",
+            backgroundColor: "#FFFDFA",
+            position: "overflow",
+            paddingX: "15px",
+            boxShadow: "none",
+          }}
+        >
+          {notifications.map((item, index) => (
+            <MediumCard
+            key={index}
+            user={item.full_name}
+            content={item.content}
+            onRefuse={() => handleRefuse(item.idNotification)}
+            onConfirm={() => handleAceppt(item.idNotification)}
+          />
+          ))}
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            marginTop: "90px",
+            height: "100%",
+            backgroundColor: "#FFFDFA",
+            position: "overflow",
+            paddingX: "15px",
+            boxShadow: "none",
+          }}
+        >
+          <Backdrop
+            sx={{ color: "#blue", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loading}
+            invisible={true}
+          >
+            <CircularProgress color="primary" size={40} />
+          </Backdrop>
+        </Box>
+      )}
+    </>
+  );
+};
 
-                }}
-            >
-                <Grid container sx={{
-                    borderBottom: '2px solid #D9D9D9',
-                    borderRadius: '30px',
-                    padding: '40px 5px 15px 25px',
-
-                }}>
-
-                    <Grid item xs={9}>
-                        <Typography variant='subtitle1' sx={{
-                            fontWeight: "bold",
-                        }}>
-
-                            Roberto Carlos Andrade
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <ButtonOutline
-                            text={"Aceptar"}
-                            style={{
-                                height: '33px',
-                                width: '115px',
-                                marginBottom: '10px',
-                            }}
-                        />
-                    </Grid>
-                    <Grid item xs={9}>
-                        <Typography variant='body2'>
-                            Te ha pedido unirse a tu proyecto IA en Biologia !
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <ButtonOutline
-                            text={"Rechazar"}
-                            style={{
-                                height: '33px',
-                                width: '115px',
-                                marginBottom: '10px',
-
-                            }}
-                        />
-                    </Grid>
-                    <Fade
-                        in={loading}
-                        style={{
-                            transitionDelay: loading ? '800ms' : '0ms',
-                        }}
-                        unmountOnExit
-                    >
-                        <CircularProgress />
-                    </Fade>
-                </Grid>
-            </Box>
-        </Grid>
-    )
-}
-
-export default NotificationsPage
+export default NotificationsPage;
