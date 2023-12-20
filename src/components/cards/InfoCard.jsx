@@ -2,7 +2,10 @@ import { Grid, Link, Typography } from '@mui/material'
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import ButtonContained from "@components/buttons/ButtonContained";
 
-function InfoCard({ occupation, full_name, description, title_project, onDetail, handleSearch }) {
+var idLogin = JSON.parse(localStorage.getItem("id"));
+
+
+function InfoCard({ occupation, full_name, description, title_project, onDetail, handleSearch, id }) {
   return (
     <Grid
       item
@@ -46,7 +49,12 @@ function InfoCard({ occupation, full_name, description, title_project, onDetail,
         />
       </div>
       <div style={{ display: "flex", justifyContent: 'end', marginTop: '10px', marginBottom: '15px' }}>
-        <ButtonContained text={"Unirse"} style={{ width: '25px', height: '30px', marginRight: '10px' }} />
+        {
+          id != idLogin && (
+            <ButtonContained text={"Unirse"} style={{ width: '25px', height: '30px', marginRight: '10px' }} />
+
+          )
+        }
         <ButtonOutline text={"Ver"} onClick={onDetail} style={{ width: '25px', height: '30px' }} />
       </div>
     </Grid>

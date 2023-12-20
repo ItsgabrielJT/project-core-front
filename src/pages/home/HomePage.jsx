@@ -6,6 +6,8 @@ import InfoCard from '@components/cards/InfoCard'
 import { useProjects } from '@hook/projects/useProjects'
 import { useNavigate } from 'react-router-dom'
 
+
+
 const HomePage = () => {
 
   const { dataHome, loading } = useProjects()
@@ -43,6 +45,7 @@ const HomePage = () => {
                   title_project={item.title_project}
                   onDetail={() => handleDetail(item.idProject)}
                   handleSearch={() => handleSearchPerfil(item.userId)}
+                  id={item.userId}
                 />
 
               ))
