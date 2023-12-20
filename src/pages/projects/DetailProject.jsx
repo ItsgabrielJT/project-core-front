@@ -1,8 +1,12 @@
 import {
   Backdrop,
+  Badge,
   Box,
   CircularProgress,
   Grid,
+  List,
+  ListItem,
+  ListItemText,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -39,7 +43,7 @@ function DetailProject() {
         notificationService.error(err.message)
       })
       .finally(() => {
-        setOpen(false );
+        setOpen(false);
       })
   };
 
@@ -57,7 +61,7 @@ function DetailProject() {
         slots={{ backdrop: StyledBackdrop }}
       />
       {project ? (
-        <Box
+        <Grid
           sx={{
             marginTop: "80px",
             height: "100%",
@@ -68,37 +72,31 @@ function DetailProject() {
           }}
         >
           {project.userId != idLogin && (
-            <div
-          
-            >
-                <Typography variant="body1">
-                  <div style={{ display: "flex" }}>
-                    <Typography sx={{
-                        fontWeight: "bold",
-                        fontSize: "16px"
-                      }}>
-                      {project.full_name}
-                    </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      sx={{
-                        marginLeft: "5px",
-                        marginTop: "2px",
-                        color: "#319795",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      / {project.occupation}
-                    </Typography>
-                  </div>
+            <>
+              <div style={{ display: 'flex' }}>
+                <Typography variant="body1" sx={{
+                  fontWeight: "bold",
+                  fontSize: "16px"
+                }}>
+                  {project.full_name}
                 </Typography>
-                <Typography variant="overline">
-                  <div style={{ display: "flex" }}>
-                    {project.university_name} -
-                   
-                  </div>
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    marginLeft: "5px",
+                    marginTop: "2px",
+                    color: "#319795",
+                    fontWeight: "bold",
+                  }}
+                >
+                  / {project.occupation}
                 </Typography>
-            </div>
+              </div>
+              <Typography variant="overline" sx={{ display: 'flex' }}>
+                {project.university_name} -
+
+              </Typography>
+            </>
           )}
 
           <div
@@ -144,10 +142,10 @@ function DetailProject() {
                   {project.state === 1
                     ? "Iniciado"
                     : project.state === 2
-                    ? "En curso"
-                    : project.state === 3
-                    ? "Finalizado"
-                    : "En revision"}
+                      ? "En curso"
+                      : project.state === 3
+                        ? "Finalizado"
+                        : "En revision"}
                 </Typography>
               </div>
               <ButtonContained
@@ -202,96 +200,150 @@ function DetailProject() {
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 {project.title_project}
               </Typography>
-              <Typography variant="body2" sx={{}}>
-                {project.description}
-              </Typography>
+              <List dense={true}>
+                <Badge
+                  color="primary"
+                  variant="dot"
+                  badgeContent=" "
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+
+                />
+                <ListItem sx={{ height: '20px', marginBottom: '30px' }}>
+                  <ListItemText
+                    primary={project.description}
+                    sx={{
+                      whiteSpace: 'pre-line', overflowWrap: 'break-word', maxHeight: '3em', textOverflow: 'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2,
+
+                    }}
+                  />
+                </ListItem>
+              </List>
             </div>
-            <div style={{ marginTop: "20px" }}>
+            <div >
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Objetivo General
               </Typography>
-              {project.general_objetive.map((item, index) => (
-                <Typography
-                  key={index}
-                  variant="body2"
-                  sx={{
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      marginTop: "7px",
-                      backgroundColor: "blue",
-                      width: "8px",
-                      height: "8px",
-                      borderRadius: "100px",
-                      marginRight: "10px",
-                    }}
-                  />
-                  {item}
-                </Typography>
-              ))}
+              <List dense={true}>
+                {project.general_objetive.map((item, index) => (
+                  <>
+                    <Badge
+                      color="primary"
+                      variant="dot"
+                      badgeContent=" "
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+
+                    />
+                    <ListItem sx={{ height: '20px', marginBottom: '40px' }}>
+
+                      <ListItemText
+                        primary={item}
+                        sx={{
+                          whiteSpace: 'pre-line', overflowWrap: 'break-word', maxHeight: '3em', textOverflow: 'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2,
+
+                        }}
+                      />
+                    </ListItem>
+                  </>
+
+                ))}
+              </List>
             </div>
-            <div style={{ marginTop: "20px" }}>
+            <div >
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Objetivos Especificos
               </Typography>
-              {project.specific_object.map((item, index) => (
-                <Typography
-                  key={index}
-                  variant="body2"
-                  sx={{
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      marginTop: "7px",
-                      backgroundColor: "blue",
-                      width: "8px",
-                      height: "8px",
-                      borderRadius: "100px",
-                      marginRight: "10px",
-                    }}
-                  />
-                  {item}
-                </Typography>
-              ))}
+              <List dense={true}>
+
+                {project.specific_object.map((item, index) => (
+                  <>
+                    <Badge
+                      color="primary"
+                      variant="dot"
+                      badgeContent=" "
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+
+                    />
+                    <ListItem sx={{ height: '20px', marginBottom: '40px' }}>
+                      <ListItemText
+                        primary={item}
+                        sx={{
+                          whiteSpace: 'pre-line', overflowWrap: 'break-word', maxHeight: '3em', textOverflow: 'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2,
+
+                        }}
+                      />
+                    </ListItem>
+                  </>
+                ))}
+              </List>
             </div>
-            <div style={{ marginTop: "20px" }}>
+            <div >
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Alcance
               </Typography>
-              <Typography variant="body2">{project.scope}</Typography>
+              <List dense={true}>
+                <Badge
+                  color="primary"
+                  variant="dot"
+                  badgeContent=" "
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                />
+                <ListItem sx={{ height: '20px', marginBottom: '40px' }}>
+
+                  <ListItemText
+                    primary={project.scope}
+                    sx={{
+                      whiteSpace: 'pre-line', overflowWrap: 'break-word', maxHeight: '3em', textOverflow: 'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2,
+
+                    }}
+                  />
+                </ListItem>
+              </List>
             </div>
-            <div style={{ marginTop: "20px" }}>
+            <div >
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Referencias
               </Typography>
-              {project.bibliographic_references.map((item, index) => (
-                <Typography
-                  key={index}
-                  variant="body2"
-                  sx={{
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      marginTop: "7px",
-                      backgroundColor: "blue",
-                      width: "8px",
-                      height: "8px",
-                      borderRadius: "100px",
-                      marginRight: "10px",
-                    }}
-                  />
-                  {item}
-                </Typography>
-              ))}
+              <List dense={true}>
+                {project.bibliographic_references.map((item, index) => (
+                  <>
+                    <Badge
+                      color="primary"
+                      variant="dot"
+                      badgeContent=" "
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+
+                    />
+                    <ListItem sx={{ height: '20px', marginBottom: '40px' }}>
+                      <ListItemText
+                        primary={item}
+                        sx={{
+                          whiteSpace: 'pre-line', overflowWrap: 'break-word', maxHeight: '3em', textOverflow: 'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2,
+
+                        }}
+                      />
+                    </ListItem>
+                  </>
+                ))}
+              </List>
+
             </div>
           </div>
-        </Box>
+        </Grid>
       ) : (
         <Box
           sx={{

@@ -32,7 +32,7 @@ function InfoCard({ occupation, full_name, description, title_project, onDetail 
         <Typography variant='body1' sx={{ fontWeight: 'bold', marginBottom: '10px' }}>
           {title_project}
         </Typography>
-        <Typography variant='body2'>
+        <Typography variant='body2' sx={{ whiteSpace: 'pre-line', overflowWrap: 'break-word', maxHeight: '3em', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>
           {description}
         </Typography>
         <img
