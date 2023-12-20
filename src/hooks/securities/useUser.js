@@ -3,16 +3,15 @@ import { useEffect } from "react";
 import { accountService } from "@services/account/accountService";
 import notificationService from "@services/notificationService"
 
-export const useUser = (success) => {
+export const useUser = (success, id = null ) => {
 
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    var id = JSON.parse(localStorage.getItem("id"));
-    accountService.getPerfilById(id)
+    if(id != null) {
+      accountService.getPerfilById(id)
       .then((res) => {
-        console.log(res.data)
         setUser(res.data.usuario)
       })
       .catch((err) => {
@@ -21,8 +20,10 @@ export const useUser = (success) => {
       .finally(() => {
         setLoading(false)
       })
+    } 
+    
 
-  }, [success]);
+  }, [success, id]);
 
   return {
     user,

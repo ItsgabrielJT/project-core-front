@@ -1,8 +1,8 @@
-import { Grid, Typography } from '@mui/material'
+import { Grid, Link, Typography } from '@mui/material'
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import ButtonContained from "@components/buttons/ButtonContained";
 
-function InfoCard({ occupation, full_name, description, title_project, onDetail }) {
+function InfoCard({ occupation, full_name, description, title_project, onDetail, handleSearch }) {
   return (
     <Grid
       item
@@ -11,10 +11,14 @@ function InfoCard({ occupation, full_name, description, title_project, onDetail 
         marginTop: "30px",
 
       }}>
-      <div style={{
-        display: 'flex',
-        marginBottom: "25px",
-      }}>
+      <Link
+        onClick={handleSearch}
+        underline="hover"
+        style={{
+          display: 'flex',
+          marginBottom: "25px",
+          color: 'black'
+        }}>
         <Typography variant="body1">
           {full_name}
         </Typography>
@@ -27,7 +31,7 @@ function InfoCard({ occupation, full_name, description, title_project, onDetail 
           / {occupation}
         </Typography>
 
-      </div>
+      </Link>
       <div>
         <Typography variant='body1' sx={{ fontWeight: 'bold', marginBottom: '10px' }}>
           {title_project}

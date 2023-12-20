@@ -64,10 +64,9 @@ export const useEdit = (id = null) => {
                 .catch((err) => {
                     notificationService.error(err.message);
                 })
-                .finally(() => [
-                    setLoading(false)
-                ])
         }
+        setLoading(false)
+
     }, [id])
 
     const handleObjectSpecifics = (event, index) => {

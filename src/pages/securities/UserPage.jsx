@@ -5,13 +5,16 @@ import { CssContentInfo } from "@constants/styles";
 import EditUser from './EditUser';
 import { ResponsiveBarCanvas } from '@nivo/bar'
 import { useUser } from '@hook/securities/useUser';
+import { useParams } from 'react-router-dom';
 
+var idLogin = JSON.parse(localStorage.getItem("id"));
 
 function UserPage() {
 
   const [open, setOpen] = useState(false);
   const [ success, setSuccess] = useState(false);
-  const { user, loading } = useUser(success)
+  const { id } = useParams();
+  const { user, loading } = useUser(success, id)
 
 
   const handleOpen = () => {
@@ -25,7 +28,7 @@ function UserPage() {
       {
         user ? (
           <Grid item xs={12}>
-            <EditUser
+                <EditUser
               open={open}
               handleClose={handleClose}
               onSuccess={setSuccess}
@@ -70,7 +73,11 @@ function UserPage() {
                   </Typography>
                 </div>
                 <div >
-                  <ButtonOutline text={"Editar"} onClick={handleOpen} />
+                  {
+                    user.id == idLogin && (
+                      <ButtonOutline text={"Editar"} onClick={handleOpen} />
+                    )
+                  }
                 </div>
               </div>
               <div style={CssContentInfo}>

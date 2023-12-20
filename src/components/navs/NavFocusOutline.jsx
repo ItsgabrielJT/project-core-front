@@ -8,9 +8,16 @@ import { Navigate, useNavigate } from 'react-router-dom';
 function NavFocusOutline(props) {
 
     const navigate = useNavigate();
+    const userId = JSON.parse(localStorage.getItem("id"));
 
-    const handleRedirecTo = (path) => {
-        navigate(path);        
+
+    const handleRedirecTo = (value) => {
+        if(value.title == "Perfil") {
+            navigate(`${value.path}/${userId}`);      
+
+        }  else {
+            navigate(value.path);      
+        }
     }
 
     return (
@@ -19,7 +26,7 @@ function NavFocusOutline(props) {
             fullWidth
             variant="outlined"
             sx={CssNavOutline}
-            onClick={() => handleRedirecTo(props.path)}
+            onClick={() => handleRedirecTo(props)}
         >
             {props.icon}
             <Typography variant='body1' sx={{

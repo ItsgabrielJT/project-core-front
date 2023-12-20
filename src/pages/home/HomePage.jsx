@@ -9,15 +9,14 @@ import { useNavigate } from 'react-router-dom'
 const HomePage = () => {
 
   const { dataHome, loading } = useProjects()
-  const [open, setOpen] = useState (false);
   const navigate = useNavigate()
-
-  const handleConfirm = () => {
-      setOpen(false);
-  }
 
   const handleDetail = (id) => {
       navigate(`/projects/${id}`)
+  }
+
+  const handleSearchPerfil = (value) => {
+    navigate(`/user/${value}`)
   }
 
   return (
@@ -43,6 +42,7 @@ const HomePage = () => {
                   description={item.description}
                   title_project={item.title_project}
                   onDetail={() => handleDetail(item.idProject)}
+                  handleSearch={() => handleSearchPerfil(item.userId)}
                 />
 
               ))

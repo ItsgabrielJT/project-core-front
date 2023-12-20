@@ -25,6 +25,7 @@ function App() {
           >
             <Route path="home" element={<HomePage/>} />
             <Route path="user" element={<UserPage/>} />
+            <Route path="user/:id" element={<UserPage/>} />
             <Route path="projects" element={<ListProjects/>} />
             <Route path="notifications" element={<NotificationsPage/>} />
             <Route path="create/project" element={<EditProject/>} />
