@@ -50,7 +50,7 @@ function InfoCard({
       <div>
       <Typography
           variant="body1"
-          sx={{ fontSize: 13, marginBottom: "3px", color: "#9BBEC8", fontWeight: 19 }}
+          sx={{ fontSize: 13, marginBottom: "3px", color: "#9BBEC8", fontWeight: "bold" }}
         >
           {fecha}
         </Typography>
