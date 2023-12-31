@@ -5,6 +5,7 @@ function LittleCard({
     title,
     image,
     fecha,
+    user,
     description,
     onDetail,
     ...props
@@ -21,8 +22,11 @@ function LittleCard({
             <Typography variant='subtitle2' sx={{ fontWeight: "bold", fontSize: '18px' }}>
                {title}
             </Typography>
-            <Typography variant='subtitle2' sx={{ fontWeight: "bold", color: '#6C757D' }}>
+            <Typography variant='subtitle2' sx={{ fontWeight: "bold", color: '#355890' }}>
                 {fecha}
+            </Typography>
+            <Typography variant='subtitle2' sx={{ fontWeight: "bold", color: '#6C757D' }}>
+                {user.full_name}
             </Typography>
             <Typography variant='body2' sx={{
                 marginTop: '10px',

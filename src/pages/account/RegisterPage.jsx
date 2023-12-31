@@ -133,7 +133,7 @@ function RegisterPage({ open, handleClose }) {
                     fullWidth
                     name="contrasenia"
                     label="Password"
-                    type="contrasenia"
+                    type="password"
                     id="contrasenia"
                     autoComplete="current-contrasenia"
                     value={formRegister.values.contrasenia}

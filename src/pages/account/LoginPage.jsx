@@ -94,7 +94,7 @@ const LoginPage = () => {
               fullWidth
               name="contrasenia"
               label="Password"
-              type="contrasenia"
+              type="password"
               id="contrasenia"
               autoComplete="current-contrasenia"
               value={formLogin.values.contrasenia}

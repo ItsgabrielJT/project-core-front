@@ -92,6 +92,7 @@ function DetailProject() {
         open={openModal}
         handleClose={handleCloseModal}
         onSuccess={setSuccess}
+        colaborators={project ? project.colaborators : []}
       />
       <CustomizedPopover
         id={idPopover}
@@ -108,27 +109,32 @@ function DetailProject() {
         }}
       >
         <List>
-          <ListItem
-            sx={{
-              borderRadius: '30px',
-              marginBottom: '10px',
+          {
+            project && project.colaborators.map((item, index) => (
+              <ListItem
+                key={index}
+                sx={{
+                  borderRadius: '30px',
+                  marginBottom: '10px',
 
-              '&.Mui-selected': {
-                backgroundColor: 'rgba(92, 221, 219, 0.3)',
-              }
-            }}
+                  '&.Mui-selected': {
+                    backgroundColor: 'rgba(92, 221, 219, 0.3)',
+                  }
+                }}
 
-          >
-            <AccountCircleIcon
-              style={{
-                width: "30px",
-                height: "auto",
-                borderRadius: "8px",
-                marginRight: '7px'
-              }}
-            />
-            <ListItemText primary="Roberto Andrade" />
-          </ListItem>
+              >
+                <AccountCircleIcon
+                  style={{
+                    width: "30px",
+                    height: "auto",
+                    borderRadius: "8px",
+                    marginRight: '7px'
+                  }}
+                />
+                <ListItemText primary={item.user.full_name} />
+              </ListItem>
+            ))
+          }
         </List>
       </CustomizedPopover>
       <ModalDialog
@@ -177,11 +183,11 @@ function DetailProject() {
             </>
           )}
           <Typography
-          variant="body1"
-          sx={{ fontSize: 13, marginBottom: "3px", color: "#9BBEC8", fontWeight: 19 }}
-        >
-          {format(new Date(project.fecha), 'EEEE, d MMMM yyyy')}
-        </Typography>
+            variant="body1"
+            sx={{ fontSize: 13, marginBottom: "3px", color: "#355890", fontWeight: "bold" }}
+          >
+            {format(new Date(project.fecha), 'EEEE, d MMMM yyyy')}
+          </Typography>
 
           <div
             style={{

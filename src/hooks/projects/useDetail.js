@@ -27,8 +27,10 @@ export const useDetail = (id = null) => {
                             full_name: res.data.proyecto.users[0].user.full_name,
                             link_image: res.data.proyecto.users[0].user.link_image,
                             occupation: res.data.proyecto.users[0].user.occupation,
-                            university_name: res.data.proyecto.users[0].user.university_name
+                            university_name: res.data.proyecto.users[0].user.university_name,
+                            colaborators: res.data.proyecto.colaborators
                         }
+                        console.log(data)
                         setProject(data)
                     } else {
                         notificationService.warning("Intentlo mas tarde")

@@ -20,6 +20,7 @@ export const useProjects = () => {
                             fecha: item.updatedAt,
                             description: item.description,
                             link_image: item.link_image,
+                            propietario: item.propietario.user
                         })
                     })
                     setProjects(data)

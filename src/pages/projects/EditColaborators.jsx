@@ -21,11 +21,16 @@ const PERMISSIONS = [
     'Editar'
 ]
 
-function EditColaborators({ open, handleClose, onSuccess }) {
+function EditColaborators({ open, handleClose, onSuccess, colaborators }) {
 
     const { formUser } = useEdit(handleClose, onSuccess);
     const [selectedIndex, setSelectedIndex] = useState(2);
     const [checked, setChecked] = React.useState([0]);
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        setUsers(colaborators)
+    }, [colaborators])
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -96,34 +101,27 @@ function EditColaborators({ open, handleClose, onSuccess }) {
 
                                 <Grid container spacing={1} columns={16}>
                                     <Grid item xs={7} sx={{ marginTop: '30px' }}>
-                                        <ListItemButton
-                                            selected={selectedIndex === 2}
-                                            onClick={(event) => handleListItemClick(event, 2)}
-                                            sx={{
-                                                borderRadius: '30px',
-                                                marginBottom: '10px',
-                                               
-                                                '&.Mui-selected': {
-                                                    backgroundColor: 'rgba(92, 221, 219, 0.3)',
-                                                }
-                                            }}
+                                        {
+                                            users && users.map((item, index) => (
+                                                <ListItemButton
+                                                    key={index}
+                                                    selected={selectedIndex === index}
+                                                    onClick={(event) => handleListItemClick(event, index)}
+                                                    sx={{
+                                                        borderRadius: '30px',
+                                                        marginBottom: '10px',
 
-                                        >
-                                            <ListItemText primary="Joel Tates" />
-                                        </ListItemButton>
-                                        <ListItemButton
-                                            selected={selectedIndex === 3}
-                                            onClick={(event) => handleListItemClick(event, 3)}
-                                            sx={{
-                                                borderRadius: '30px',
-                                                
-                                                '&.Mui-selected': {
-                                                    backgroundColor: 'rgba(92, 221, 219, 0.3)',
-                                                }
-                                            }}
-                                        >
-                                            <ListItemText primary="Roberto Andrade" />
-                                        </ListItemButton>
+                                                        '&.Mui-selected': {
+                                                            backgroundColor: 'rgba(92, 221, 219, 0.3)',
+                                                        }
+                                                    }}
+
+                                                >
+                                                    <ListItemText primary={item.user.full_name} />
+                                                </ListItemButton>
+                                            ))
+                                        }
+
                                     </Grid>
                                     <Grid item xs={9} sx={{ marginTop: '22px' }}>
                                         <List sx={{ width: '100%', maxWidth: 360, bgcolor: '#FFFDFA' }}>

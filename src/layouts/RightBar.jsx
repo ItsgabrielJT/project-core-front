@@ -32,6 +32,7 @@ function RightBar() {
                         key={index}
                         title={item.title_project}
                         image={item.link_image}
+                        user={item.propietario}
                         fecha={format(new Date(item.fecha), 'EEEE, d MMMM yyyy')}
                         description={item.description}
                         onDetail={() => handleDetail(item.id)}
