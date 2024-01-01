@@ -13,13 +13,69 @@ import RegisterPage from "./RegisterPage";
 import personas from "@images/estudiantes.png";
 import logo from "@images/logos/logo.png";
 import ResetPage from "./ResetPage";
-import { Paper } from "@mui/material";
+import { Paper, ThemeProvider, createTheme, css, keyframes } from "@mui/material";
+import styled from '@emotion/styled';
+
+const theme = createTheme();
+
+const slideInFromLeft = keyframes`
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
+
+const slideInFromLeft2 = keyframes`
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+`;
+
+const slideInFromLeft3 = keyframes`
+  from {
+    transform: translateX(-400%);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
+
+const fadeIn = keyframes`
+  from {
+    filter: brightness(100%);
+  }
+  to {
+    filter: brightness(26%);  
+  }
+`;
+
+const AnimatedGrid = styled(Grid)`
+  animation: ${slideInFromLeft} 2s ease-out;
+  // Otros estilos...
+`;
+
+const AnimatedGrid2 = styled(Grid)`
+  animation: ${slideInFromLeft2} 2s ease-out;
+  // Otros estilos...
+`;
+
+const AnimatedGrid3 = styled(Grid)`
+  animation: ${slideInFromLeft3} 3s ease-out, ${fadeIn} 0.5s ease-in 3s forwards;
+
+  
+  // Otros estilos...
+`;
 
 const LoginPage = () => {
   const { formLogin } = useLogin();
   const [open, setOpen] = useState(false);
   const [openReset, setOpenReset] = useState(false);
-  
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -27,27 +83,71 @@ const LoginPage = () => {
   const handleCloseReset = () => setOpenReset(false);
 
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
+    <Grid container component="main" sx={{ height: "97vh" }}>
       <RegisterPage open={open} handleClose={handleClose} />
       <ResetPage open={openReset} handleClose={handleCloseReset} />
 
-     
-        <Grid
+
+      <AnimatedGrid2
         item
         xs={false}
-        sm={4}
+        sm={2}
         md={7}
         sx={{
-          backgroundImage: `url(${personas})`,
-          backgroundRepeat: "no-repeat",
-          backgroundColor: "#FFFDFA",
-          backgroundSize: "1110px 700px",
-          backgroundPosition: "bottom",
+          position: 'absolute',
+          zIndex: "2"
         }}
-      ></Grid>
-      
+      >
+        <div style={{
+          fontSize: "8em",
+          color: "#9BBEC8",
+          fontWeight: "500",
+          fontFamily: "Bahnschrift Condensed",
+          lineHeight: "130px",
+          overflow: "hidden",
+          marginTop: "65px"
+        }}>
+          BIENVENIDO AL PORTAL
 
-      <Grid item xs={12} sm={7} md={5} component={Paper} elevation={6} square>
+        </div>
+        <div style={{
+          fontSize: "4em",
+          color: "#9AD0C2",
+          fontWeight: "500",
+          fontFamily: "Bahnschrift Condensed",
+          overflow: "hidden",
+        }}>
+          DE
+        </div>
+        <div style={{
+          fontSize: "5em",
+          color: "#319795",
+          fontWeight: "500",
+          fontFamily: "Bahnschrift Condensed",
+          overflow: "hidden",
+
+        }}>
+          PROYECTOS INVESTIGATIVOS
+        </div>
+      </AnimatedGrid2>
+
+      <AnimatedGrid3
+         item
+         xs={false}
+         sm={4}
+         md={7}
+         sx={{
+           backgroundImage: `url(${personas})`,
+           backgroundRepeat: "no-repeat",
+           backgroundColor: "#319795",
+           backgroundSize: "1110px 700px",
+           backgroundPosition: "bottom",
+         }}
+      >
+
+      </AnimatedGrid3>
+
+      <AnimatedGrid item xs={12} sm={7} md={5} component={Paper} elevation={6} square >
         <Box
           sx={{
             my: 3,
@@ -57,18 +157,17 @@ const LoginPage = () => {
             alignItems: "center",
           }}
         >
-          <img src={logo} alt="" 
+          <img src={logo} alt=""
             style={{
-              width: '30%', // Ajusta el ancho de la imagen según sea necesario
+              width: '40%', // Ajusta el ancho de la imagen según sea necesario
               height: 'auto', // Ajusta la altura de la imagen automáticamente
+              marginTop: '60px',
               borderRadius: '8px', // Ajusta el radio de las esquinas según sea necesario
               marginBottom: '16px', // Ajusta el margen inferior según sea necesario
             }}
           />
 
-          <Typography component="h1" variant="h3" className="color-primary">
-            Bienvenido al portal de proyectos de investigacion
-          </Typography>
+
           <Box
             component="form"
             noValidate
@@ -119,10 +218,10 @@ const LoginPage = () => {
             >
               <div>o</div>
             </Grid>
-            
-            <ButtonOutline  text={"Crear cuenta"} onClick={handleOpen} fullWidth style={{ 
+
+            <ButtonOutline text={"Crear cuenta"} onClick={handleOpen} fullWidth style={{
               marginTop: "20px"
-             }}/>
+            }} />
 
             <Grid
               item
@@ -139,7 +238,7 @@ const LoginPage = () => {
             </Grid>
           </Box>
         </Box>
-      </Grid>
+      </AnimatedGrid>
     </Grid>
   );
 };
