@@ -60,7 +60,7 @@ function LargeCard({ title, state, handleDetail, handleDelete,handleEdit, ...pro
                         : "En revision"}
             </Typography>
           </div>
-          <div
+          {/* <div
             style={{
               display: "flex",
               marginLeft: "25px",
@@ -68,7 +68,7 @@ function LargeCard({ title, state, handleDetail, handleDelete,handleEdit, ...pro
           >
             <PersonRoundedIcon />
             <Typography variant="body1">4</Typography>
-          </div>
+          </div> */}
         </div>
       </Grid>
       <Grid item xs={3}>
