@@ -38,7 +38,7 @@ const slideInFromLeft2 = keyframes`
 
 const slideInFromLeft3 = keyframes`
   from {
-    transform: translateX(-400%);
+    transform: translateX(-150%);
   }
   to {
     transform: translateX(0);
@@ -65,7 +65,7 @@ const AnimatedGrid2 = styled(Grid)`
 `;
 
 const AnimatedGrid3 = styled(Grid)`
-  animation: ${slideInFromLeft3} 3s ease-out, ${fadeIn} 0.5s ease-in 3s forwards;
+  animation: ${slideInFromLeft3} 3s ease-out , ${fadeIn} 0.5s ease-in 3s forwards;
 
   
   // Otros estilos...
@@ -105,29 +105,34 @@ const LoginPage = () => {
           fontFamily: "Bahnschrift Condensed",
           lineHeight: "130px",
           overflow: "hidden",
-          marginTop: "65px"
+          marginTop: "150px",
+          marginLeft: "40px"
         }}>
-          BIENVENIDO AL PORTAL
+          BIENVENIDO AL PORTAL DE
 
         </div>
+        
         <div style={{
           fontSize: "4em",
-          color: "#9AD0C2",
-          fontWeight: "500",
-          fontFamily: "Bahnschrift Condensed",
-          overflow: "hidden",
-        }}>
-          DE
-        </div>
-        <div style={{
-          fontSize: "5em",
           color: "#319795",
           fontWeight: "500",
           fontFamily: "Bahnschrift Condensed",
           overflow: "hidden",
+          marginLeft: "40px"
 
         }}>
           PROYECTOS INVESTIGATIVOS
+        </div>
+        <div style={{
+          fontSize: "2.5em",
+          color: "#9AD0C2",
+          fontWeight: "250",
+          fontFamily: "Bahnschrift Condensed",
+          overflow: "hidden",
+          marginLeft: "40px"
+
+        }}>
+          Maneja eficientemente todos tus proyectos !
         </div>
       </AnimatedGrid2>
 

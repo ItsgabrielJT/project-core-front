@@ -6,16 +6,25 @@ import EditUser from './EditUser';
 import { ResponsiveBarCanvas } from '@nivo/bar'
 import { useUser } from '@hook/securities/useUser';
 import { useParams } from 'react-router-dom';
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 
 var idLogin = JSON.parse(localStorage.getItem("id"));
 
 function UserPage() {
 
   const [open, setOpen] = useState(false);
-  const [ success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [cloudName] = useState("dnkst5hjn");
   const { id } = useParams();
   const { user, loading } = useUser(success, id)
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName
+    }
+  });
 
+  const myImage = cld.image(user ? user.link_image : "");
 
   const handleOpen = () => {
     setOpen(true)
@@ -28,7 +37,7 @@ function UserPage() {
       {
         user ? (
           <Grid item xs={12}>
-                <EditUser
+            <EditUser
               open={open}
               handleClose={handleClose}
               onSuccess={setSuccess}
@@ -44,14 +53,35 @@ function UserPage() {
 
               }}
             >
-              <div style={{
-                backgroundColor: "#ACCDDC",
-                height: '200px'
-              }} />
+              <div style={{ position: 'relative' }}>
+                <div style={{
+                  backgroundColor: "#ACCDDC",
+                  height: '200px',
+                }} />
+
+                    <AdvancedImage
+                      style={{
+                        position: 'absolute',
+                        top: '90%',
+                        left: '10%',
+                        transform: 'translate(-50%, -50%)',
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                        overflow: "hidden",
+                      }}
+                      cldImg={myImage}
+                      plugins={[responsive(), placeholder()]}
+                    />
+                  
+              </div>
               <div style={{
                 display: 'flex',
-                justifyContent: "space-between",
-                marginTop: "20px"
+                marginTop: '60px',
+
+                top: '350px',
+                justifyContent: 'space-between',
               }}>
                 <div >
 
@@ -67,7 +97,7 @@ function UserPage() {
                         marginTop: "3px",
                         color: "#319795"
                       }}>
-                         / {user.occupation}
+                        / {user.occupation}
                       </Typography>
                     </div>
                   </Typography>
@@ -108,7 +138,7 @@ function UserPage() {
 
               </div>
 
-        
+
             </Box>
           </Grid>
         ) : (

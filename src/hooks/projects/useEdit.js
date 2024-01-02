@@ -15,10 +15,10 @@ const FORM_VALUES = {
     alcance: "",
     objetivos_especificos: [],
     referencias_bibliograficas: [],
-    link_imagen: "Link_imagen3"
+    link_imagen: ""
 }
 
-export const useEdit = (id = null) => {
+export const useEdit = (id = null, image, setPublicId) => {
 
     const validationSchema = yup.object({
 
@@ -97,7 +97,11 @@ export const useEdit = (id = null) => {
         initialValues: FORM_VALUES,
         validationSchema,
         onSubmit: async (values) => {
-            let json = { ...values };
+            let json = {
+                ...values,
+
+                link_imagen: image
+            };
             json.objetivos_especificos = specifics
             json.referencias_bibliograficas = references
             json.objetivos_generales = [json.objetivos_generales]
@@ -111,9 +115,10 @@ export const useEdit = (id = null) => {
                             formProject.resetForm();
                             setReferences([''])
                             setSpecifics([''])
+                            setPublicId("")
                             navigate(`/projects/${id}`)
 
-                        } 
+                        }
                     })
                     .catch((err) => {
                         notificationService.error(err.message)
@@ -126,9 +131,11 @@ export const useEdit = (id = null) => {
                         if (res.data.status) {
                             notificationService.success("Se ha creado el proyecto")
                             formProject.resetForm();
+                            setPublicId("")
+
                             setReferences([''])
                             setSpecifics([''])
-                        } 
+                        }
                     })
                     .catch((err) => {
                         notificationService.error(err.message)

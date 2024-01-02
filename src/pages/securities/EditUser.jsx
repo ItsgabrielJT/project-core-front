@@ -10,13 +10,38 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { Button, Collapse, TextField } from "@mui/material";
 import ButtonContained from "@components/buttons/ButtonContained";
 import ModalDialog from "@components/modals/ModalDialog";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useEdit } from "@hook/securities/useEdit";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import CloudinaryUploadWidget from "@components/modals/CloudinaryUpload";
 
 function EditUser({ open, handleClose, onSuccess }) {
 
-    const [ close, setClose] = useState(false);
-    const { formUser } = useEdit(handleClose, onSuccess);
+    const [close, setClose] = useState(false);
+    const [publicId, setPublicId] = useState("");
+    const [cloudName] = useState("dnkst5hjn");
+    const [uploadPreset] = useState("o0bi0kjz");
+    const { formUser } = useEdit(handleClose, onSuccess, publicId);
+
+
+    const [uwConfig] = useState({
+        cloudName,
+        uploadPreset,
+        folder: "project-core-users", //upload files to the specified folder
+        clientAllowedFormats: ["jpg", "png"], //restrict uploading to image files only
+        maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+        maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+        theme: "blue", //change to a purple theme
+    });
+
+    // Create a Cloudinary instance and set your cloud name.
+    const cld = new Cloudinary({
+        cloud: {
+            cloudName
+        }
+    });
+
+    const myImage = cld.image(publicId);
 
     const onClose = () => {
         handleClose();
@@ -63,30 +88,31 @@ function EditUser({ open, handleClose, onSuccess }) {
                                         Editar perfil
                                     </h2>
                                 </div>
-                                <ButtonContained 
+                                <ButtonContained
                                     type='submit'
-                                text={"Guardar"} style={{
-                                    height: '37px',
-                                    width: '115px',
-                                    marginTop: '32px'
-                                }} />
+                                    text={"Guardar"} style={{
+                                        height: '37px',
+                                        width: '115px',
+                                        marginTop: '32px'
+                                    }} />
+
 
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <Fab
-                                    sx={{
-                                        margin: "20px 0px 20px 0px",
-                                        width: "115px",
-                                        height: "115px",
-                                        fontSize: "12px",
-                                        flexDirection: "column", // Colocar los elementos en una columna
-                                        alignItems: "center", // Alinear en el centro horizontal
-                                        justifyContent: "center", // Alinear en el centro vertical
+
+                                <AdvancedImage
+                                    style={{
+                                        width: "120px",
+                                        height: "120px",
+                                        objectFit: "cover",
+                                        borderRadius: "50%",
+                                        overflow: "hidden",
                                     }}
-                                >
-                                    <AddAPhotoIcon />
-                                    <div>Agrega una foto</div>
-                                </Fab>
+                                    cldImg={myImage}
+                                    plugins={[responsive(), placeholder()]}
+                                />
+                                <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} />
+
                                 <TextField
                                     margin="normal"
                                     fullWidth

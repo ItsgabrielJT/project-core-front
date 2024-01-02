@@ -13,7 +13,7 @@ const FORM_VALUES = {
     link_imagen_perfil: "",
 }
 
-export const useEdit = (handleClose, onSuccess) => {
+export const useEdit = (handleClose, onSuccess, image) => {
 
 
 
@@ -33,7 +33,10 @@ export const useEdit = (handleClose, onSuccess) => {
         validationSchema,
         onSubmit: async (values) => {
             var id = JSON.parse(localStorage.getItem("id"));
-            let json = {...values};
+            let json = {
+                ...values,
+                link_imagen_perfil: image
+            };
             delete json.password
 
             accountService.updateUser(id, json)
@@ -50,6 +53,7 @@ export const useEdit = (handleClose, onSuccess) => {
                 })
         }
     });
+
 
     return {
         formUser,

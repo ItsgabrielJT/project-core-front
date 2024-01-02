@@ -8,9 +8,11 @@ import { colaboratorService } from "../../services/colaborators/colaboratorServi
 import notificationService from "@services/notificationService";
 import { format } from 'date-fns';
 
+
 const HomePage = () => {
   const { dataHome, loading } = useProjects();
   const { user } = useAuth();
+
   const navigate = useNavigate();
 
   const handleDetail = (id) => {
@@ -38,6 +40,8 @@ const HomePage = () => {
       });
   };
 
+  
+
   return (
     <>
       {dataHome ? (
@@ -54,6 +58,8 @@ const HomePage = () => {
           {dataHome.map((item, index) => (
             <InfoCard
               key={index}
+              userImage={item.link_image_user}
+              projectImage={item.link_image_project}
               occupation={item.occupation}
               full_name={item.full_name}
               fecha={format(new Date(item.fecha), 'EEEE, d MMMM yyyy')}

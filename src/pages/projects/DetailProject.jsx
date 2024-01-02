@@ -31,7 +31,8 @@ import EditColaborators from "./EditColaborators";
 import { CustomizedPopover } from "../../assets/statics/constants/styles";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { format } from "date-fns";
-
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 
 var idLogin = JSON.parse(localStorage.getItem("id"));
 
@@ -39,6 +40,7 @@ function DetailProject() {
   const navigate = useNavigate()
   const { id } = useParams();
   const [open, setOpen] = useState(false);
+  const [cloudName] = useState("dnkst5hjn");
   const { project, loading } = useDetail(id);
   const [openModal, setOpenModal] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -85,6 +87,15 @@ function DetailProject() {
   };
 
   const handleCloseModal = () => setOpenModal(false);
+
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName
+    }
+  });
+
+  const perfil = cld.image(project ? project.link_image_user : "");
+  const proyecto = cld.image(project ? project.link_image_project : "");
 
   return (
     <Grid item xs={12}>
@@ -158,6 +169,19 @@ function DetailProject() {
           {project.userId != idLogin && (
             <>
               <div style={{ display: 'flex' }}>
+                <AdvancedImage
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    marginRight: '10px',
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                  }}
+                  cldImg={perfil
+                  }
+                  plugins={[responsive(), placeholder()]}
+                />
                 <Typography variant="body1" sx={{
                   fontWeight: "bold",
                   fontSize: "16px"
@@ -189,18 +213,23 @@ function DetailProject() {
             {format(new Date(project.fecha), 'EEEE, d MMMM yyyy')}
           </Typography>
 
-          <div
-            style={{
-              backgroundColor: "#D9D9D9",
-              height: "250px",
-              margin: "17px 0px 0px 0px",
-              borderRadius: "30px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          ></div>
+      
+              <AdvancedImage
+                style={{
+                  width: "100%",
+                  height: "290px",
+                  margin: "17px 0px 0px 0px",
+                  backgroundColor: "#D9D9D9",
+                  objectFit: "cover",
+                  borderRadius: "30px",
+                  overflow: "hidden",
+                }}
+                cldImg={proyecto}
+                plugins={[responsive(), placeholder()]}
+              />
+          
+
+
 
           <div>
             <div

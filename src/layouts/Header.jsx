@@ -5,12 +5,15 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { CustomizedPopover } from "@constants/styles";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { useAuth } from "../context/AuthContext";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const { logOut, user } = useAuth();
+  const [cloudName] = useState("dnkst5hjn");
 
-  
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -23,10 +26,19 @@ function Header() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName
+    }
+  });
+
+  const perfil = cld.image(user ? user.linkImagen : "");
+
   return (
     <Grid
       item
       sx={{
+
         backgroundColor: "rgba(242, 241, 238, 0.5)",
         backdropFilter: "blur(10px)",
         zIndex: 1,
@@ -34,6 +46,7 @@ function Header() {
         justifyContent: "space-between",
         width: "99%",
         position: "fixed",
+        top: 0,
       }}
     >
       <Grid item >
@@ -64,12 +77,18 @@ function Header() {
             display: "flex",
           }}
         >
-          <AccountCircleIcon
+          <AdvancedImage
             style={{
-              width: "30px",
-              height: "auto",
-              borderRadius: "8px",
+              width: "40px",
+              height: "30px",
+              marginRight: '10px',
+              objectFit: "cover",
+              borderRadius: "50%",
+              overflow: "hidden",
             }}
+            cldImg={perfil
+            }
+            plugins={[responsive(), placeholder()]}
           />
           <Typography
             variant="body2"
@@ -120,7 +139,7 @@ function Header() {
           </Fab>
         </CustomizedPopover>
       </Grid>
-      
+
     </Grid>
   );
 }

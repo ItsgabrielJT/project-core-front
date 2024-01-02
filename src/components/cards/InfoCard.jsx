@@ -1,12 +1,18 @@
 import { Grid, Link, Typography } from "@mui/material";
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import ButtonContained from "@components/buttons/ButtonContained";
-
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import { useState } from "react";
 var idLogin = JSON.parse(localStorage.getItem("id"));
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 
 function InfoCard({
   occupation,
   full_name,
+  userImage,
+  projectImage,
   fecha,
   description,
   title_project,
@@ -16,6 +22,19 @@ function InfoCard({
   id,
   ...props
 }) {
+
+  const [cloudName] = useState("dnkst5hjn");
+
+
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName
+    }
+  });
+
+  const perfil = cld.image(userImage);
+  const proyecto = cld.image(projectImage);
+
   return (
     <Grid
       {...props}
@@ -34,11 +53,36 @@ function InfoCard({
           color: "black",
         }}
       >
-        <Typography variant="body1">{full_name}</Typography>
+        {
+          userImage == "" ? (
+            <AccountCircleIcon />
+          ) : (
+            <AdvancedImage
+              style={{
+                width: "50px",
+                height: "50px",
+                marginRight: '10px',
+                objectFit: "cover",
+                borderRadius: "50%",
+                overflow: "hidden",
+              }}
+              cldImg={perfil
+              }
+              plugins={[responsive(), placeholder()]}
+            />
+          )
+        }
+        <Typography variant="body1"
+          sx={{
+            marginTop: "13px",
+
+          }}
+
+        >{full_name}</Typography>
         <Typography
           variant="body2"
           sx={{
-            marginTop: "2px",
+            marginTop: "15px",
             marginLeft: "5px",
             color: "#319795",
             fontWeight: "bold",
@@ -48,7 +92,7 @@ function InfoCard({
         </Typography>
       </Link>
       <div>
-      <Typography
+        <Typography
           variant="body1"
           sx={{ fontSize: 13, marginBottom: "3px", color: "#355890", fontWeight: "bold" }}
         >
@@ -73,17 +117,20 @@ function InfoCard({
         >
           {description}
         </Typography>
-        <img
+        <AdvancedImage
           style={{
             width: "100%",
-            maxWidth: "100%",
-            borderRadius: "25px",
-            height: "310px",
-            maxHeight: "310px",
+            height: "290px",
+            margin: "17px 0px 0px 0px",
+            backgroundColor: "#D9D9D9",
+            objectFit: "cover",
+            borderRadius: "30px",
+            overflow: "hidden",
           }}
-          alt="Biotechnology"
-          src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          cldImg={proyecto}
+          plugins={[responsive(), placeholder()]}
         />
+        
       </div>
       <div
         style={{

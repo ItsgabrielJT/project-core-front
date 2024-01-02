@@ -11,10 +11,15 @@ import Fab from "@mui/material/Fab";
 import ClearIcon from "@mui/icons-material/Clear";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useParams } from 'react-router-dom';
+import CloudinaryUploadWidget from "@components/modals/CloudinaryUpload";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 
 function EditProject() {
 
   const { id } = useParams();
+  const [publicId, setPublicId] = useState("");
+
   const {
     formProject,
     specifics,
@@ -24,10 +29,23 @@ function EditProject() {
     cleanObjectSpecifics,
     handleReferences,
     cleanReferences
-  } = useEdit(id);
+  } = useEdit(id, publicId, setPublicId);
   const [inputs, setInputs] = useState(['']);
   const [links, setLinks] = useState(['']);
+  const [uploadPreset] = useState("o0bi0kjz");
 
+  const [cloudName] = useState("dnkst5hjn");
+
+
+  const [uwConfig] = useState({
+    cloudName,
+    uploadPreset,
+    folder: "project-core-projects", //upload files to the specified folder
+    clientAllowedFormats: ["jpg", "png"], //restrict uploading to image files only
+    maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+    maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+    theme: "blue", //change to a purple theme
+  });
 
   const handleAddInput = () => {
     setInputs([...inputs, '']);
@@ -51,6 +69,14 @@ function EditProject() {
     cleanReferences(index)
   };
 
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName
+    }
+  });
+
+  const proyecto = cld.image(publicId);
+
 
   return (
     <Grid item xs={12}>
@@ -66,23 +92,38 @@ function EditProject() {
 
         }}
       >
-        <div style={{
-          backgroundColor: "#D9D9D9",
-          height: '250px',
-          margin: '40px 0px 15px 0px',
-          borderRadius: "30px",
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }} >
-          <AddAPhotoIcon sx={{
-            fontSize: 50
-          }} />
-          <Typography>
-            Agrega una imagen
-          </Typography>
-        </div>
+        <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} />
+
+        {
+          !publicId == "" ? (
+            <AdvancedImage
+              style={{
+                width: "100%",
+                height: "290px",
+                marginRight: '10px',
+                objectFit: "cover",
+                borderRadius: "30px",
+                overflow: "hidden",
+              }}
+              cldImg={proyecto
+              }
+              plugins={[responsive(), placeholder()]}
+            />
+          ) : (
+            <div style={{
+              backgroundColor: "#D9D9D9",
+              height: '250px',
+              margin: '10px 0px 15px 0px',
+              borderRadius: "30px",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }} />
+          )
+        }
+
+
 
 
         <Grid component='form'
@@ -94,12 +135,14 @@ function EditProject() {
           <div style={{
             justifyContent: "end",
           }}>
+
             <div
               style={{
                 display: 'flex',
                 justifyContent: "end",
               }}
             >
+
               <ButtonContained text={"Invitar"} style={{
                 width: '100px',
                 marginLeft: '10px',
