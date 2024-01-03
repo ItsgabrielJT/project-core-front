@@ -86,6 +86,17 @@ export const colaboratorService = {
     }
   },
 
+  getUsers: async function () {
+    const { token } = JSON.parse(localStorage.getItem("user"));
+    try {
+      const res = await axios.get(URL_BASE + "api/usuarios", {
+        headers: { Authorization: "Bearer " + token },
+      });
+      return res;
+    } catch (error) {
+      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+    }
+  },
 
 
 

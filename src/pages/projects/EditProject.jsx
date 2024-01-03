@@ -1,19 +1,23 @@
-import { Backdrop, Box, ButtonGroup, CircularProgress, Divider, Grid, Paper, TextField, Typography } from '@mui/material'
+import { Backdrop, Box, Button, ButtonGroup, CircularProgress, Divider, Grid, IconButton, List, ListItem, ListItemText, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import ButtonContained from "@components/buttons/ButtonContained";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import {
   CssTexField,
 } from "@constants/styles";
 import { useEdit } from "@hook/projects/useEdit";
 import Fab from "@mui/material/Fab";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import ClearIcon from "@mui/icons-material/Clear";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useParams } from 'react-router-dom';
 import CloudinaryUploadWidget from "@components/modals/CloudinaryUpload";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import { CustomizedPopover } from "../../assets/statics/constants/styles";
+import { useUsers } from '@hook/colaborators/useUsers';
 
 function EditProject() {
 
@@ -33,9 +37,13 @@ function EditProject() {
   const [inputs, setInputs] = useState(['']);
   const [links, setLinks] = useState(['']);
   const [uploadPreset] = useState("o0bi0kjz");
-
+  const { users } = useUsers()
   const [cloudName] = useState("dnkst5hjn");
 
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const openPopover = Boolean(anchorEl);
+  const idPopover = openPopover ? "simple-popover" : undefined;
 
   const [uwConfig] = useState({
     cloudName,
@@ -49,6 +57,19 @@ function EditProject() {
 
   const handleAddInput = () => {
     setInputs([...inputs, '']);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleOpenModal = (event) => {
+    handleClick(event)
+
   };
 
   const handleRemoveInput = (index) => {
@@ -80,7 +101,58 @@ function EditProject() {
 
   return (
     <Grid item xs={12}>
+      <CustomizedPopover
+        id={idPopover}
+        open={openPopover}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        <List
+          sx={{
+            maxHeight: '150px', // ajusta la altura máxima según sea necesario
+            overflowY: 'auto',  // añade un scrollbar si el contenido excede la altura máxima
+          }}
 
+        >
+          {
+            users && users.map((item, index) => (
+              <ListItem
+                key={index}
+                sx={{
+                  borderRadius: '30px',
+                  marginBottom: '10px',
+
+                  '&.Mui-selected': {
+                    backgroundColor: 'rgba(92, 221, 219, 0.3)',
+                  }
+                }}
+
+              >
+                <AccountCircleIcon
+                  style={{
+                    width: "30px",
+                    height: "auto",
+                    borderRadius: "8px",
+                    marginRight: '7px'
+                  }}
+                />
+                <ListItemText primary={item.full_name} />
+                <IconButton aria-label="delete"  color="primary">
+                  <PersonAddAlt1Icon />
+                </IconButton>
+              </ListItem>
+            ))
+          }
+        </List>
+      </CustomizedPopover>
       <Box
         sx={{
           marginTop: "90px",
@@ -143,13 +215,19 @@ function EditProject() {
               }}
             >
 
-              <ButtonContained text={"Invitar"} style={{
-                width: '100px',
-                marginLeft: '10px',
-                height: '40px',
+              {
+                id && (
+                  <ButtonContained
+                    onClick={handleOpenModal}
+                    text={"Invitar"} style={{
+                      width: '100px',
+                      marginLeft: '10px',
+                      height: '40px',
 
-              }} >
-              </ButtonContained>
+                    }} >
+                  </ButtonContained>
+                )
+              }
               <ButtonOutline type='submit' text={"Guardar"} style={{
                 width: '100px',
                 height: '40px',
