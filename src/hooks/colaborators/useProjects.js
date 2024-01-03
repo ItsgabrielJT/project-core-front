@@ -24,7 +24,6 @@ export const useProjects = () => {
                         })
                     })
                     setProjects(data)
-                    console.log(data)
                 }
             })
             .catch((err) => {

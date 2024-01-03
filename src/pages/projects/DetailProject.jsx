@@ -45,6 +45,8 @@ function DetailProject() {
   const [openModal, setOpenModal] = useState(false);
   const [success, setSuccess] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [perfil, setImagePerfil] = useState(null);
+  const [proyecto, setImageProyecto] = useState(null);
 
   const openPopover = Boolean(anchorEl);
   const idPopover = openPopover ? "simple-popover" : undefined;
@@ -88,14 +90,22 @@ function DetailProject() {
 
   const handleCloseModal = () => setOpenModal(false);
 
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName
-    }
-  });
+  
 
-  const perfil = cld.image(project ? project.link_image_user : "");
-  const proyecto = cld.image(project ? project.link_image_project : "");
+  useEffect(() => {
+    
+    const cld = new Cloudinary({
+      cloud: {
+        cloudName
+      }
+    });
+    const perfil = cld.image(project ? project.link_image_user : "");
+    const proyecto = cld.image(project ? project.link_image_project : "");
+    setImagePerfil(perfil)
+    setImageProyecto(proyecto)
+  }, [project])
+
+
 
   return (
     <Grid item xs={12}>
@@ -213,21 +223,21 @@ function DetailProject() {
             {format(new Date(project.fecha), 'EEEE, d MMMM yyyy')}
           </Typography>
 
-      
-              <AdvancedImage
-                style={{
-                  width: "100%",
-                  height: "290px",
-                  margin: "17px 0px 0px 0px",
-                  backgroundColor: "#D9D9D9",
-                  objectFit: "cover",
-                  borderRadius: "30px",
-                  overflow: "hidden",
-                }}
-                cldImg={proyecto}
-                plugins={[responsive(), placeholder()]}
-              />
-          
+
+          <AdvancedImage
+            style={{
+              width: "100%",
+              height: "290px",
+              margin: "17px 0px 0px 0px",
+              backgroundColor: "#D9D9D9",
+              objectFit: "cover",
+              borderRadius: "30px",
+              overflow: "hidden",
+            }}
+            cldImg={proyecto}
+            plugins={[responsive(), placeholder()]}
+          />
+
 
 
 
@@ -373,7 +383,9 @@ function DetailProject() {
               </Typography>
               <List dense={true}>
                 {project.general_objetive.map((item, index) => (
-                  <>
+                  <div
+                    key={index}
+                  >
                     <Badge
                       color="primary"
                       variant="dot"
@@ -394,7 +406,7 @@ function DetailProject() {
                         }}
                       />
                     </ListItem>
-                  </>
+                  </div>
 
                 ))}
               </List>
@@ -406,7 +418,9 @@ function DetailProject() {
               <List dense={true}>
 
                 {project.specific_object.map((item, index) => (
-                  <>
+                  <div
+                    key={index}
+                  >
                     <Badge
                       color="primary"
                       variant="dot"
@@ -426,7 +440,7 @@ function DetailProject() {
                         }}
                       />
                     </ListItem>
-                  </>
+                  </div>
                 ))}
               </List>
             </div>
@@ -462,7 +476,9 @@ function DetailProject() {
               </Typography>
               <List dense={true}>
                 {project.bibliographic_references.map((item, index) => (
-                  <>
+                  <div
+                    key={index}
+                  >
                     <Badge
                       color="primary"
                       variant="dot"
@@ -482,7 +498,7 @@ function DetailProject() {
                         }}
                       />
                     </ListItem>
-                  </>
+                  </div>
                 ))}
               </List>
 

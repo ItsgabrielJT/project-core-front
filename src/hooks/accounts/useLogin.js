@@ -38,7 +38,6 @@ export const useLogin = () => {
         initialValues: FORM_VALUES,
         validationSchema,
         onSubmit: async (values) => {
-            console.log(values)
             singIn(values)
         }
     });

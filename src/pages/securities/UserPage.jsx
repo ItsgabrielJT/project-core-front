@@ -8,8 +8,8 @@ import { useUser } from '@hook/securities/useUser';
 import { useParams } from 'react-router-dom';
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import { useAuth } from '../../context/AuthContext';
 
-var idLogin = JSON.parse(localStorage.getItem("id"));
 
 function UserPage() {
 
@@ -17,14 +17,19 @@ function UserPage() {
   const [success, setSuccess] = useState(false);
   const [cloudName] = useState("dnkst5hjn");
   const { id } = useParams();
-  const { user, loading } = useUser(success, id)
+  const { user } = useAuth()
+  const { profile, loading } = useUser(success, id)
   const cld = new Cloudinary({
     cloud: {
       cloudName
     }
   });
 
-  const myImage = cld.image(user ? user.link_image : "");
+  useEffect(() => {
+    console.log(user)
+  }, [user])
+
+  const myImage = cld.image(profile ? profile.link_image : "");
 
   const handleOpen = () => {
     setOpen(true)
@@ -35,7 +40,7 @@ function UserPage() {
   return (
     <>
       {
-        user ? (
+        profile ? (
           <Grid item xs={12}>
             <EditUser
               open={open}
@@ -86,25 +91,25 @@ function UserPage() {
                 <div >
 
                   <Typography variant="h6">
-                    {user.full_name}
+                    {profile.full_name}
 
                   </Typography>
                   <Typography variant="overline">
                     <div style={{ display: 'flex' }}>
-                      {user.university_name} - {user.career}
+                      {profile.university_name} - {profile.career}
                       <Typography variant='subtitle2' sx={{
                         marginLeft: "5px",
                         marginTop: "3px",
                         color: "#319795"
                       }}>
-                        / {user.occupation}
+                        / {profile.occupation}
                       </Typography>
                     </div>
                   </Typography>
                 </div>
                 <div >
                   {
-                    user.id == idLogin && (
+                    profile.id == user.id && (
                       <ButtonOutline text={"Editar"} onClick={handleOpen} />
                     )
                   }
@@ -119,7 +124,7 @@ function UserPage() {
                     Correo electronico
                   </Typography>
                   <Typography variant='body2'>
-                    {user.email_user}
+                    {profile.email_user}
                   </Typography>
                 </div>
                 <div style={{ marginTop: '10px' }}>
@@ -127,7 +132,7 @@ function UserPage() {
                     Celular
                   </Typography>
                   <Typography variant='body2'>
-                    {user.cellphone_number}
+                    {profile.cellphone_number}
                   </Typography>
                 </div>
               </div>

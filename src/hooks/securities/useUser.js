@@ -5,14 +5,14 @@ import notificationService from "@services/notificationService"
 
 export const useUser = (success, id = null ) => {
 
-  const [user, setUser] = useState(null)
+  const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if(id != null) {
       accountService.getPerfilById(id)
       .then((res) => {
-        setUser(res.data.usuario)
+        setProfile(res.data.usuario)
       })
       .catch((err) => {
         notificationService.error(err.message)
@@ -26,7 +26,7 @@ export const useUser = (success, id = null ) => {
   }, [success, id]);
 
   return {
-    user,
+    profile,
     loading
   }
 };
