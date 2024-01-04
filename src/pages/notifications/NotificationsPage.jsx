@@ -36,6 +36,20 @@ const NotificationsPage = () => {
       });
   };
 
+  const handleRefuseInvitation = (id) => {
+    colaboratorService
+      .refuseInivitation(id)
+      .then((res) => {
+        if (res.data.status) {
+          notificationService.success("Se le notificara tu decision");
+          setSuccess(true)
+        }
+      })
+      .catch((err) => {
+        notificationService.error(err.message);
+      });
+  };
+
   const handleAceppt = (id) => {
     colaboratorService
       .aceptColaborator(id)
@@ -50,6 +64,37 @@ const NotificationsPage = () => {
         notificationService.error(err.message);
       });
   };
+
+  const handleAcepptInivitation = (id) => {
+    colaboratorService
+      .aceptInvitation(id)
+      .then((res) => {
+        if (res.data.status) {
+          notificationService.success("Se ha unido al proyecto");
+          setSuccess(true)
+
+        }
+      })
+      .catch((err) => {
+        notificationService.error(err.message);
+      });
+  };
+
+  const directionateEventAccept = (id, type) => {
+    if (type === "pedido") {
+      handleAceppt(id)
+    } else {
+      handleAcepptInivitation(id)
+    }
+  }
+
+  const directionateEventRefuse = (id, type) => {
+    if (type === "pedido") {
+      handleRefuse(id)
+    } else {
+      handleRefuseInvitation(id)
+    }
+  }
 
   return (
     <>
@@ -75,8 +120,8 @@ const NotificationsPage = () => {
               key={index}
               user={item.full_name}
               content={item.content}
-              onRefuse={() => handleRefuse(item.idNotification)}
-              onConfirm={() => handleAceppt(item.idNotification)}
+              onRefuse={() => directionateEventRefuse(item.idNotification, item.type)}
+              onConfirm={() => directionateEventAccept(item.idNotification, item.type)}
             />
           ))}
           {notifications.length === 0 && (

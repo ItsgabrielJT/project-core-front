@@ -1,4 +1,11 @@
-import { Fab, Grid, Paper, Popover, Typography } from "@mui/material";
+import {
+  Fab,
+  Grid,
+  Paper,
+  Popover,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import logo from "@images/logos/logo.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -13,8 +20,6 @@ function Header() {
   const { logOut, user } = useAuth();
   const [cloudName] = useState("dnkst5hjn");
 
-
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -28,8 +33,8 @@ function Header() {
 
   const cld = new Cloudinary({
     cloud: {
-      cloudName
-    }
+      cloudName,
+    },
   });
 
   const perfil = cld.image(user ? user.linkImagen : "");
@@ -38,7 +43,6 @@ function Header() {
     <Grid
       item
       sx={{
-
         backgroundColor: "rgba(242, 241, 238, 0.5)",
         backdropFilter: "blur(10px)",
         zIndex: 1,
@@ -49,7 +53,7 @@ function Header() {
         top: 0,
       }}
     >
-      <Grid item >
+      <Grid item>
         <img
           src={logo}
           alt=""
@@ -62,7 +66,19 @@ function Header() {
           }}
         />
       </Grid>
-      <Grid item >
+      <Grid item>
+        <TextField
+          margin="normal"
+          fullWidth
+          multiline
+          name="busqueda"
+          label="Buscar"
+          autoComplete="current-name"
+          
+        
+        />
+      </Grid>
+      <Grid item>
         <Fab
           aria-describedby={id}
           onClick={handleClick}
@@ -81,13 +97,12 @@ function Header() {
             style={{
               width: "40px",
               height: "30px",
-              marginRight: '10px',
+              marginRight: "10px",
               objectFit: "cover",
               borderRadius: "50%",
               overflow: "hidden",
             }}
-            cldImg={perfil
-            }
+            cldImg={perfil}
             plugins={[responsive(), placeholder()]}
           />
           <Typography
@@ -139,7 +154,6 @@ function Header() {
           </Fab>
         </CustomizedPopover>
       </Grid>
-
     </Grid>
   );
 }

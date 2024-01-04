@@ -1,26 +1,40 @@
-import { Backdrop, Box, Button, ButtonGroup, CircularProgress, Divider, Grid, IconButton, List, ListItem, ListItemText, Paper, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import {
+  Backdrop,
+  Box,
+  Button,
+  ButtonGroup,
+  CircularProgress,
+  Divider,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import ButtonContained from "@components/buttons/ButtonContained";
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-import {
-  CssTexField,
-} from "@constants/styles";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import { CssTexField } from "@constants/styles";
 import { useEdit } from "@hook/projects/useEdit";
 import Fab from "@mui/material/Fab";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import ClearIcon from "@mui/icons-material/Clear";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { useParams } from 'react-router-dom';
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { useParams } from "react-router-dom";
 import CloudinaryUploadWidget from "@components/modals/CloudinaryUpload";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { CustomizedPopover } from "../../assets/statics/constants/styles";
-import { useUsers } from '@hook/colaborators/useUsers';
+import { useUsers } from "@hook/colaborators/useUsers";
+import notificationService from "@services/notificationService";
+import { colaboratorService } from "@services/colaborators/colaboratorService";
 
 function EditProject() {
-
   const { id } = useParams();
   const [publicId, setPublicId] = useState("");
 
@@ -32,12 +46,12 @@ function EditProject() {
     handleObjectSpecifics,
     cleanObjectSpecifics,
     handleReferences,
-    cleanReferences
+    cleanReferences,
   } = useEdit(id, publicId, setPublicId);
-  const [inputs, setInputs] = useState(['']);
-  const [links, setLinks] = useState(['']);
+  const [inputs, setInputs] = useState([""]);
+  const [links, setLinks] = useState([""]);
   const [uploadPreset] = useState("o0bi0kjz");
-  const { users } = useUsers()
+  const { users } = useUsers();
   const [cloudName] = useState("dnkst5hjn");
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -50,13 +64,13 @@ function EditProject() {
     uploadPreset,
     folder: "project-core-projects", //upload files to the specified folder
     clientAllowedFormats: ["jpg", "png"], //restrict uploading to image files only
-    maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+    maxImageFileSize: 2000000, //restrict file size to less than 2MB
     maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
     theme: "blue", //change to a purple theme
   });
 
   const handleAddInput = () => {
-    setInputs([...inputs, '']);
+    setInputs([...inputs, ""]);
   };
 
   const handleClick = (event) => {
@@ -68,36 +82,56 @@ function EditProject() {
   };
 
   const handleOpenModal = (event) => {
-    handleClick(event)
-
+    handleClick(event);
   };
 
   const handleRemoveInput = (index) => {
     const newInputs = [...inputs];
     newInputs.splice(index, 1);
     setInputs(newInputs);
-    cleanObjectSpecifics(index)
+    cleanObjectSpecifics(index);
   };
 
   const handleAddLink = () => {
-    setLinks([...links, '']);
+    setLinks([...links, ""]);
   };
 
   const handleRemoveLink = (index) => {
     const newInputs = [...links];
     newInputs.splice(index, 1);
     setLinks(newInputs);
-    cleanReferences(index)
+    cleanReferences(index);
   };
 
   const cld = new Cloudinary({
     cloud: {
-      cloudName
-    }
+      cloudName,
+    },
   });
 
   const proyecto = cld.image(publicId);
+  const proyectoEdit = cld.image(
+    formProject ? formProject.values.link_imagen : ""
+  );
 
+  const handleInvite = (idUser) => {
+    let json = {
+      id_proyecto: id,
+      id_usuario_colaborador: idUser,
+    };
+    colaboratorService
+      .inviteColaborate(json)
+      .then((res) => {
+        if (res.data.status) {
+          notificationService.success("Se ha enviado la invitacion");
+          setAnchorEl(null);
+          
+        }
+      })
+      .catch((err) => {
+        notificationService.error(err.message);
+      });
+  };
 
   return (
     <Grid item xs={12}>
@@ -117,124 +151,122 @@ function EditProject() {
       >
         <List
           sx={{
-            maxHeight: '150px', // ajusta la altura máxima según sea necesario
-            overflowY: 'auto',  // añade un scrollbar si el contenido excede la altura máxima
+            maxHeight: "150px", // ajusta la altura máxima según sea necesario
+            overflowY: "auto", // añade un scrollbar si el contenido excede la altura máxima
           }}
-
         >
-          {
-            users && users.map((item, index) => (
+          {users &&
+            users.map((item, index) => (
               <ListItem
                 key={index}
                 sx={{
-                  borderRadius: '30px',
-                  marginBottom: '10px',
+                  borderRadius: "30px",
+                  marginBottom: "10px",
 
-                  '&.Mui-selected': {
-                    backgroundColor: 'rgba(92, 221, 219, 0.3)',
-                  }
+                  "&.Mui-selected": {
+                    backgroundColor: "rgba(92, 221, 219, 0.3)",
+                  },
                 }}
-
               >
                 <AccountCircleIcon
                   style={{
                     width: "30px",
                     height: "auto",
                     borderRadius: "8px",
-                    marginRight: '7px'
+                    marginRight: "7px",
                   }}
                 />
                 <ListItemText primary={item.full_name} />
-                <IconButton aria-label="delete"  color="primary">
+                <IconButton
+                  aria-label="delete"
+                  color="primary"
+                  onClick={() => handleInvite(item.id)}
+                >
                   <PersonAddAlt1Icon />
                 </IconButton>
               </ListItem>
-            ))
-          }
+            ))}
         </List>
       </CustomizedPopover>
       <Box
         sx={{
           marginTop: "90px",
-          height: '100%',
-          backgroundColor: '#FFFDFA',
-          position: 'overflow',
-          boxShadow: 'none',
-          paddingX: '15px',
-
+          height: "100%",
+          backgroundColor: "#FFFDFA",
+          position: "overflow",
+          boxShadow: "none",
+          paddingX: "15px",
         }}
       >
         <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} />
 
-        {
-          !publicId == "" ? (
-            <AdvancedImage
-              style={{
-                width: "100%",
-                height: "290px",
-                marginRight: '10px',
-                objectFit: "cover",
-                borderRadius: "30px",
-                overflow: "hidden",
-              }}
-              cldImg={proyecto
-              }
-              plugins={[responsive(), placeholder()]}
-            />
-          ) : (
-            <div style={{
-              backgroundColor: "#D9D9D9",
-              height: '250px',
-              margin: '10px 0px 15px 0px',
+        {!publicId == "" ? (
+          <AdvancedImage
+            style={{
+              width: "100%",
+              height: "290px",
+              marginRight: "10px",
+              objectFit: "cover",
               borderRadius: "30px",
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }} />
-          )
-        }
+              overflow: "hidden",
+            }}
+            cldImg={proyecto}
+            plugins={[responsive(), placeholder()]}
+          />
+        ) : (
+          <AdvancedImage
+            style={{
+              width: "100%",
+              height: "290px",
+              marginRight: "10px",
+              objectFit: "cover",
+              borderRadius: "30px",
+              overflow: "hidden",
+            }}
+            cldImg={proyectoEdit}
+            plugins={[responsive(), placeholder()]}
+          />
+        )}
 
-
-
-
-        <Grid component='form'
+        <Grid
+          component="form"
           onSubmit={formProject.handleSubmit}
           sx={{
-            marginTop: '10px',
-          }}>
-
-          <div style={{
-            justifyContent: "end",
-          }}>
-
+            marginTop: "10px",
+          }}
+        >
+          <div
+            style={{
+              justifyContent: "end",
+            }}
+          >
             <div
               style={{
-                display: 'flex',
+                display: "flex",
                 justifyContent: "end",
               }}
             >
-
-              {
-                id && (
-                  <ButtonContained
-                    onClick={handleOpenModal}
-                    text={"Invitar"} style={{
-                      width: '100px',
-                      marginLeft: '10px',
-                      height: '40px',
-
-                    }} >
-                  </ButtonContained>
-                )
-              }
-              <ButtonOutline type='submit' text={"Guardar"} style={{
-                width: '100px',
-                height: '40px',
-                marginLeft: '10px'
-              }} />
+              {id && (
+                <ButtonContained
+                  onClick={handleOpenModal}
+                  text={"Invitar"}
+                  style={{
+                    width: "100px",
+                    marginLeft: "10px",
+                    height: "40px",
+                  }}
+                ></ButtonContained>
+              )}
+              <ButtonOutline
+                type="submit"
+                text={"Guardar"}
+                style={{
+                  width: "100px",
+                  height: "40px",
+                  marginLeft: "10px",
+                }}
+              />
             </div>
-
           </div>
           <TextField
             margin="normal"
@@ -248,13 +280,9 @@ function EditProject() {
             onChange={formProject.handleChange}
             onBlur={formProject.handleBlur}
             error={
-              formProject.touched.titulo &&
-              Boolean(formProject.errors.titulo)
+              formProject.touched.titulo && Boolean(formProject.errors.titulo)
             }
-            helperText={
-              formProject.touched.titulo &&
-              formProject.errors.titulo
-            }
+            helperText={formProject.touched.titulo && formProject.errors.titulo}
             sx={CssTexField}
           />
           <TextField
@@ -273,8 +301,7 @@ function EditProject() {
               Boolean(formProject.errors.descripcion)
             }
             helperText={
-              formProject.touched.descripcion &&
-              formProject.errors.descripcion
+              formProject.touched.descripcion && formProject.errors.descripcion
             }
             sx={CssTexField}
           />
@@ -311,12 +338,10 @@ function EditProject() {
             onChange={formProject.handleChange}
             onBlur={formProject.handleBlur}
             error={
-              formProject.touched.alcance &&
-              Boolean(formProject.errors.alcance)
+              formProject.touched.alcance && Boolean(formProject.errors.alcance)
             }
             helperText={
-              formProject.touched.alcance &&
-              formProject.errors.alcance
+              formProject.touched.alcance && formProject.errors.alcance
             }
             sx={CssTexField}
           />
@@ -331,18 +356,21 @@ function EditProject() {
                 zIndex: 0,
               }}
             >
-              <AddCircleIcon sx={{
-                color: '#319795',
-                fontSize: '35px',
-              }} />
+              <AddCircleIcon
+                sx={{
+                  color: "#319795",
+                  fontSize: "35px",
+                }}
+              />
             </Fab>
-
           </Divider>
           {inputs.map((value, index) => (
-            <div key={index} style={{
-              display: 'flex'
-            }}>
-
+            <div
+              key={index}
+              style={{
+                display: "flex",
+              }}
+            >
               <Fab
                 size="small"
                 aria-label="add"
@@ -350,7 +378,7 @@ function EditProject() {
                 sx={{
                   backgroundColor: "#FFFDFA",
                   boxShadow: "none",
-                  marginTop: '22px'
+                  marginTop: "22px",
                 }}
               >
                 <ClearIcon />
@@ -372,24 +400,27 @@ function EditProject() {
               size="small"
               aria-label="edit"
               onClick={handleAddLink}
-
               style={{
                 backgroundColor: "#FFFDFA",
                 boxShadow: "none",
                 zIndex: 0,
               }}
             >
-              <AddCircleIcon sx={{
-                color: '#319795',
-                fontSize: '35px',
-              }} />
+              <AddCircleIcon
+                sx={{
+                  color: "#319795",
+                  fontSize: "35px",
+                }}
+              />
             </Fab>
-
           </Divider>
           {links.map((value, index) => (
-            <div key={index} style={{
-              display: 'flex'
-            }}>
+            <div
+              key={index}
+              style={{
+                display: "flex",
+              }}
+            >
               <Fab
                 size="small"
                 aria-label="add"
@@ -397,7 +428,7 @@ function EditProject() {
                 sx={{
                   backgroundColor: "#FFFDFA",
                   boxShadow: "none",
-                  marginTop: '22px'
+                  marginTop: "22px",
                 }}
               >
                 <ClearIcon />
@@ -415,16 +446,18 @@ function EditProject() {
             </div>
           ))}
         </Grid>
-
       </Box>
       <Backdrop
-        sx={{ backgroundColor: "rgba(155, 190, 200, 0.3)", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          backgroundColor: "rgba(155, 190, 200, 0.3)",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
         open={loading}
       >
         <CircularProgress color="primary" size={40} />
       </Backdrop>
     </Grid>
-  )
+  );
 }
 
-export default EditProject
+export default EditProject;

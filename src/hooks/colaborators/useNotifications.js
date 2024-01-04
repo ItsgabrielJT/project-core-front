@@ -14,13 +14,15 @@ export const useNotifications = (success, onSuccess) => {
                 if (res.data.status) {
                     let data = []
                     res.data.notificaciones.map((item) => {
+                        const content = item.content
                         data.push({
                             idNotification: item.id,
-                            content: item.content,
+                            content: content,
                             fecha: item.updatedAt,
                             projectId: item.projectId,
                             collaborator_userId: item.collaborator_userId,
-                            full_name: item.collaborator.full_name,
+                            full_name: item.owner.full_name,
+                            type: content.includes("pedido") ? "pedido" : "solicitado"
                         })
                     })
                     setNotifications(data)
