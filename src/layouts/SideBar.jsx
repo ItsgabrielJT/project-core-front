@@ -65,8 +65,7 @@ function SideBar({ children }) {
         </Grid>
 
         {/* Contenido principal */}
-        <Grid item xs={12} md={6} sx={{
-        }}>
+        <Grid item xs={12} md={6} >
           <Outlet />
         </Grid>
 

@@ -3,8 +3,11 @@ import { URL_BASE } from "../../config";
 
 export const colaboratorService = {
   requestFollow: async function (json) {
+    const { token } = JSON.parse(localStorage.getItem("user"));
     try {
-      const res = await axios.post(URL_BASE + "api/colaborar-proyecto", json);
+      const res = await axios.post(URL_BASE + "api/colaborar-proyecto", json, {
+        headers: { Authorization: "Bearer " + token },
+      });
       return res;
     } catch (error) {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
@@ -26,9 +29,12 @@ export const colaboratorService = {
   aceptColaborator: async function (id) {
     const { token } = JSON.parse(localStorage.getItem("user"));
     try {
-      const res = await axios.delete(URL_BASE + "api/aceptar-colaboracion/" + id, {
-        headers: { Authorization: "Bearer " + token },
-      });
+      const res = await axios.delete(
+        URL_BASE + "api/aceptar-colaboracion/" + id,
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      );
       return res;
     } catch (error) {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
@@ -36,8 +42,14 @@ export const colaboratorService = {
   },
 
   refuseColaborator: async function (id) {
+    const { token } = JSON.parse(localStorage.getItem("user"));
     try {
-      const res = await axios.delete(URL_BASE + "api/rechazar-colaboracion/" + id);
+      const res = await axios.delete(
+        URL_BASE + "api/rechazar-colaboracion/" + id,
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      );
       return res;
     } catch (error) {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
@@ -45,8 +57,14 @@ export const colaboratorService = {
   },
 
   aceptInvitation: async function (id) {
+    const { token } = JSON.parse(localStorage.getItem("user"));
     try {
-      const res = await axios.delete(URL_BASE + "api/aceptar-invitacion/" + id);
+      const res = await axios.delete(
+        URL_BASE + "api/aceptar-invitacion/" + id,
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      );
       return res;
     } catch (error) {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
@@ -54,8 +72,14 @@ export const colaboratorService = {
   },
 
   refuseInivitation: async function (id) {
+    const { token } = JSON.parse(localStorage.getItem("user"));
     try {
-      const res = await axios.delete(URL_BASE + "api/rechazar-invitacion/" + id);
+      const res = await axios.delete(
+        URL_BASE + "api/rechazar-invitacion/" + id,
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      );
       return res;
     } catch (error) {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
@@ -77,9 +101,13 @@ export const colaboratorService = {
   inviteColaborate: async function (json) {
     const { token } = JSON.parse(localStorage.getItem("user"));
     try {
-      const res = await axios.post(URL_BASE + "api/invitar-colaborador-proyecto", json,{
-        headers: { Authorization: "Bearer " + token },
-      });
+      const res = await axios.post(
+        URL_BASE + "api/invitar-colaborador-proyecto",
+        json,
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      );
       return res;
     } catch (error) {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
@@ -97,7 +125,4 @@ export const colaboratorService = {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
     }
   },
-
-
-
 };

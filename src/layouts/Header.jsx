@@ -1,4 +1,12 @@
-import { Fab, Grid, Paper, Popover, Typography } from "@mui/material";
+import {
+  Autocomplete,
+  Fab,
+  Grid,
+  Paper,
+  Popover,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import logo from "@images/logos/logo.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -7,13 +15,31 @@ import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { useAuth } from "../context/AuthContext";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import { useProjects } from "@hook/projects/useProjects";
+import { useNavigate } from "react-router";
 
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const { logOut, user } = useAuth();
   const [cloudName] = useState("dnkst5hjn");
+  const { dataHome, loading } = useProjects();
+  const [dataSelect, setDataSelect] = useState([]);
+  const [value, setValue] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
 
-
+  useEffect(() => {
+    let data = [];
+    if (dataHome) {
+      dataHome.map((item) => {
+        data.push({
+          label: item.title_project,
+          idProject: item.idProject,
+        });
+      });
+      setDataSelect(data);
+    }
+  }, [dataHome]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,17 +54,21 @@ function Header() {
 
   const cld = new Cloudinary({
     cloud: {
-      cloudName
-    }
+      cloudName,
+    },
   });
 
   const perfil = cld.image(user ? user.linkImagen : "");
+
+  const selectProject = (value) => {
+    setValue(value);
+    navigate(`/projects/${value.idProject}`);
+  };
 
   return (
     <Grid
       item
       sx={{
-
         backgroundColor: "rgba(242, 241, 238, 0.5)",
         backdropFilter: "blur(10px)",
         zIndex: 1,
@@ -49,7 +79,7 @@ function Header() {
         top: 0,
       }}
     >
-      <Grid item >
+      <Grid item>
         <img
           src={logo}
           alt=""
@@ -62,7 +92,30 @@ function Header() {
           }}
         />
       </Grid>
-      <Grid item >
+      <Grid item>
+        <Autocomplete
+          size="small"
+          disablePortal
+          id="combo-box-demo"
+          value={value}
+          onChange={(event, newValue) => {
+            selectProject(newValue);
+          }}
+          inputValue={inputValue}
+          onInputChange={(event, newInputValue) => {
+            setInputValue(newInputValue);
+          }}
+          options={dataSelect}
+          style={{
+            marginLeft: "250px",
+            width: "350px",
+            borderRadius: "80px",
+            marginTop: "5px",
+          }}
+          renderInput={(params) => <TextField {...params} label="Buscar" />}
+        />
+      </Grid>
+      <Grid item>
         <Fab
           aria-describedby={id}
           onClick={handleClick}
@@ -81,13 +134,12 @@ function Header() {
             style={{
               width: "40px",
               height: "30px",
-              marginRight: '10px',
+              marginRight: "10px",
               objectFit: "cover",
               borderRadius: "50%",
               overflow: "hidden",
             }}
-            cldImg={perfil
-            }
+            cldImg={perfil}
             plugins={[responsive(), placeholder()]}
           />
           <Typography
@@ -139,7 +191,6 @@ function Header() {
           </Fab>
         </CustomizedPopover>
       </Grid>
-
     </Grid>
   );
 }
