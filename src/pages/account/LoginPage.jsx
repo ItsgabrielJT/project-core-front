@@ -20,24 +20,6 @@ const theme = createTheme();
 
 const slideInFromLeft = keyframes`
   from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-`;
-
-const slideInFromLeft2 = keyframes`
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-`;
-
-const slideInFromLeft3 = keyframes`
-  from {
     transform: translateX(-150%);
   }
   to {
@@ -50,26 +32,22 @@ const fadeIn = keyframes`
     filter: brightness(100%);
   }
   to {
-    filter: brightness(26%);  
+    filter: brightness(70%);  
   }
 `;
 
 const AnimatedGrid = styled(Grid)`
-  animation: ${slideInFromLeft} 2s ease-out;
-  // Otros estilos...
-`;
-
-const AnimatedGrid2 = styled(Grid)`
-  animation: ${slideInFromLeft2} 2s ease-out;
+  animation: ${slideInFromLeft} 1s ease-out;
   // Otros estilos...
 `;
 
 const AnimatedGrid3 = styled(Grid)`
-  animation: ${slideInFromLeft3} 3s ease-out , ${fadeIn} 0.5s ease-in 3s forwards;
+  animation:  ${fadeIn} 0.3s ease-in 0.5s forwards;
 
   
   // Otros estilos...
 `;
+
 
 const LoginPage = () => {
   const { formLogin } = useLogin();
@@ -83,76 +61,25 @@ const LoginPage = () => {
   const handleCloseReset = () => setOpenReset(false);
 
   return (
-    <Grid container component="main" sx={{ height: "97vh" }}>
+    <Grid container component="main" sx={{ height: "98vh" }}>
       <RegisterPage open={open} handleClose={handleClose} />
       <ResetPage open={openReset} handleClose={handleCloseReset} />
 
-
-      <AnimatedGrid2
+      <AnimatedGrid3
         item
         xs={false}
-        sm={2}
+        sm={false}
         md={7}
         sx={{
-          position: 'absolute',
-          zIndex: "2"
+          backgroundImage: `url(${personas})`,
+          backgroundRepeat: "no-repeat",
+          backgroundColor: "#319795",
+          backgroundSize: "1110px 700px",
+          backgroundPosition: "bottom",
         }}
-      >
-        <div style={{
-          fontSize: "8em",
-          color: "#9BBEC8",
-          fontWeight: "500",
-          fontFamily: "Bahnschrift Condensed",
-          lineHeight: "130px",
-          overflow: "hidden",
-          marginTop: "150px",
-          marginLeft: "40px"
-        }}>
-          BIENVENIDO AL PORTAL DE
+      />
 
-        </div>
-        
-        <div style={{
-          fontSize: "4em",
-          color: "#319795",
-          fontWeight: "500",
-          fontFamily: "Bahnschrift Condensed",
-          overflow: "hidden",
-          marginLeft: "40px"
-
-        }}>
-          PROYECTOS INVESTIGATIVOS
-        </div>
-        <div style={{
-          fontSize: "2.5em",
-          color: "#9AD0C2",
-          fontWeight: "250",
-          fontFamily: "Bahnschrift Condensed",
-          overflow: "hidden",
-          marginLeft: "40px"
-
-        }}>
-          Maneja eficientemente todos tus proyectos !
-        </div>
-      </AnimatedGrid2>
-
-      <AnimatedGrid3
-         item
-         xs={false}
-         sm={4}
-         md={7}
-         sx={{
-           backgroundImage: `url(${personas})`,
-           backgroundRepeat: "no-repeat",
-           backgroundColor: "#319795",
-           backgroundSize: "1110px 700px",
-           backgroundPosition: "bottom",
-         }}
-      >
-
-      </AnimatedGrid3>
-
-      <AnimatedGrid item xs={12} sm={7} md={5} component={Paper} elevation={6} square >
+      <AnimatedGrid item xs={12} sm={7} md={5} component={Paper} square >
         <Box
           sx={{
             my: 3,
@@ -160,6 +87,7 @@ const LoginPage = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+
           }}
         >
           <img src={logo} alt=""
