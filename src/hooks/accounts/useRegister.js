@@ -30,16 +30,13 @@ export const useRegister = (handleClose) => {
 
     const validationSchema = yup.object({
         nombres: yup
-            .string('Enter your fullname')
-            .required('Fullname is required'),
+            .string('Enter your fullname'),
         email: yup
             .string('Enter your email')
-            .email('Enter a valid email')
-            .required('Email is required'),
+            .email('Introduce un email valido'),
         contrasenia: yup
             .string('Enter your password')
-            .min(8, 'Password should be of minimum 8 characters length')
-            .required('Password is required'),
+            .min(8, 'La longitud minima debe ser de 8 caracteres'),
         ocupacion: yup
             .string('Enter your ocupation')
             .required('Ocupation is required'),

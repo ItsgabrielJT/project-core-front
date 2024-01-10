@@ -88,7 +88,7 @@ function InfoCard({
             fontWeight: "bold",
           }}
         >
-          / {occupation}
+          /{occupation}
         </Typography>
       </Link>
       <div>

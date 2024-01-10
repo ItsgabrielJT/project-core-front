@@ -73,7 +73,7 @@ function RegisterPage({ open, handleClose }) {
                     <ClearIcon />
                   </Fab>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'  }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Fab
                     sx={{
                       margin: "20px 0px 20px 0px",
@@ -92,20 +92,13 @@ function RegisterPage({ open, handleClose }) {
                     margin="normal"
                     fullWidth
                     name="nombres"
-                    label="Full Name"
+                    label="Nombre completo"
                     id="nombres"
                     autoComplete="current-name"
                     value={formRegister.values.nombres}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
-                    error={
-                      formRegister.touched.nombres &&
-                      Boolean(formRegister.errors.nombres)
-                    }
-                    helperText={
-                      formRegister.touched.nombres &&
-                      formRegister.errors.nombres
-                    }
+
                     sx={CssTexField}
                   />
                   <TextField
@@ -119,10 +112,7 @@ function RegisterPage({ open, handleClose }) {
                     value={formRegister.values.email}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
-                    error={
-                      formRegister.touched.email &&
-                      Boolean(formRegister.errors.email)
-                    }
+
                     helperText={
                       formRegister.touched.email && formRegister.errors.email
                     }
@@ -132,17 +122,14 @@ function RegisterPage({ open, handleClose }) {
                     margin="normal"
                     fullWidth
                     name="contrasenia"
-                    label="Password"
+                    label="Contraseña"
                     type="password"
                     id="contrasenia"
                     autoComplete="current-contrasenia"
                     value={formRegister.values.contrasenia}
                     onChange={formRegister.handleChange}
                     onBlur={formRegister.handleBlur}
-                    error={
-                      formRegister.touched.contrasenia &&
-                      Boolean(formRegister.errors.contrasenia)
-                    }
+
                     helperText={
                       formRegister.touched.contrasenia &&
                       formRegister.errors.contrasenia
@@ -150,7 +137,12 @@ function RegisterPage({ open, handleClose }) {
                     sx={CssTexField}
                   />
                 </div>
-                <ButtonContained fullWidth onClick={handleNextStep} text={"Siguiente"} />
+                <ButtonContained
+                  disabled={Boolean(formRegister.errors.contrasenia) || Boolean(formRegister.errors.email) || !Boolean(formRegister.values.nombres) || !Boolean(formRegister.values.email) || !Boolean(formRegister.values.contrasenia)}
+                  fullWidth
+                  onClick={handleNextStep}
+                  text={"Siguiente"}
+                />
               </div>
             )}
             {nextstep && (

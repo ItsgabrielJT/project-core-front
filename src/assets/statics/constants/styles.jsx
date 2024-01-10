@@ -15,7 +15,6 @@ export const CssButtonContained = {
   border: '1px solid',
   lineHeight: 1.5,
   backgroundColor: '#319795',
-  borderColor: '#319795',
   '&:hover': {
     backgroundColor: '#5CDDDB',
     borderColor: '#5CDDDB',

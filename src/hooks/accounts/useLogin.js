@@ -26,8 +26,7 @@ export const useLogin = () => {
     const validationSchema = yup.object({
         email: yup
             .string('Enter your email')
-            .email('Enter a valid email')
-            .required('Email is required'),
+            .email('Introduce un email valido'),
         contrasenia: yup
             .string('Enter your password')
             .min(8, 'Password should be of minimum 8 characters length')

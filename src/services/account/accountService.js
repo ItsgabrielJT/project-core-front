@@ -22,7 +22,13 @@ export const accountService = {
 
   getPerfilById: async function (id) {
     try {
-      const res = await axios.get(URL_BASE + "api/perfil/" + id);
+      const { token } = JSON.parse(localStorage.getItem("user"));
+      const res = await axios.get(URL_BASE + "api/perfil/" + id,
+      {
+        headers: { Authorization: "Bearer " + token },
+      }
+      );
+
       return res;
     } catch (error) {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
@@ -30,8 +36,14 @@ export const accountService = {
   },
 
   updateUser: async function (id, user) {
+    const { token } = JSON.parse(localStorage.getItem("user"));
+
     try {
-      const res = await axios.put(URL_BASE + "api/usuario/" + id, user);
+      const res = await axios.put(URL_BASE + "api/usuario/" + id, user,
+      {
+        headers: { Authorization: "Bearer " + token },
+      }
+      );
       return res;
     } catch (error) {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import { useLogin } from "@hook/accounts/useLogin";
 import { CssTexField } from "@constants/styles";
 import ButtonContained from "@components/buttons/ButtonContained";
@@ -16,7 +14,6 @@ import ResetPage from "./ResetPage";
 import { Paper, ThemeProvider, createTheme, css, keyframes } from "@mui/material";
 import styled from '@emotion/styled';
 
-const theme = createTheme();
 
 const slideInFromLeft = keyframes`
   from {
@@ -117,7 +114,6 @@ const LoginPage = () => {
               value={formLogin.values.email}
               onChange={formLogin.handleChange}
               onBlur={formLogin.handleBlur}
-              error={formLogin.touched.email && Boolean(formLogin.errors.email)}
               helperText={formLogin.touched.email && formLogin.errors.email}
               sx={CssTexField}
             />
@@ -132,15 +128,15 @@ const LoginPage = () => {
               value={formLogin.values.contrasenia}
               onChange={formLogin.handleChange}
               onBlur={formLogin.handleBlur}
-              error={
-                formLogin.touched.contrasenia && Boolean(formLogin.errors.contrasenia)
-              }
-              helperText={
-                formLogin.touched.contrasenia && formLogin.errors.contrasenia
-              }
+             
               sx={CssTexField}
             />
-            <ButtonContained fullWidth text={"Iniciar sesion"} type="submit" />
+            <ButtonContained 
+              fullWidth 
+              disabled={!Boolean(formLogin.values.contrasenia) || Boolean(formLogin.errors.email) || !Boolean(formLogin.values.email)}
+              text={"Iniciar sesion"} 
+              type="submit"
+            />
             <Grid
               sx={{
                 mt: 3,

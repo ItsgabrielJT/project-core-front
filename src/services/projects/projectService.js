@@ -4,7 +4,12 @@ import { URL_BASE } from "../../config";
 export const projectService = {
   getAllProjects: async function () {
     try {
-      const res = await axios.get(URL_BASE + "api/proyectos");
+      const { token } = JSON.parse(localStorage.getItem("user"));
+      const res = await axios.get(URL_BASE + "api/proyectos",
+      {
+        headers: { Authorization: "Bearer " + token },
+      }
+      );
       return res;
     } catch (error) {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
@@ -12,8 +17,14 @@ export const projectService = {
   },
 
   getProjectById: async function (id) {
+    
     try {
-      const res = await axios.get(URL_BASE + "api/proyecto/" + id);
+      const { token } = JSON.parse(localStorage.getItem("user"));
+      const res = await axios.get(URL_BASE + "api/proyecto/" + id,
+      {
+        headers: { Authorization: "Bearer " + token },
+      }
+      );
       return res;
     } catch (error) {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
@@ -57,9 +68,13 @@ export const projectService = {
 
   updateProject: async function (id, json) {
     try {
+      const { token } = JSON.parse(localStorage.getItem("user"));
       const res = await axios.put(
         URL_BASE + "api/actualizar-proyecto/" + id,
-        json
+        json,
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
       );
       return res;
     } catch (error) {
