@@ -9,11 +9,9 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        // Check if the script is already loaded
         if (!loaded) {
             const uwScript = document.getElementById("uw");
             if (!uwScript) {
-                // If not loaded, create and load the script
                 const script = document.createElement("script");
                 script.setAttribute("async", "");
                 script.setAttribute("id", "uw");
@@ -21,7 +19,6 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
                 script.addEventListener("load", () => setLoaded(true));
                 document.body.appendChild(script);
             } else {
-                // If already loaded, update the state
                 setLoaded(true);
             }
         }
@@ -52,20 +49,21 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
     return (
         <CloudinaryScriptContext.Provider value={{ loaded }}>
             <Fab
-            variant="extended"
+                variant="extended"
                 id="upload_widget"
                 onClick={initializeCloudinaryWidget}
                 sx={{
                     margin: "10px 0px 20px 0px",
                     fontSize: "12px",
+                    boxShadow: 'none'
                 }}
             >
                 <AddAPhotoIcon sx={{
                     marginRight: "10px",
-                }}/>
+                }} />
                 <div>Seleciona una imagen</div>
             </Fab>
-        
+
         </CloudinaryScriptContext.Provider>
     );
 }

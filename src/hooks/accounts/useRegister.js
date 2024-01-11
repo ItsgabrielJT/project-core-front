@@ -17,7 +17,7 @@ const FORM_VALUES = {
     link_imagen_perfil: "",
 }
 
-export const useRegister = (handleClose) => {
+export const useRegister = (handleClose, publicId, ocupacion) => {
 
     const { singUp, isAuthenticated } = useAuth()
 
@@ -38,8 +38,7 @@ export const useRegister = (handleClose) => {
             .string('Enter your password')
             .min(8, 'La longitud minima debe ser de 8 caracteres'),
         ocupacion: yup
-            .string('Enter your ocupation')
-            .required('Ocupation is required'),
+            .string('Enter your ocupation'),
         universidad: yup
             .string('Enter your institute')
             .required('Institute is required'),
@@ -55,7 +54,13 @@ export const useRegister = (handleClose) => {
         initialValues: FORM_VALUES,
         validationSchema,
         onSubmit: async (values) => {
-            singUp(values);
+            //singUp(values);
+            let json = {
+                ...values,
+                link_imagen_perfil: publicId,
+                ocupacion: ocupacion
+            }
+            console.log(json)
 
         }
     });

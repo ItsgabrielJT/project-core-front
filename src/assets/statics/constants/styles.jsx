@@ -3,8 +3,10 @@ import { Modal as BaseModal } from '@mui/base/Modal';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
-import { Button } from '@mui/base';
+import { Button } from '@mui/base'; 
 import { Fade, Popover } from '@mui/material';
+import { Option as BaseOption, optionClasses } from '@mui/base/Option';
+
 
 export const CssButtonContained = {
   boxShadow: 'none',
@@ -16,14 +18,15 @@ export const CssButtonContained = {
   lineHeight: 1.5,
   backgroundColor: '#319795',
   '&:hover': {
-    backgroundColor: '#5CDDDB',
-    borderColor: '#5CDDDB',
+    backgroundColor: '#9AD0C2',
+    borderColor: '#9AD0C2',
     boxShadow: 'none',
+    color: "#202023"
   },
   '&:active': {
     boxShadow: 'none',
-    backgroundColor: '#5CDDDB',
-    borderColor: '#5CDDDB',
+    backgroundColor: '#9AD0C2',
+    borderColor: '#9AD0C2',
   },
 }
 
@@ -72,7 +75,6 @@ export const CssNavOutline = {
   },
 }
 
-
 export const CssTexField = {
 
   '& .MuiInput-underline:after': {
@@ -84,7 +86,7 @@ export const CssTexField = {
       border: '3px solid #319795'
     },
     '&:hover fieldset': {
-      border: '3px solid #5CDDDB',
+      border: '3px solid #9AD0C2',
       borderRadius: '50px'
     },
     '&.Mui-focused fieldset': {
@@ -93,6 +95,47 @@ export const CssTexField = {
     },
   },
 }
+
+export const Option = styled(BaseOption)(
+  ({ theme }) => `
+  list-style: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: default;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &.${optionClasses.selected} {
+    background-color: ${theme.palette.mode === 'dark' ? blue[900] : blue[100]};
+    color: ${theme.palette.mode === 'dark' ? blue[100] : blue[900]};
+  }
+
+  &.${optionClasses.highlighted} {
+    background-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[100]};
+    color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  }
+
+  &.${optionClasses.highlighted}.${optionClasses.selected} {
+    background-color: ${theme.palette.mode === 'dark' ? blue[900] : blue[100]};
+    color: ${theme.palette.mode === 'dark' ? blue[100] : blue[900]};
+  }
+
+  &:focus-visible {
+    outline: 3px solid ${theme.palette.mode === 'dark' ? blue[600] : blue[200]};
+  }
+
+  &.${optionClasses.disabled} {
+    color: ${theme.palette.mode === 'dark' ? grey[700] : grey[400]};
+  }
+
+  &:hover:not(.${optionClasses.disabled}) {
+    background-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[100]};
+    color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  }
+  `,
+);
 
 export const CustomizedPopover = styled(Popover)`
   color: #20b2aa;
