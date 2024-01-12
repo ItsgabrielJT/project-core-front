@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CssTexField,
   Modal,
@@ -9,7 +9,7 @@ import {
 import Fab from "@mui/material/Fab";
 import ClearIcon from "@mui/icons-material/Clear";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-import { Collapse, Fade, TextField } from "@mui/material";
+import { Alert, Collapse, Fade, Snackbar, TextField } from "@mui/material";
 import { useRegister } from "@hook/accounts/useRegister";
 import ButtonContained from "@components/buttons/ButtonContained";
 import { Cloudinary } from "@cloudinary/url-gen";
@@ -32,6 +32,7 @@ const options = [
 
 function RegisterPage({ open, handleClose }) {
   const [nextstep, setNextStep] = useState(false);
+  const [validate, setValidate] = useState(false);
   const [publicId, setPublicId] = useState("");
   const [ocupacion, setOcupacion] = useState("");
 
@@ -39,8 +40,20 @@ function RegisterPage({ open, handleClose }) {
   const [uploadPreset] = useState("o0bi0kjz");
   const { formRegister } = useRegister(handleClose, publicId, ocupacion);
 
+  const [state, setState] = React.useState({
+    openSnack: false,
+    vertical: 'bottom',
+    horizontal: 'center',
+    message: 'Existen campos requeridos'
+  });
+  const { vertical, horizontal, openSnack, message } = state;
+
+  const handleCloseSnack = () => {
+    setState({ ...state, openSnack: false });
+  };
+
   const handleNextStep = () => {
-    setNextStep(true);
+    setValidate(true);
   };
 
   const handleReturn = () => {
@@ -63,8 +76,13 @@ function RegisterPage({ open, handleClose }) {
   });
 
   const handleSelectOcupacion = (e) => {
-    console.log(e)
     setOcupacion(e)
+  }
+
+  const handleChangeNumber = (e) => {
+    if (/^\d*$/.test(e.target.value) && e.target.value.length < 11) {
+      formRegister.handleChange(e)
+    }
   }
 
   const cld = new Cloudinary({
@@ -75,11 +93,32 @@ function RegisterPage({ open, handleClose }) {
 
   const myImage = cld.image(publicId);
 
+  useEffect(() => {
+    if (validate) {
+      if (formRegister.values.nombres.trim() == "" || formRegister.errors.nombres) {
+        setState({ ...state, openSnack: true, message: formRegister.errors.nombres ? formRegister.errors.nombres : "El campo nombre es requerido" });
+      } else if (formRegister.values.email.trim() == "" || formRegister.errors.email) {
+        setState({ ...state, openSnack: true, message: formRegister.errors.email ? formRegister.errors.email : "El campo email es requerido" });
+      } else if (formRegister.values.contrasenia.trim() == "" || formRegister.errors.contrasenia) {
+        setState({ ...state, openSnack: true, message: formRegister.errors.contrasenia ? formRegister.errors.contrasenia : "El campo contraseña es requerido" });
+      }
+      setValidate(false);
+    }
+  }, [validate])
+
   return (
     <>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={openSnack}
+        onClose={handleCloseSnack}
+        key={vertical + horizontal}
+      >
+        <Alert onClose={handleCloseSnack} severity="warning" sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
       <Modal
-        aria-labelledby="unstyled-modal-title"
-        aria-describedby="unstyled-modal-description"
         open={open}
         closeAfterTransition
         slots={{ backdrop: StyledBackdrop }}
@@ -139,12 +178,10 @@ function RegisterPage({ open, handleClose }) {
                       fullWidth
                       name="nombres"
                       label="Nombre completo"
-                      id="nombres"
                       autoComplete="current-name"
                       value={formRegister.values.nombres}
                       onChange={formRegister.handleChange}
                       onBlur={formRegister.handleBlur}
-
                       sx={CssTexField}
                     />
                     <TextField
@@ -153,15 +190,10 @@ function RegisterPage({ open, handleClose }) {
                       name="email"
                       label="Email"
                       type="email"
-                      id="email"
                       autoComplete="current-email"
                       value={formRegister.values.email}
                       onChange={formRegister.handleChange}
                       onBlur={formRegister.handleBlur}
-
-                      helperText={
-                        formRegister.touched.email && formRegister.errors.email
-                      }
                       sx={CssTexField}
                     />
                     <TextField
@@ -170,21 +202,14 @@ function RegisterPage({ open, handleClose }) {
                       name="contrasenia"
                       label="Contraseña"
                       type="password"
-                      id="contrasenia"
                       autoComplete="current-contrasenia"
                       value={formRegister.values.contrasenia}
                       onChange={formRegister.handleChange}
                       onBlur={formRegister.handleBlur}
-
-                      helperText={
-                        formRegister.touched.contrasenia &&
-                        formRegister.errors.contrasenia
-                      }
                       sx={CssTexField}
                     />
                   </div>
                   <ButtonContained
-                    disabled={Boolean(formRegister.errors.contrasenia) || Boolean(formRegister.errors.email) || !Boolean(formRegister.values.nombres) || !Boolean(formRegister.values.email) || !Boolean(formRegister.values.contrasenia)}
                     fullWidth
                     onClick={handleNextStep}
                     text={"Siguiente"}
@@ -235,7 +260,9 @@ function RegisterPage({ open, handleClose }) {
                       value={formRegister.values.universidad}
                       onChange={formRegister.handleChange}
                       onBlur={formRegister.handleBlur}
-
+                      helperText={
+                        formRegister.touched.universidad && formRegister.errors.universidad
+                      }
                       sx={CssTexField}
                     />
                     <TextField
@@ -248,7 +275,9 @@ function RegisterPage({ open, handleClose }) {
                       value={formRegister.values.carrera}
                       onChange={formRegister.handleChange}
                       onBlur={formRegister.handleBlur}
-
+                      helperText={
+                        formRegister.touched.carrera && formRegister.errors.carrera
+                      }
                       sx={CssTexField}
                     />
                     <TextField
@@ -259,7 +288,7 @@ function RegisterPage({ open, handleClose }) {
                       id="numero_celular"
                       autoComplete="current-numero_celular"
                       value={formRegister.values.numero_celular}
-                      onChange={formRegister.handleChange}
+                      onChange={handleChangeNumber}
                       onBlur={formRegister.handleBlur}
 
                       helperText={

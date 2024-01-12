@@ -21,7 +21,7 @@ export const useRegister = (handleClose, publicId, ocupacion) => {
 
     const { singUp, isAuthenticated } = useAuth()
 
-    useEffect   (() => {
+    useEffect(() => {
         if (isAuthenticated) {
             handleClose();
             formRegister.resetForm();
@@ -30,24 +30,27 @@ export const useRegister = (handleClose, publicId, ocupacion) => {
 
     const validationSchema = yup.object({
         nombres: yup
-            .string('Enter your fullname'),
+            .string('Enter your fullname')
+            .max(50, 'El nombre debe ser maximo de 50 caracteres'),
+
         email: yup
             .string('Enter your email')
-            .email('Introduce un email valido'),
+            .max(30, 'El email debe ser maximo de 30 caracteres')
+            .email('Introduzca un email valido'),
         contrasenia: yup
             .string('Enter your password')
-            .min(8, 'La longitud minima debe ser de 8 caracteres'),
+            .min(8, 'La contraseña debe tener un minima de 8 caracteres'),
         ocupacion: yup
             .string('Enter your ocupation'),
         universidad: yup
             .string('Enter your institute')
-            .required('Institute is required'),
+            .max(50, 'La longitud maxima debe ser de 50 caracteres'),
+
         carrera: yup
             .string('Enter your carrer')
-            .required('Carrer is required'),
+            .max(50, 'La longitud maxima debe ser de 50 caracteres'),
         numero_celular: yup
-            .number('Enter your phone number')
-            .required('Phone number is required'),
+            .number('Enter your phone number'),
     });
 
     const formRegister = useFormik({
