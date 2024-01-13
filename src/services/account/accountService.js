@@ -7,7 +7,7 @@ export const accountService = {
       const res = await axios.post(URL_BASE + "api/login", user);
       return res;
     } catch (error) {
-      throw new Error("Credenciales incorrectas, intente de nuevo");
+      throw new Error("Credenciales incorrectas");
     }
   },
 
@@ -16,7 +16,7 @@ export const accountService = {
       const res = await axios.post(URL_BASE + "api/registrar", user);
       return res;
     } catch (error) {
-      throw new Error("El email ya existe");
+      throw new Error("Verfique que los datos esten correctos");
     }
   },
 

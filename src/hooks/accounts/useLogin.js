@@ -29,7 +29,6 @@ export const useLogin = () => {
             .email('Introduce un email valido'),
         contrasenia: yup
             .string('Enter your password')
-            .min(8, 'Password should be of minimum 8 characters length')
             .required('Password is required'),
     });
 

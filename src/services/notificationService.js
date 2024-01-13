@@ -1,36 +1,39 @@
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import 'sweetalert2/dist/sweetalert2.all';
+import "sweetalert2/dist/sweetalert2.all"
 
 
 const MySwal = withReactContent(Swal);
 
-
-const success = (msg) => MySwal.fire({
-  text: msg,
-  position: "center",
-  icon: "success",
-  background: "#FFFDFA",
-  timer: 2000,
+const Toast = MySwal.mixin({
+  toast: true,
+  position: "bottom",
   showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = MySwal.stopTimer;
+    toast.onmouseleave = MySwal.resumeTimer;
+  }
+});
+
+
+const success = (msg) => Toast.fire({
+  title: msg,
+  icon: "success",
 })
 
-const error = (msg) => MySwal.fire({
-  text: msg,
-  position: "center",
+const error = (msg) => Toast.fire({
+  title: msg,
   icon: "error",
-  timer: 2400,
-  background: "#FFFDFA",
-  showConfirmButton: false
+
 })
 
-const warning = (msg) => MySwal.fire({
-  text: msg,
-  position: "center",
+const warning = (msg) => Toast.fire({
+
+  title: msg,
   icon: "warning",
-  timer: 2500,
-  background: "#FFFDFA",
-  showConfirmButton: false
+
 })
 
 

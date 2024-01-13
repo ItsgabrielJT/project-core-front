@@ -16,6 +16,9 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import CloudinaryUploadWidget from "@components/modals/CloudinaryUpload";
 import CustomSelect from "@components/selects/CustomSelect";
+import { useSnackbar } from "@hook/accounts/useSnackbar";
+import ModalDialog from "@components/modals/ModalDialog";
+
 
 const options = [
   {
@@ -35,35 +38,16 @@ function RegisterPage({ open, handleClose }) {
   const [validate, setValidate] = useState(false);
   const [publicId, setPublicId] = useState("");
   const [ocupacion, setOcupacion] = useState("");
-
   const [cloudName] = useState("dnkst5hjn");
   const [uploadPreset] = useState("o0bi0kjz");
   const { formRegister } = useRegister(handleClose, publicId, ocupacion);
-
-  const [state, setState] = React.useState({
-    openSnack: false,
-    vertical: 'bottom',
-    horizontal: 'center',
-    message: 'Existen campos requeridos'
-  });
-  const { vertical, horizontal, openSnack, message } = state;
-
-  const handleCloseSnack = () => {
-    setState({ ...state, openSnack: false });
-  };
-
-  const handleNextStep = () => {
-    setValidate(true);
-  };
-
-  const handleReturn = () => {
-    setNextStep(false);
-  };
-
-  const onClose = () => {
-    handleClose();
-    formRegister.resetForm();
-  };
+  const {
+    vertical,
+    horizontal,
+    openSnack,
+    message,
+    handleCloseSnack
+  } = useSnackbar(formRegister, validate, setValidate, setNextStep)
 
   const [uwConfig] = useState({
     cloudName,
@@ -75,16 +59,6 @@ function RegisterPage({ open, handleClose }) {
     theme: "blue", //change to a purple theme
   });
 
-  const handleSelectOcupacion = (e) => {
-    setOcupacion(e)
-  }
-
-  const handleChangeNumber = (e) => {
-    if (/^\d*$/.test(e.target.value) && e.target.value.length < 11) {
-      formRegister.handleChange(e)
-    }
-  }
-
   const cld = new Cloudinary({
     cloud: {
       cloudName
@@ -93,21 +67,51 @@ function RegisterPage({ open, handleClose }) {
 
   const myImage = cld.image(publicId);
 
-  useEffect(() => {
-    if (validate) {
-      if (formRegister.values.nombres.trim() == "" || formRegister.errors.nombres) {
-        setState({ ...state, openSnack: true, message: formRegister.errors.nombres ? formRegister.errors.nombres : "El campo nombre es requerido" });
-      } else if (formRegister.values.email.trim() == "" || formRegister.errors.email) {
-        setState({ ...state, openSnack: true, message: formRegister.errors.email ? formRegister.errors.email : "El campo email es requerido" });
-      } else if (formRegister.values.contrasenia.trim() == "" || formRegister.errors.contrasenia) {
-        setState({ ...state, openSnack: true, message: formRegister.errors.contrasenia ? formRegister.errors.contrasenia : "El campo contraseña es requerido" });
-      }
-      setValidate(false);
+  const handleReturn = () => {
+    setNextStep(false);
+  };
+
+  const handleSelectOcupacion = (e) => {
+    formRegister.setFieldValue("ocupacion", e)
+  }
+
+  const handleChangeNumber = (e) => {
+    if (/^\d*$/.test(e.target.value) && e.target.value.length < 11) {
+      formRegister.handleChange(e)
     }
-  }, [validate])
+  }
+
+  const [close, setClose] = useState(false);
+
+  const onCloseDialog = () => {
+    setClose(false);
+    setPublicId("")
+    handleClose();
+    formRegister.resetForm();
+  };
+
+  const handleOpenDialog = () => {
+      if (
+        publicId == "" && formRegister.values.nombres == "" &&
+        formRegister.values.email == "" &&
+        formRegister.values.contrasenia == "" &&
+        formRegister.values.ocupacion == "" 
+      ) {
+        onCloseDialog()
+      } else {
+        setClose(true)
+      }
+  } 
+
 
   return (
     <>
+      <ModalDialog
+        title={"Quieres descartar los cambios ?"}
+        open={close}
+        onClose={() => setClose(false)}
+        onConfirm={onCloseDialog}
+      />
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={openSnack}
@@ -150,7 +154,7 @@ function RegisterPage({ open, handleClose }) {
                     <Fab
                       size="small"
                       aria-label="add"
-                      onClick={onClose}
+                      onClick={handleOpenDialog}
                       sx={{
                         backgroundColor: "#FFFDFA",
                         boxShadow: "none",
@@ -211,7 +215,7 @@ function RegisterPage({ open, handleClose }) {
                   </div>
                   <ButtonContained
                     fullWidth
-                    onClick={handleNextStep}
+                    onClick={() => setValidate(true)}
                     text={"Siguiente"}
                   />
                 </div>
@@ -255,14 +259,10 @@ function RegisterPage({ open, handleClose }) {
                       fullWidth
                       name="universidad"
                       label="Instituto o Universidad"
-                      id="universidad"
                       autoComplete="current-universidad"
                       value={formRegister.values.universidad}
                       onChange={formRegister.handleChange}
                       onBlur={formRegister.handleBlur}
-                      helperText={
-                        formRegister.touched.universidad && formRegister.errors.universidad
-                      }
                       sx={CssTexField}
                     />
                     <TextField
@@ -270,30 +270,21 @@ function RegisterPage({ open, handleClose }) {
                       fullWidth
                       name="carrera"
                       label="Carrera"
-                      id="carrera"
                       autoComplete="current-carrera"
                       value={formRegister.values.carrera}
                       onChange={formRegister.handleChange}
                       onBlur={formRegister.handleBlur}
-                      helperText={
-                        formRegister.touched.carrera && formRegister.errors.carrera
-                      }
                       sx={CssTexField}
                     />
                     <TextField
                       margin="normal"
                       fullWidth
                       name="numero_celular"
-                      label="Numero de telefono"
-                      id="numero_celular"
+                      label="Numero de telefono: 593XXXXXXXXX"
                       autoComplete="current-numero_celular"
                       value={formRegister.values.numero_celular}
                       onChange={handleChangeNumber}
                       onBlur={formRegister.handleBlur}
-
-                      helperText={
-                        formRegister.touched.numero_celular && formRegister.errors.numero_celular
-                      }
                       sx={CssTexField}
                     />
                   </div>

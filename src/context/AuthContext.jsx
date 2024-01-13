@@ -21,21 +21,8 @@ export const AuthProvider = ({ children }) => {
     checkLogin();
   }, []);
 
-  const singUp = async (user) => {
-    await accountService
-      .singupUser(user)
-      .then((res) => {
-        if (res.data.status) {
-          setIsAuthenticated(res.data.status);
-        }
-      })
-      .catch((err) => {
-        notificationService.warning(err.message);
-        setIsAuthenticated(false);
-      });
-  };
 
-  const singIn = async (user) => {
+  const singIn = async (user) => {  
     await accountService
       .loginUser(user)
       .then((res) => {
@@ -54,12 +41,10 @@ export const AuthProvider = ({ children }) => {
 
   };
 
-  const checkLogin = async () => {
-    var objetoRecuperado = await JSON.parse(localStorage.getItem("user"));
-
+  const checkLogin =  () => {
+    var objetoRecuperado =  JSON.parse(localStorage.getItem("user"));
     if (!objetoRecuperado) {
       setIsAuthenticated(false);
-      return;
     } else {
       setIsAuthenticated(true);
       setUser(objetoRecuperado);
@@ -78,7 +63,6 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        singUp,
         singIn,
         logOut,
         user,

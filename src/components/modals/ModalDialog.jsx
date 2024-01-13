@@ -3,8 +3,31 @@ import {
     Modal,
     ModalContentConfirm,
 } from "@constants/styles";
-import ButtonContained from "@components/buttons/ButtonContained";
 import ButtonOutline from "@components/buttons/ButtonOutline";
+import { Button, Fade } from "@mui/material";
+
+const CssButtonContained = {
+    marginTop: "15px",
+    boxShadow: 'none',
+    borderRadius: '50px',
+    textTransform: 'none',
+    fontSize: 16,
+    padding: '6px 12px',
+    color: "white",
+    border: '1px solid',
+    lineHeight: 1.5,
+    backgroundColor: '#DC3545',
+    '&:hover': {
+      backgroundColor: '#F85D6C',
+      borderColor: '#F85D6C',
+      boxShadow: 'none',
+    },
+    '&:active': {
+      boxShadow: 'none',
+      backgroundColor: '#F85D6C',
+      borderColor: '#F85D6C',
+    },
+  }
 
 function ModalDialog({ open, onClose, onConfirm, title, slots = {} }) {
 
@@ -19,6 +42,7 @@ function ModalDialog({ open, onClose, onConfirm, title, slots = {} }) {
             slots={slots}
 
         >
+            <Fade in={open}>
             <ModalContentConfirm sx={{ width: 250 }}>
                 <div>
                     <div
@@ -32,15 +56,14 @@ function ModalDialog({ open, onClose, onConfirm, title, slots = {} }) {
                         </div>
 
                     </div>
-                    <ButtonContained text={"Descartar"}
+                    <Button
                         fullWidth
 
                         onClick={onConfirm}
-                        style={{
-                            backgroundColor: '#DC3545',
-                            borderColor: '#DC3545',
-                            marginTop: '20px',
-                        }} />
+                        sx={CssButtonContained}
+                        >
+                            Aceptar
+                        </Button>
                     <ButtonOutline text={"Cancelar"}
                         fullWidth
 
@@ -52,6 +75,8 @@ function ModalDialog({ open, onClose, onConfirm, title, slots = {} }) {
 
                 </div>
             </ModalContentConfirm>
+            </Fade>
+            
         </Modal>
 
     )

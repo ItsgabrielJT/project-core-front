@@ -173,7 +173,7 @@ const grey = {
 
 export const Modal = styled(BaseModal)`
   position: fixed;
-  z-index: 1300;
+  z-index: 1;
   inset: 0;
   display: flex;
   align-items: center;

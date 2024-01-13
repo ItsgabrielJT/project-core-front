@@ -5,9 +5,8 @@ import { Backdrop, CircularProgress } from "@mui/material";
 
 export const ProtectedRoute = () => {
   const { isAuthenticated } = useAuth();
-
   
-  if (!isAuthenticated ) return <Navigate to="/" replace />;
+  if (!isAuthenticated ) return <Navigate to="/"  />;
   return (
     <SideBar>
       <Outlet />;
