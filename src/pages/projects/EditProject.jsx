@@ -14,7 +14,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import ButtonContained from "@components/buttons/ButtonContained";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
@@ -58,6 +58,9 @@ function EditProject() {
 
   const openPopover = Boolean(anchorEl);
   const idPopover = openPopover ? "simple-popover" : undefined;
+
+  const [ proyecto, setPrpyectoImage] = useState("")
+  const [ proyectoEdit, setProyectoEditImage] = useState("")
 
   const [uwConfig] = useState({
     cloudName,
@@ -103,16 +106,22 @@ function EditProject() {
     cleanReferences(index);
   };
 
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName,
-    },
-  });
+  useEffect(() => {
+    const cld = new Cloudinary({
+      cloud: {
+        cloudName,
+      },
+    });
+  
+    const proyecto = cld.image(publicId);
+    const proyectoEdit = cld.image(
+      formProject ? formProject.values.link_imagen : ""
+    );
+    setPrpyectoImage(proyecto);
+    setProyectoEditImage(proyectoEdit);
+  }, [publicId])
 
-  const proyecto = cld.image(publicId);
-  const proyectoEdit = cld.image(
-    formProject ? formProject.values.link_imagen : ""
-  );
+  
 
   const handleInvite = (idUser) => {
     let json = {
@@ -125,7 +134,7 @@ function EditProject() {
         if (res.data.status) {
           notificationService.success("Se ha enviado la invitacion");
           setAnchorEl(null);
-          
+
         }
       })
       .catch((err) => {
@@ -206,6 +215,7 @@ function EditProject() {
               width: "100%",
               height: "290px",
               marginRight: "10px",
+              backgroundColor: "#F2F1EE",
               objectFit: "cover",
               borderRadius: "30px",
               overflow: "hidden",
@@ -219,6 +229,7 @@ function EditProject() {
               width: "100%",
               height: "290px",
               marginRight: "10px",
+              backgroundColor: "#F2F1EE",
               objectFit: "cover",
               borderRadius: "30px",
               overflow: "hidden",
@@ -371,18 +382,23 @@ function EditProject() {
                 display: "flex",
               }}
             >
-              <Fab
-                size="small"
-                aria-label="add"
-                onClick={() => handleRemoveInput(index)}
-                sx={{
-                  backgroundColor: "#FFFDFA",
-                  boxShadow: "none",
-                  marginTop: "22px",
-                }}
-              >
-                <ClearIcon />
-              </Fab>
+              {
+                inputs.length > 1 && (
+                  <Fab
+                    size="small"
+                    aria-label="add"
+                    onClick={() => handleRemoveInput(index)}
+                    sx={{
+                      backgroundColor: "#FFFDFA",
+                      boxShadow: "none",
+                      marginTop: "22px",
+                    }}
+                  >
+                    <ClearIcon />
+                  </Fab>
+                )
+              }
+
               <TextField
                 margin="normal"
                 fullWidth
@@ -421,18 +437,22 @@ function EditProject() {
                 display: "flex",
               }}
             >
-              <Fab
-                size="small"
-                aria-label="add"
-                onClick={() => handleRemoveLink(index)}
-                sx={{
-                  backgroundColor: "#FFFDFA",
-                  boxShadow: "none",
-                  marginTop: "22px",
-                }}
-              >
-                <ClearIcon />
-              </Fab>
+              {
+                links.length > 1 && (
+                  <Fab
+                    size="small"
+                    aria-label="add"
+                    onClick={() => handleRemoveLink(index)}
+                    sx={{
+                      backgroundColor: "#FFFDFA",
+                      boxShadow: "none",
+                      marginTop: "22px",
+                    }}
+                  >
+                    <ClearIcon />
+                  </Fab>
+                )
+              }
               <TextField
                 margin="normal"
                 fullWidth

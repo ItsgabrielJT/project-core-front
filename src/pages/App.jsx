@@ -4,13 +4,13 @@ import LoginPage from "./account/LoginPage";
 import HomePage from "./home/HomePage";
 import '@styles/App.css'
 import { AuthProvider } from "../context/AuthContext";
-import SideBar from "../layouts/SideBar";
 import UserPage from "./securities/UserPage";
 import NotificationsPage from "./notifications/NotificationsPage";
 import EditProject from "./projects/EditProject";
 import ListProjects from "./projects/ListProjects";
 import DetailProject from "./projects/DetailProject";
 import { ProtectedRoute } from "../_routes";
+import ErrorPage from "./errors/ErrorPage";
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
             element={<ProtectedRoute/>}
           >
             <Route path="home" element={<HomePage/>} />
+            <Route path="error" element={<ErrorPage/>} />
             <Route path="user" element={<UserPage/>} />
             <Route path="user/:id" element={<UserPage/>} />
             <Route path="projects" element={<ListProjects/>} />

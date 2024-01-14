@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import notificationService from "@services/notificationService"
 import { colaboratorService } from "@services/colaborators/colaboratorService";
+import { useNavigate } from "react-router-dom";
 
 export const useNotifications = (success, onSuccess) => {
     
     const [ notifications, setNotifications ] = useState()
     const [loading, setLoading] = useState(true)
-
+    const navigate = useNavigate()
 
     useEffect(() => {
             colaboratorService.notificationsByUser()
@@ -31,6 +32,7 @@ export const useNotifications = (success, onSuccess) => {
                 }
             })
             .catch((err) => {
+                navigate('/error')
                 notificationService.error(err.message);
             })
             .finally(() => [

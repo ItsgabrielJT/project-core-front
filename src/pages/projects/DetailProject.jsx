@@ -45,8 +45,8 @@ function DetailProject() {
   const [openModal, setOpenModal] = useState(false);
   const [success, setSuccess] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [perfil, setImagePerfil] = useState(null);
-  const [proyecto, setImageProyecto] = useState(null);
+  const [ perfil, setPerfilImage] = useState("")
+  const [ proyecto, setProyectoImage] = useState("")
 
   const openPopover = Boolean(anchorEl);
   const idPopover = openPopover ? "simple-popover" : undefined;
@@ -93,7 +93,6 @@ function DetailProject() {
   
 
   useEffect(() => {
-    
     const cld = new Cloudinary({
       cloud: {
         cloudName
@@ -101,11 +100,10 @@ function DetailProject() {
     });
     const perfil = cld.image(project ? project.link_image_user : "");
     const proyecto = cld.image(project ? project.link_image_project : "");
-    setImagePerfil(perfil)
-    setImageProyecto(proyecto)
+    setPerfilImage(perfil)
+    setProyectoImage(proyecto)
   }, [project])
-
-
+    
 
   return (
     <Grid item xs={12}>
@@ -155,6 +153,13 @@ function DetailProject() {
                 <ListItemText primary={item.user.full_name} />
               </ListItem>
             ))
+          }
+          {
+            project && project.colaborators.length === 0 && (
+              <ListItem>
+                <ListItemText primary="Aun no hay colaboradores" />
+              </ListItem>
+            )
           }
         </List>
       </CustomizedPopover>
@@ -211,7 +216,7 @@ function DetailProject() {
                 </Typography>
               </div>
               <Typography variant="overline" sx={{ display: 'flex' }}>
-                {project.university_name} -
+                {project.university_name} - {project.career}
 
               </Typography>
             </>

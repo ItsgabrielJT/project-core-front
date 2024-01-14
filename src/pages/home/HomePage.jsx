@@ -1,4 +1,4 @@
-import { Backdrop, Box, CircularProgress } from "@mui/material";
+import { Backdrop, Box, CircularProgress, Typography } from "@mui/material";
 import React, { useState } from "react";
 import InfoCard from "@components/cards/InfoCard";
 import { useProjects } from "@hook/projects/useProjects";
@@ -7,7 +7,6 @@ import { useAuth } from "../../context/AuthContext";
 import { colaboratorService } from "../../services/colaborators/colaboratorService";
 import notificationService from "@services/notificationService";
 import { format } from 'date-fns';
-
 
 const HomePage = () => {
   const { dataHome, loading } = useProjects();
@@ -40,7 +39,7 @@ const HomePage = () => {
       });
   };
 
-  
+
 
   return (
     <>
@@ -71,6 +70,7 @@ const HomePage = () => {
               id={item.userId}
             />
           ))}
+          
         </Box>
       ) : (
         <Box
@@ -92,6 +92,7 @@ const HomePage = () => {
           </Backdrop>
         </Box>
       )}
+    
     </>
   );
 };

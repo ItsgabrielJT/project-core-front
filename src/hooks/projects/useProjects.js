@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
 import { projectService } from "@services/projects/projectService";
 import notificationService from "@services/notificationService"
+import { useNavigate } from "react-router-dom";
 
 
 export const useProjects = () => {
 
-    const [dataHome, setDataHome] = useState();
-      const [loading, setLoading] = useState(true)
-
+    const [dataHome, setDataHome] = useState([]);
+    const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
 
     useEffect(() => {
         projectService.getAllProjects()
@@ -16,7 +17,7 @@ export const useProjects = () => {
                     let data = []
                     res.data.proyectos.map((item) => {
                         data.push({
-                            idProject: item.id,
+                            idProject: item.id, 
                             title_project: item.title_project,
                             fecha: item.updatedAt,
                             description: item.description,
@@ -33,6 +34,7 @@ export const useProjects = () => {
                 }
             })
             .catch((err) => {
+                navigate('/error')
                 notificationService.error(err.message);
             })
             .finally(() => [

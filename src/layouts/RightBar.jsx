@@ -2,8 +2,9 @@ import LittleCard from "@components/cards/LittleCard"
 import { Box } from "@mui/system"
 import { useProjects } from "@hook/colaborators/useProjects"
 import { useNavigate } from "react-router-dom";
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress, Typography } from "@mui/material";
 import { format } from "date-fns";
+import Diversity3Icon from '@mui/icons-material/Diversity3';
 
 function RightBar() {
 
@@ -38,11 +39,31 @@ function RightBar() {
                         onDetail={() => handleDetail(item.id)}
                     />
                 ))}
+                {
+                    projects.length == 0 && (
+                        <center>
+                            <Diversity3Icon sx={{
+                                color: "#9BBEC8",
+                                fontSize: "80px",
+                                marginTop: "140px",
+                            }} />
+
+                            <Typography
+                                variant="h5"
+                                sx={{
+                                    color: "#9BBEC8",
+                                }}
+                            >
+                                Aqui apareceran los proyectos en los que colaboras!
+                            </Typography>
+                        </center>
+                    )
+                }
             </Box >
             <Backdrop
                 sx={{ backgroundColor: "rgba(155, 190, 200, 0.3)", zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={loading}
-                
+
             >
                 <CircularProgress color="primary" size={40} />
             </Backdrop>

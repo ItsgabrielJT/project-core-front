@@ -4,7 +4,7 @@ import { colaboratorService } from "@services/colaborators/colaboratorService";
 
 export const useProjects = () => {
  
-    const [ projects, setProjects ] = useState()
+    const [ projects, setProjects ] = useState([])
     const [loading, setLoading] = useState(true)
 
 

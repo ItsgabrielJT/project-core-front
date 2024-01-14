@@ -29,6 +29,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import QueueIcon from '@mui/icons-material/Queue';
 
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -326,6 +327,12 @@ function Header() {
                     <PersonRoundedIcon fontSize="small" />
                   </ListItemIcon>
                   Perfil
+                </MenuItem>
+                <MenuItem onClick={() => handleRedirecTo("/create/project")}>
+                  <ListItemIcon>
+                    <QueueIcon fontSize="small" />
+                  </ListItemIcon>
+                  Crear proyecto
                 </MenuItem>
                 <Divider />
 

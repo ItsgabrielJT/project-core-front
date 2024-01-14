@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import { projectService } from "@services/projects/projectService";
 import notificationService from "@services/notificationService"
+import { useNavigate } from "react-router-dom";
 
 export const useDetail = (id = null) => {
 
     const [project, setProject] = useState(null);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -27,8 +29,9 @@ export const useDetail = (id = null) => {
                             full_name: res.data.proyecto.users[0].user.full_name,
                             link_image_user: res.data.proyecto.users[0].user.link_image,
                             occupation: res.data.proyecto.users[0].user.occupation,
+                            career: res.data.proyecto.users[0].user.career,
                             university_name: res.data.proyecto.users[0].user.university_name,
-                            colaborators: res.data.proyecto.colaborators
+                            colaborators: []
                         }
                         setProject(data)
                     } else {
@@ -36,6 +39,7 @@ export const useDetail = (id = null) => {
                     }
                 })
                 .catch((err) => {
+                    navigate('/error')
                     notificationService.error(err.message);
                 })
                 .finally(() => [

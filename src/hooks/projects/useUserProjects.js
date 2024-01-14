@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
 import { projectService } from "@services/projects/projectService";
 import notificationService from "@services/notificationService"
+import { useNavigate } from "react-router-dom";
 
 
 export const useUserProjects = (success, onSuccess) => {
     
     const [projects, setProjects] = useState();
-      const [loading, setLoading] = useState(true)
-
+    const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
 
     useEffect(() => {
             projectService.getProjectByUser()
@@ -30,6 +31,8 @@ export const useUserProjects = (success, onSuccess) => {
                 }
             })
             .catch((err) => {
+                navigate('/error')
+
                 notificationService.error(err.message);
             })
             .finally(() => [
