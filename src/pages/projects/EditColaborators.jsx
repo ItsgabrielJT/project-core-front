@@ -69,7 +69,7 @@ function EditColaborators({ open, handleClose, onSuccess, colaborators }) {
                 <ModalContent sx={{ width: 650 }}>
                     {
                         users.length == 0 ? (
-                            <div>
+                            <center>
                                 <Fab
                                     size="small"
                                     aria-label="add"
@@ -81,13 +81,13 @@ function EditColaborators({ open, handleClose, onSuccess, colaborators }) {
                                 >
                                     <ClearIcon />
                                 </Fab>
-                                <Typography variant="h6" style={{ marginLeft: '160px' }}>
+                                <Typography variant="h6" >
                                     <FaceRetouchingOffIcon
                                         style={{ marginRight: '10px', fontSize: 30 }}
                                     />
                                     Aun no tienes colaboradores !
                                 </Typography>
-                            </div>
+                            </center>
                         ) : (
                             <form onSubmit={formUser.handleSubmit}>
 

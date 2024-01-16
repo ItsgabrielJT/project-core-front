@@ -19,6 +19,7 @@ function InfoCard({
   onDetail,
   handleSearch,
   onFollow,
+  isFollower,
   id,
   ...props
 }) {
@@ -140,13 +141,16 @@ function InfoCard({
           marginBottom: "15px",
         }}
       >
-        {id != idLogin && (
-          <ButtonContained
+        
+        {
+          !isFollower && (
+            <ButtonContained
             text={"Unirse"}
             onClick={onFollow}
             style={{ width: "25px", height: "30px", marginRight: "10px" }}
           />
-        )}
+          )
+        }
         <ButtonOutline
           text={"Ver"}
           onClick={onDetail}

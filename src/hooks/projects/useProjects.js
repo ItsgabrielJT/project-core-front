@@ -25,7 +25,9 @@ export const useProjects = () => {
                             userId: item.users[0].id,
                             full_name: item.users[0].full_name,
                             link_image_user: item.users[0].link_image,
-                            occupation: item.users[0].occupation
+                            occupation: item.users[0].occupation,
+                            users: item.users
+
                         })
                     })
                     setDataHome(data)

@@ -12,6 +12,7 @@ import {
   ListItemText,
   Paper,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -22,7 +23,7 @@ import { CssTexField } from "@constants/styles";
 import { useEdit } from "@hook/projects/useEdit";
 import Fab from "@mui/material/Fab";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
+import { MagicMotion } from "react-magic-motion";
 import ClearIcon from "@mui/icons-material/Clear";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useParams } from "react-router-dom";
@@ -59,8 +60,8 @@ function EditProject() {
   const openPopover = Boolean(anchorEl);
   const idPopover = openPopover ? "simple-popover" : undefined;
 
-  const [ proyecto, setPrpyectoImage] = useState("")
-  const [ proyectoEdit, setProyectoEditImage] = useState("")
+  const [proyecto, setPrpyectoImage] = useState("")
+  const [proyectoEdit, setProyectoEditImage] = useState("")
 
   const [uwConfig] = useState({
     cloudName,
@@ -112,7 +113,7 @@ function EditProject() {
         cloudName,
       },
     });
-  
+
     const proyecto = cld.image(publicId);
     const proyectoEdit = cld.image(
       formProject ? formProject.values.link_imagen : ""
@@ -121,7 +122,7 @@ function EditProject() {
     setProyectoEditImage(proyectoEdit);
   }, [publicId])
 
-  
+
 
   const handleInvite = (idUser) => {
     let json = {
@@ -357,23 +358,26 @@ function EditProject() {
             sx={CssTexField}
           />
           <Divider textAlign="right">
-            <Fab
-              size="small"
-              aria-label="edit"
-              onClick={handleAddInput}
-              style={{
-                backgroundColor: "#FFFDFA",
-                boxShadow: "none",
-                zIndex: 0,
-              }}
-            >
-              <AddCircleIcon
-                sx={{
-                  color: "#319795",
-                  fontSize: "35px",
+            <Tooltip title="Agregar objetivo">
+              <Fab
+                size="small"
+                aria-label="edit"
+                onClick={handleAddInput}
+                style={{
+                  backgroundColor: "#FFFDFA",
+                  boxShadow: "none",
+                  zIndex: 0,
                 }}
-              />
-            </Fab>
+              >
+                <AddCircleIcon
+                  sx={{
+                    color: "#319795",
+                    fontSize: "35px",
+                  }}
+                />
+              </Fab>
+            </Tooltip>
+
           </Divider>
           {inputs.map((value, index) => (
             <div
@@ -384,51 +388,57 @@ function EditProject() {
             >
               {
                 inputs.length > 1 && (
-                  <Fab
-                    size="small"
-                    aria-label="add"
-                    onClick={() => handleRemoveInput(index)}
-                    sx={{
-                      backgroundColor: "#FFFDFA",
-                      boxShadow: "none",
-                      marginTop: "22px",
-                    }}
-                  >
-                    <ClearIcon />
-                  </Fab>
+                  <Tooltip title="Eliminar">
+                    <Fab
+                      size="small"
+                      aria-label="add"
+                      onClick={() => handleRemoveInput(index)}
+                      sx={{
+                        backgroundColor: "#FFFDFA",
+                        boxShadow: "none",
+                        marginTop: "22px",
+                      }}
+                    >
+                      <ClearIcon />
+                    </Fab>
+                  </Tooltip>
+
                 )
               }
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  multiline
+                  label="Objetivo Specifico"
+                  autoComplete="current-name"
+                  value={specifics[index]}
+                  onChange={(event) => handleObjectSpecifics(event, index)}
+                  sx={CssTexField}
+                />
 
-              <TextField
-                margin="normal"
-                fullWidth
-                multiline
-                label="Objetivo Specifico"
-                autoComplete="current-name"
-                value={specifics[index]}
-                onChange={(event) => handleObjectSpecifics(event, index)}
-                sx={CssTexField}
-              />
             </div>
           ))}
           <Divider textAlign="right">
-            <Fab
-              size="small"
-              aria-label="edit"
-              onClick={handleAddLink}
-              style={{
-                backgroundColor: "#FFFDFA",
-                boxShadow: "none",
-                zIndex: 0,
-              }}
-            >
-              <AddCircleIcon
-                sx={{
-                  color: "#319795",
-                  fontSize: "35px",
+            <Tooltip title="Agregar referencia">
+              <Fab
+                size="small"
+                aria-label="edit"
+                onClick={handleAddLink}
+                style={{
+                  backgroundColor: "#FFFDFA",
+                  boxShadow: "none",
+                  zIndex: 0,
                 }}
-              />
-            </Fab>
+              >
+                <AddCircleIcon
+                  sx={{
+                    color: "#319795",
+                    fontSize: "35px",
+                  }}
+                />
+              </Fab>
+            </Tooltip>
+
           </Divider>
           {links.map((value, index) => (
             <div
@@ -439,18 +449,21 @@ function EditProject() {
             >
               {
                 links.length > 1 && (
-                  <Fab
-                    size="small"
-                    aria-label="add"
-                    onClick={() => handleRemoveLink(index)}
-                    sx={{
-                      backgroundColor: "#FFFDFA",
-                      boxShadow: "none",
-                      marginTop: "22px",
-                    }}
-                  >
-                    <ClearIcon />
-                  </Fab>
+                  <Tooltip title="Eliminar">
+                    <Fab
+                      size="small"
+                      aria-label="add"
+                      onClick={() => handleRemoveLink(index)}
+                      sx={{
+                        backgroundColor: "#FFFDFA",
+                        boxShadow: "none",
+                        marginTop: "22px",
+                      }}
+                    >
+                      <ClearIcon />
+                    </Fab>
+                  </Tooltip>
+
                 )
               }
               <TextField

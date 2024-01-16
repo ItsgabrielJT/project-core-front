@@ -1,10 +1,20 @@
 import {
+  Avatar,
   Backdrop,
   Box,
   CircularProgress,
+  Fab,
   Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
   Paper,
+  Tooltip,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ButtonOutline from "@components/buttons/ButtonOutline";
@@ -17,6 +27,10 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { useAuth } from "../../context/AuthContext";
 import { useStaticts } from "@hook/securities/useStaticts";
+import SettingsIcon from '@mui/icons-material/Settings';
+import { CustomizedPopover } from "../../assets/statics/constants/styles";
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import LockResetIcon from '@mui/icons-material/LockReset';
 
 const data = [
   {
@@ -48,19 +62,21 @@ function UserPage() {
   const [cloudName] = useState("dnkst5hjn");
   const { id } = useParams();
   const { user } = useAuth();
-  const { profile, loading } = useUser(success, id);
+  const { profile, loading } = useUser(success, id ? id : user.id);
   const { staticts } = useStaticts(success, id);
   const cld = new Cloudinary({
     cloud: {
       cloudName,
     },
   });
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openPopover = Boolean(anchorEl);
+  const idPopover = openPopover ? "simple-popover" : undefined;
 
-  useEffect(() => {
-    console.log(staticts);
-  }, [staticts]);
 
   const myImage = cld.image(profile ? profile.link_image : "");
+  const isSmallScreen = useMediaQuery('(max-width:800px)');
+
 
   const handleOpen = () => {
     setOpen(true);
@@ -68,23 +84,84 @@ function UserPage() {
   };
   const handleClose = () => setOpen(false);
 
+  const handleOpenModal = (event) => {
+    handleClick(event);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClosePopover = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       {profile ? (
         <Grid item xs={12}>
           <EditUser
+            user={profile}
             open={open}
             handleClose={handleClose}
             onSuccess={setSuccess}
           />
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={openPopover}
+            onClose={handleClosePopover}
+            onClick={handleClosePopover}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                overflow: 'visible',
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                mt: 1.5,
+                '& .MuiAvatar-root': {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                '&::before': {
+                  content: '""',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: 'background.paper',
+                  transform: 'translateY(-50%) rotate(45deg)',
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          >
+            <MenuItem onClick={handleOpen}>
+              <ListItemIcon>
+                <ManageAccountsIcon fontSize="small" />
+              </ListItemIcon>
+              Editar pefil
+            </MenuItem>
+            <MenuItem >
+              <ListItemIcon>
+                <LockResetIcon />
+              </ListItemIcon>
+              Editar contraseña
+            </MenuItem>
+
+          </Menu>
 
           <Box
             sx={{
               marginTop: "53px",
-              width: "48%",
               height: "100%",
               backgroundColor: "#FFFDFA",
-              position: "absolute",
+              position: "overflow",
               boxShadow: "none",
               paddingX: "15px",
             }}
@@ -101,7 +178,7 @@ function UserPage() {
                 style={{
                   position: "absolute",
                   top: "90%",
-                  left: "10%",
+                  left: isSmallScreen ? "21%" : "10%",
                   transform: "translate(-50%, -50%)",
                   width: "150px",
                   height: "150px",
@@ -142,7 +219,22 @@ function UserPage() {
               </div>
               <div>
                 {profile.id == user.id && (
-                  <ButtonOutline text={"Editar"} onClick={handleOpen} />
+                  <Tooltip title="Configuraciones">
+                    <Fab
+                      aria-describedby={idPopover}
+                      size="small"
+                      aria-label="edit"
+                      onClick={handleOpenModal}
+                      style={{
+                        boxShadow: "none",
+                        marginRight: "10px",
+                        zIndex: 0
+                      }}
+                    >
+                      <SettingsIcon
+                      />
+                    </Fab>
+                  </Tooltip>
                 )}
               </div>
             </div>
@@ -237,7 +329,7 @@ function UserPage() {
                       </center>
                     </div>
                   );
-                  else if (value.id == "enRevision")
+                else if (value.id == "enRevision")
                   return (
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <div

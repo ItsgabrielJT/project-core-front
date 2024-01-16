@@ -7,21 +7,19 @@ import {
 } from "@constants/styles";
 import Fab from "@mui/material/Fab";
 import ClearIcon from "@mui/icons-material/Clear";
-import { Button, Collapse, TextField } from "@mui/material";
+import { Button, Collapse, Fade, TextField } from "@mui/material";
 import ButtonContained from "@components/buttons/ButtonContained";
-import ModalDialog from "@components/modals/ModalDialog";
 import { useEdit } from "@hook/securities/useEdit";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import CloudinaryUploadWidget from "@components/modals/CloudinaryUpload";
 
-function EditUser({ open, handleClose, onSuccess }) {
+function EditUser({ user, open, handleClose, onSuccess }) {
 
-    const [close, setClose] = useState(false);
     const [publicId, setPublicId] = useState("");
     const [cloudName] = useState("dnkst5hjn");
     const [uploadPreset] = useState("o0bi0kjz");
-    const { formUser } = useEdit(handleClose, onSuccess, publicId);
+    const { formUser } = useEdit(handleClose, onSuccess, publicId,  setPublicId, user, open);
 
 
     const [uwConfig] = useState({
@@ -45,19 +43,16 @@ function EditUser({ open, handleClose, onSuccess }) {
 
     const onClose = () => {
         handleClose();
-        setClose(false);
-        formUser.resetForm();
     };
+
+    const handleChangeNumber = (e) => {
+        if (/^\d*$/.test(e.target.value) && e.target.value.length < 14) {
+          formUser.handleChange(e)
+        }
+      }
 
     return (
         <>
-
-            <ModalDialog
-                title={"Quieres descartar los cambios ?"}
-                open={close}
-                onClose={() => setClose(false)}
-                onConfirm={onClose}
-            />
             <Modal
                 aria-labelledby="unstyled-modal-title"
                 aria-describedby="unstyled-modal-description"
@@ -65,6 +60,7 @@ function EditUser({ open, handleClose, onSuccess }) {
                 closeAfterTransition
                 slots={{ backdrop: StyledBackdrop }}
             >
+                <Fade in={open}>
                 <ModalContent sx={{ width: 450 }}>
                     <form onSubmit={formUser.handleSubmit}>
 
@@ -76,7 +72,7 @@ function EditUser({ open, handleClose, onSuccess }) {
                                     <Fab
                                         size="small"
                                         aria-label="add"
-                                        onClick={() => setClose(true)}
+                                        onClick={onClose}
                                         sx={{
                                             backgroundColor: "#FFFDFA",
                                             boxShadow: "none",
@@ -105,6 +101,7 @@ function EditUser({ open, handleClose, onSuccess }) {
                                         width: "120px",
                                         height: "120px",
                                         objectFit: "cover",
+                                        backgroundColor: '#F2F1EE',
                                         borderRadius: "50%",
                                         overflow: "hidden",
                                     }}
@@ -160,7 +157,7 @@ function EditUser({ open, handleClose, onSuccess }) {
                                     id="numero_celular"
                                     autoComplete="current-numero_celular"
                                     value={formUser.values.numero_celular}
-                                    onChange={formUser.handleChange}
+                                    onChange={handleChangeNumber}
                                     onBlur={formUser.handleBlur}
                                     error={
                                         formUser.touched.numero_celular &&
@@ -172,31 +169,14 @@ function EditUser({ open, handleClose, onSuccess }) {
                                     }
                                     sx={CssTexField}
                                 />
-                                <TextField
-                                    margin="normal"
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                    value={formUser.values.password}
-                                    onChange={formUser.handleChange}
-                                    onBlur={formUser.handleBlur}
-                                    error={
-                                        formUser.touched.password &&
-                                        Boolean(formUser.errors.password)
-                                    }
-                                    helperText={
-                                        formUser.touched.password &&
-                                        formUser.errors.password
-                                    }
-                                    sx={CssTexField}
-                                />
+                                
                             </div>
                         </div>
 
                     </form>
                 </ModalContent>
+                </Fade>
+               
             </Modal>
         </>
     )

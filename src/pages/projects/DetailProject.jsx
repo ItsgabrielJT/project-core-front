@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -45,8 +46,8 @@ function DetailProject() {
   const [openModal, setOpenModal] = useState(false);
   const [success, setSuccess] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [ perfil, setPerfilImage] = useState("")
-  const [ proyecto, setProyectoImage] = useState("")
+  const [perfil, setPerfilImage] = useState("")
+  const [proyecto, setProyectoImage] = useState("")
 
   const openPopover = Boolean(anchorEl);
   const idPopover = openPopover ? "simple-popover" : undefined;
@@ -90,7 +91,7 @@ function DetailProject() {
 
   const handleCloseModal = () => setOpenModal(false);
 
-  
+
 
   useEffect(() => {
     const cld = new Cloudinary({
@@ -103,7 +104,7 @@ function DetailProject() {
     setPerfilImage(perfil)
     setProyectoImage(proyecto)
   }, [project])
-    
+
 
   return (
     <Grid item xs={12}>
@@ -283,33 +284,8 @@ function DetailProject() {
                         : "En revision"}
                 </Typography>
               </div>
-              {/* <Button
-                style={{
-                  color: "white",
-                  width: "110px",
-                  height: "30px",
-                  marginTop: '15px'
-                }}
-                sx={CssButtonContained}
-              >
-                <PersonAddIcon />
-                Invitar
-              </Button> */}
 
-              <Button
-                aria-describedby={idPopover}
-                style={{
-                  color: "white",
-                  width: "170px",
-                  height: "30px",
-                  marginTop: '15px'
-                }}
-                onClick={handleOpenModal}
-                sx={CssButtonContained}
-              >
-                <GroupIcon />
-                Colaboradores
-              </Button>
+
               {project.userId == idLogin && (
                 <>
 
@@ -320,34 +296,63 @@ function DetailProject() {
                       marginTop: "15px",
                     }}
                   >
-                    <Fab
-                      size="small"
-                      aria-label="edit"
-                      onClick={editProject}
-                      style={{
-                        backgroundColor: "#FFFDFA",
-                        boxShadow: "none",
-                        zIndex: 0,
-                      }}
-                    >
-                      <CreateIcon />
-                    </Fab>
-                    <Fab
-                      size="small"
-                      aria-label="edit"
-                      onClick={() => setOpen(true)}
-                      style={{
-                        backgroundColor: "#FFFDFA",
-                        boxShadow: "none",
-                        zIndex: 0,
-                      }}
-                    >
-                      <DeleteIcon
-                        sx={{
-                          color: "#DC3545",
+                    <Tooltip title="Colaboradores">
+                      <Fab
+                        aria-describedby={idPopover}
+
+                        size="small"
+                        aria-label="edit"
+                        onClick={handleOpenModal}
+                        style={{
+                          backgroundColor: "#E1F9F3",
+                          boxShadow: "none",
+                          zIndex: 0,
+                  marginRight: "10px",
+
                         }}
-                      />
-                    </Fab>
+                      >
+                        <GroupIcon
+                          sx={{
+                            color: "#319795",
+                          }}
+                        />
+                      </Fab>
+                    </Tooltip>
+                    <Tooltip title="Editar">
+                      <Fab
+                        size="small"
+                        aria-label="edit"
+                        onClick={editProject}
+                        style={{
+                          boxShadow: "none",
+                          zIndex: 0,
+                  marginRight: "10px",
+
+                        }}
+                      >
+                        <CreateIcon />
+                      </Fab>
+                    </Tooltip>
+                    <Tooltip title="Eliminar">
+                      <Fab
+                        size="small"
+                        aria-label="edit"
+                        onClick={() => setOpen(true)}
+                        style={{
+                          backgroundColor: "#FFB1B8",
+                          boxShadow: "none",
+                          zIndex: 0,
+                        }}
+                      >
+                        <DeleteIcon
+                          sx={{
+                            color: "#DC3545",
+                          }}
+                        />
+                      </Fab>
+                    </Tooltip>
+
+
                   </div>
                 </>
               )}

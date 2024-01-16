@@ -2,18 +2,17 @@ import { useFormik } from "formik"
 import * as yup from 'yup';
 import notificationService from "@services/notificationService"
 import { accountService } from "@services/account/accountService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const FORM_VALUES = {
-    password: "",
     universidad: "",
     carrera: "",
     numero_celular: "",
     link_imagen_perfil: "",
 }
 
-export const useEdit = (handleClose, onSuccess, image) => {
+export const useEdit = (handleClose, onSuccess, image, onImage, user, open) => {
 
 
 
@@ -21,11 +20,15 @@ export const useEdit = (handleClose, onSuccess, image) => {
 
         universidad: yup
             .string('Enter your institute')
-            .required('Institute is required'),
+            .required('La universidad es requerida'),
 
         carrera: yup
             .string('Enter your carrer')
-            .required('Carrer is required'),
+            .required('La carrera es requerida'),
+
+        numero_celular: yup
+         .string('Enter your phone number')
+         .required('El numero de celular es requerido'),
     });
 
     const formUser = useFormik({
@@ -43,7 +46,6 @@ export const useEdit = (handleClose, onSuccess, image) => {
                 .then((res) => {
                     if (res.data.status) {
                         handleClose()
-                        formUser.resetForm();
                         notificationService.success("Perfil actualizado")
                         onSuccess(true);
                     }
@@ -53,6 +55,18 @@ export const useEdit = (handleClose, onSuccess, image) => {
                 })
         }
     });
+
+    useEffect(() => {
+        if (user != null) {
+            formUser.setValues({
+                universidad: user.university_name,
+                carrera: user.career,
+                numero_celular: user.cellphone_number,
+                link_imagen_perfil: user.link_image
+            })
+            onImage(user.link_image)
+        }
+    }, [open])
 
 
     return {

@@ -76,7 +76,7 @@ function RegisterPage({ open, handleClose }) {
   }
 
   const handleChangeNumber = (e) => {
-    if (/^\d*$/.test(e.target.value) && e.target.value.length < 11) {
+    if (/^\d*$/.test(e.target.value) && e.target.value.length < 14) {
       formRegister.handleChange(e)
     }
   }
