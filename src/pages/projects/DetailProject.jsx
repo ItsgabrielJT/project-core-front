@@ -263,7 +263,7 @@ function DetailProject() {
               >
                 <div
                   style={{
-                    backgroundColor: "orange",
+                    backgroundColor: `${project.color}`,
                     width: "20px",
                     height: "20px",
                     borderRadius: "50px",

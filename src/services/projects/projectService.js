@@ -59,7 +59,11 @@ export const projectService = {
 
   deleteProject: async function (id) {
     try {
-      const res = await axios.delete(URL_BASE + "api/eliminar-proyecto/" + id);
+      const { token } = JSON.parse(localStorage.getItem("user"));
+      const res = await axios.delete(URL_BASE + "api/eliminar-proyecto/" + id, {
+        headers: { Authorization: "Bearer " + token },
+
+      });
       return res;
     } catch (error) {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");

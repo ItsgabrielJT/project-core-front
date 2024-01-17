@@ -20,12 +20,14 @@ export const useUserProjects = (success, onSuccess) => {
                             idProject: item.id,
                             title_project: item.title_project,
                             estado: item.state,
+                            color: item.state == 1 ? '#63CFDB' : item.state == 2 ? '#DC8B4C' : item.state == 3 ? '#DC3B54' : '#95DB68',
                             userId: item.users[0].id,
                             full_name: item.users[0].full_name,
                             link_image: item.users[0].link_image,
                             occupation: item.users[0].occupation
                         })
                     })
+                    console.log(data)
                     setProjects(data)
                     onSuccess(false)
                 }

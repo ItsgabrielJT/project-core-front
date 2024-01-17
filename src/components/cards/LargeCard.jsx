@@ -17,7 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
 
-function LargeCard({ title, state, handleDetail, handleDelete, handleEdit, ...props }) {
+function LargeCard({ title, state, color, handleDetail, handleDelete, handleEdit, ...props }) {
 
   const isSmallScreen = useMediaQuery('(max-width:900px)');
 
@@ -43,7 +43,7 @@ function LargeCard({ title, state, handleDetail, handleDelete, handleEdit, ...pr
           >
             <div
               style={{
-                backgroundColor: "orange",
+                backgroundColor: `${color}`,
                 width: "20px",
                 height: "20px",
                 borderRadius: "50px",

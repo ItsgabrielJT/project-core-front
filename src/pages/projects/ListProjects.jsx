@@ -77,6 +77,7 @@ function ListProjects() {
                 key={index}
                 title={item.title_project}
                 state={item.estado}
+                color={item.color}
                 handleDetail={() => handleDetail(item.idProject)}
                 handleDelete={() => openModal(item.idProject)}
                 handleEdit={() => editProject(item.idProject)}

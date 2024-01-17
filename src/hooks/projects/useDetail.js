@@ -19,6 +19,7 @@ export const useDetail = (id = null) => {
                             title_project: res.data.proyecto.title_project,
                             fecha: res.data.proyecto.updatedAt,
                             state: res.data.proyecto.state,
+                            color: res.data.proyecto.state == 1 ? '#63CFDB' : res.data.proyecto.state == 2 ? '#DC8B4C' : res.data.proyecto.state == 3 ? '#DC3B54' : '#95DB68',
                             description: res.data.proyecto.description,
                             link_image_project: res.data.proyecto.link_image,
                             scope: res.data.proyecto.scope,
