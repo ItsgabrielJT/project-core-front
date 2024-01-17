@@ -55,7 +55,8 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
                 sx={{
                     margin: "10px 0px 20px 0px",
                     fontSize: "12px",
-                    boxShadow: 'none'
+                    boxShadow: 'none',
+                    zIndex: 0
                 }}
             >
                 <AddAPhotoIcon sx={{

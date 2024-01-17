@@ -31,6 +31,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { CustomizedPopover } from "../../assets/statics/constants/styles";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LockResetIcon from '@mui/icons-material/LockReset';
+import EditPassword from "./EditPassword";
 
 const data = [
   {
@@ -58,6 +59,7 @@ const data = [
 
 function UserPage() {
   const [open, setOpen] = useState(false);
+  const [openPassword, setOpenPassword] = useState(false);
   const [success, setSuccess] = useState(false);
   const [cloudName] = useState("dnkst5hjn");
   const { id } = useParams();
@@ -84,6 +86,12 @@ function UserPage() {
   };
   const handleClose = () => setOpen(false);
 
+  const handleOpenPassword = () => {
+    setOpenPassword(true);
+    setSuccess(false);
+  };
+  const handleClosePassword = () => setOpenPassword(false);
+
   const handleOpenModal = (event) => {
     handleClick(event);
   };
@@ -104,6 +112,13 @@ function UserPage() {
             user={profile}
             open={open}
             handleClose={handleClose}
+            onSuccess={setSuccess}
+          />
+
+          <EditPassword
+            user={profile}
+            open={openPassword}
+            handleClose={handleClosePassword}
             onSuccess={setSuccess}
           />
           <Menu
@@ -147,7 +162,7 @@ function UserPage() {
               </ListItemIcon>
               Editar pefil
             </MenuItem>
-            <MenuItem >
+            <MenuItem onClick={handleOpenPassword}>
               <ListItemIcon>
                 <LockResetIcon />
               </ListItemIcon>

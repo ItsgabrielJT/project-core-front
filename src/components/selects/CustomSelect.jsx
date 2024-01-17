@@ -167,14 +167,9 @@ function CustomOption(props) {
     );
 }
 
-CustomOption.propTypes = {
-    children: PropTypes.node,
-    className: PropTypes.string,
-    disabled: PropTypes.bool,
-    value: PropTypes.string.isRequired,
-};
+    
 
-export default function CustomSelect({ options, placeholder, onSelect }) {
+export default function CustomSelect({ options, placeholder, onSelect, item = null }) {
     const listboxRef = React.useRef(null);
     const [listboxVisible, setListboxVisible] = React.useState(false);
 
@@ -193,7 +188,7 @@ export default function CustomSelect({ options, placeholder, onSelect }) {
     return (
         <Root>
             <Toggle {...getButtonProps()} style={{ '--color': value }}>
-                {renderSelectedValue(value, options) || (
+                {renderSelectedValue(item ? item : value, options) || (
                     <span className="placeholder">{placeholder ?? ' '}</span>
                 )}
 

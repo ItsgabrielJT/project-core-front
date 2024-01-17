@@ -7,7 +7,7 @@ import {
 } from "@constants/styles";
 import Fab from "@mui/material/Fab";
 import ClearIcon from "@mui/icons-material/Clear";
-import { Button, Collapse, Fade, TextField } from "@mui/material";
+import { Alert, Button, Collapse, Fade, Snackbar, TextField } from "@mui/material";
 import ButtonContained from "@components/buttons/ButtonContained";
 import { useEdit } from "@hook/securities/useEdit";
 import { Cloudinary } from "@cloudinary/url-gen";
@@ -19,7 +19,14 @@ function EditUser({ user, open, handleClose, onSuccess }) {
     const [publicId, setPublicId] = useState("");
     const [cloudName] = useState("dnkst5hjn");
     const [uploadPreset] = useState("o0bi0kjz");
-    const { formUser } = useEdit(handleClose, onSuccess, publicId,  setPublicId, user, open);
+    const {
+        formUser,
+        vertical,
+        horizontal,
+        openSnack,
+        message,
+        handleCloseSnack
+    } = useEdit(handleClose, onSuccess, publicId, setPublicId, user, open);
 
 
     const [uwConfig] = useState({
@@ -47,12 +54,22 @@ function EditUser({ user, open, handleClose, onSuccess }) {
 
     const handleChangeNumber = (e) => {
         if (/^\d*$/.test(e.target.value) && e.target.value.length < 14) {
-          formUser.handleChange(e)
+            formUser.handleChange(e)
         }
-      }
+    }
 
     return (
         <>
+            <Snackbar
+                anchorOrigin={{ vertical, horizontal }}
+                open={openSnack}
+                onClose={handleCloseSnack}
+                key={vertical + horizontal}
+            >
+                <Alert onClose={handleCloseSnack} severity="warning" sx={{ width: '100%' }}>
+                    {message}
+                </Alert>
+            </Snackbar>
             <Modal
                 aria-labelledby="unstyled-modal-title"
                 aria-describedby="unstyled-modal-description"
@@ -61,122 +78,102 @@ function EditUser({ user, open, handleClose, onSuccess }) {
                 slots={{ backdrop: StyledBackdrop }}
             >
                 <Fade in={open}>
-                <ModalContent sx={{ width: 450 }}>
-                    <form onSubmit={formUser.handleSubmit}>
+                    <ModalContent sx={{ width: 450 }}>
+                        <form onSubmit={formUser.handleSubmit}>
 
-                        <div>
-                            <div
-                                style={{ display: "flex", justifyContent: "space-between" }}
-                            >
-                                <div>
-                                    <Fab
-                                        size="small"
-                                        aria-label="add"
-                                        onClick={onClose}
-                                        sx={{
-                                            backgroundColor: "#FFFDFA",
-                                            boxShadow: "none",
-                                        }}
-                                    >
-                                        <ClearIcon />
-                                    </Fab>
-                                    <h2 id="unstyled-modal-title" className="modal-title" style={{ marginLeft: '10px' }}>
-                                        Editar perfil
-                                    </h2>
+                            <div>
+                                <div
+                                    style={{ display: "flex", justifyContent: "space-between" }}
+                                >
+                                    <div>
+                                        <Fab
+                                            size="small"
+                                            aria-label="add"
+                                            onClick={onClose}
+                                            sx={{
+                                                backgroundColor: "#FFFDFA",
+                                                boxShadow: "none",
+                                            }}
+                                        >
+                                            <ClearIcon />
+                                        </Fab>
+                                        <h2 id="unstyled-modal-title" className="modal-title" style={{ marginLeft: '10px' }}>
+                                            Editar perfil
+                                        </h2>
+                                    </div>
+                                    <ButtonContained
+                                        type='submit'
+                                        text={"Guardar"} style={{
+                                            height: '37px',
+                                            width: '115px',
+                                            marginTop: '32px'
+                                        }} />
+
+
                                 </div>
-                                <ButtonContained
-                                    type='submit'
-                                    text={"Guardar"} style={{
-                                        height: '37px',
-                                        width: '115px',
-                                        marginTop: '32px'
-                                    }} />
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
+                                    <AdvancedImage
+                                        style={{
+                                            width: "120px",
+                                            height: "120px",
+                                            objectFit: "cover",
+                                            backgroundColor: '#F2F1EE',
+                                            borderRadius: "50%",
+                                            overflow: "hidden",
+                                        }}
+                                        cldImg={myImage}
+                                        plugins={[responsive(), placeholder()]}
+                                    />
+                                    <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} />
 
+                                    <TextField
+                                        margin="normal"
+                                        fullWidth
+                                        name="universidad"
+                                        label="Universidad"
+                                        id="universidad"
+                                        autoComplete="current-name"
+                                        value={formUser.values.universidad}
+                                        onChange={formUser.handleChange}
+                                        onBlur={formUser.handleBlur}
+                                       
+                                        sx={CssTexField}
+                                    />
+                                    <TextField
+                                        margin="normal"
+                                        fullWidth
+                                        name="carrera"
+                                        label="Carrera"
+                                        id="carrera"
+                                        autoComplete="current-carrera"
+                                        value={formUser.values.carrera}
+                                        onChange={formUser.handleChange}
+                                        onBlur={formUser.handleBlur}
+                                       
+                                        sx={CssTexField}
+                                    />
+                                    <TextField
+                                        margin="normal"
+                                        fullWidth
+                                        name="numero_celular"
+                                        label="Numero celular"
+                                        id="numero_celular"
+                                        autoComplete="current-numero_celular"
+                                        value={formUser.values.numero_celular}
+                                        onChange={handleChangeNumber}
+                                        onBlur={formUser.handleBlur}
+                                       
+                                        sx={CssTexField}
+                                    />
+
+                                </div>
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
-                                <AdvancedImage
-                                    style={{
-                                        width: "120px",
-                                        height: "120px",
-                                        objectFit: "cover",
-                                        backgroundColor: '#F2F1EE',
-                                        borderRadius: "50%",
-                                        overflow: "hidden",
-                                    }}
-                                    cldImg={myImage}
-                                    plugins={[responsive(), placeholder()]}
-                                />
-                                <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} />
-
-                                <TextField
-                                    margin="normal"
-                                    fullWidth
-                                    name="universidad"
-                                    label="Universidad"
-                                    id="universidad"
-                                    autoComplete="current-name"
-                                    value={formUser.values.universidad}
-                                    onChange={formUser.handleChange}
-                                    onBlur={formUser.handleBlur}
-                                    error={
-                                        formUser.touched.universidad &&
-                                        Boolean(formUser.errors.universidad)
-                                    }
-                                    helperText={
-                                        formUser.touched.universidad &&
-                                        formUser.errors.universidad
-                                    }
-                                    sx={CssTexField}
-                                />
-                                <TextField
-                                    margin="normal"
-                                    fullWidth
-                                    name="carrera"
-                                    label="Carrera"
-                                    id="carrera"
-                                    autoComplete="current-carrera"
-                                    value={formUser.values.carrera}
-                                    onChange={formUser.handleChange}
-                                    onBlur={formUser.handleBlur}
-                                    error={
-                                        formUser.touched.carrera &&
-                                        Boolean(formUser.errors.carrera)
-                                    }
-                                    helperText={
-                                        formUser.touched.carrera && formUser.errors.carrera
-                                    }
-                                    sx={CssTexField}
-                                />
-                                <TextField
-                                    margin="normal"
-                                    fullWidth
-                                    name="numero_celular"
-                                    label="Numero celular"
-                                    id="numero_celular"
-                                    autoComplete="current-numero_celular"
-                                    value={formUser.values.numero_celular}
-                                    onChange={handleChangeNumber}
-                                    onBlur={formUser.handleBlur}
-                                    error={
-                                        formUser.touched.numero_celular &&
-                                        Boolean(formUser.errors.numero_celular)
-                                    }
-                                    helperText={
-                                        formUser.touched.numero_celular &&
-                                        formUser.errors.numero_celular
-                                    }
-                                    sx={CssTexField}
-                                />
-                                
-                            </div>
-                        </div>
-
-                    </form>
-                </ModalContent>
+                        </form>
+                    </ModalContent>
                 </Fade>
-               
+
             </Modal>
         </>
     )

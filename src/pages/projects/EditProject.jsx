@@ -7,6 +7,7 @@ import {
   Divider,
   Grid,
   IconButton,
+  InputLabel,
   List,
   ListItem,
   ListItemText,
@@ -34,6 +35,28 @@ import { CustomizedPopover } from "../../assets/statics/constants/styles";
 import { useUsers } from "@hook/colaborators/useUsers";
 import notificationService from "@services/notificationService";
 import { colaboratorService } from "@services/colaborators/colaboratorService";
+import CustomSelect from "@components/selects/CustomSelect";
+
+
+const options = [
+  {
+    label: 'Iniciando',
+    value: 1,
+  },
+  {
+    label: 'En proceso',
+    value: 2,
+  },
+  {
+    label: 'Finalizado',
+    value: 3,
+  },
+  {
+    label: 'En revision',
+    value: 4,
+  },
+
+];
 
 function EditProject() {
   const { id } = useParams();
@@ -60,8 +83,6 @@ function EditProject() {
   const openPopover = Boolean(anchorEl);
   const idPopover = openPopover ? "simple-popover" : undefined;
 
-  const [proyecto, setPrpyectoImage] = useState("")
-  const [proyectoEdit, setProyectoEditImage] = useState("")
 
   const [uwConfig] = useState({
     cloudName,
@@ -107,22 +128,20 @@ function EditProject() {
     cleanReferences(index);
   };
 
-  useEffect(() => {
-    const cld = new Cloudinary({
-      cloud: {
-        cloudName,
-      },
-    });
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName,
+    },
+  });
 
-    const proyecto = cld.image(publicId);
-    const proyectoEdit = cld.image(
-      formProject ? formProject.values.link_imagen : ""
-    );
-    setPrpyectoImage(proyecto);
-    setProyectoEditImage(proyectoEdit);
-  }, [publicId])
+  const proyecto = cld.image(publicId);
+  const proyectoEdit = cld.image(
+    id ? formProject.values.link_imagen : ""
+  );
 
-
+  const handleSelectOcupacion = (e) => {
+    formProject.setFieldValue("estado", e)
+  }
 
   const handleInvite = (idUser) => {
     let json = {
@@ -225,19 +244,21 @@ function EditProject() {
             plugins={[responsive(), placeholder()]}
           />
         ) : (
-          <AdvancedImage
-            style={{
-              width: "100%",
-              height: "290px",
-              marginRight: "10px",
-              backgroundColor: "#F2F1EE",
-              objectFit: "cover",
-              borderRadius: "30px",
-              overflow: "hidden",
-            }}
-            cldImg={proyectoEdit}
-            plugins={[responsive(), placeholder()]}
-          />
+          <>
+            <AdvancedImage
+              style={{
+                width: "100%",
+                height: "290px",
+                marginRight: "10px",
+                backgroundColor: "#F2F1EE",
+                objectFit: "cover",
+                borderRadius: "30px",
+                overflow: "hidden",
+              }}
+              cldImg={proyectoEdit}
+              plugins={[responsive(), placeholder()]}
+            />
+          </>
         )}
 
         <Grid
@@ -247,17 +268,14 @@ function EditProject() {
             marginTop: "10px",
           }}
         >
-          <div
-            style={{
-              justifyContent: "end",
-            }}
-          >
+          <div>
             <div
               style={{
                 display: "flex",
                 justifyContent: "end",
               }}
             >
+
               {id && (
                 <ButtonContained
                   onClick={handleOpenModal}
@@ -280,6 +298,20 @@ function EditProject() {
               />
             </div>
           </div>
+          {
+            id && (
+              <div style={{ marginTop: "20px" }}>
+                <InputLabel id="label" sx={{ fontSize: 12, marginLeft: "15px" }}>Estado</InputLabel>
+                <CustomSelect
+                  placeholder="Selecciona un estado"
+                  options={options}
+                  item={formProject.values.estado}
+                  onSelect={handleSelectOcupacion}
+                />
+              </div>
+
+            )
+          }
           <TextField
             margin="normal"
             fullWidth
@@ -405,16 +437,16 @@ function EditProject() {
 
                 )
               }
-                <TextField
-                  margin="normal"
-                  fullWidth
-                  multiline
-                  label="Objetivo Specifico"
-                  autoComplete="current-name"
-                  value={specifics[index]}
-                  onChange={(event) => handleObjectSpecifics(event, index)}
-                  sx={CssTexField}
-                />
+              <TextField
+                margin="normal"
+                fullWidth
+                multiline
+                label="Objetivo Specifico"
+                autoComplete="current-name"
+                value={specifics[index]}
+                onChange={(event) => handleObjectSpecifics(event, index)}
+                sx={CssTexField}
+              />
 
             </div>
           ))}

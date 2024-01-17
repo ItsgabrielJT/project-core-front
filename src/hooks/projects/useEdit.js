@@ -33,7 +33,7 @@ export const useEdit = (id = null, image, setPublicId) => {
             .string('Enter your carrer')
             .required('El alcance es requerido'),
         objetivos_generales: yup
-            .array('Enter your phone number')
+            .string('Enter your phone number')
             .required('El obejtivo general es requerido'),
     });
 
