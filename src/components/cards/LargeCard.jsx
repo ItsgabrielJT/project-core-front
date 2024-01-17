@@ -31,6 +31,7 @@ function LargeCard({ title, state, color, handleDetail, handleDelete, handleEdit
         borderBottom: "2px solid #D9D9D9",
         borderRadius: "30px",
         padding: "40px 35px 15px 25px",
+        zIndex: 0
       }}
     >
       <Grid container>
@@ -86,7 +87,7 @@ function LargeCard({ title, state, color, handleDetail, handleDelete, handleEdit
                 style={{
                   boxShadow: "none",
                   marginRight: "10px",
-
+                  zIndex: 0
                 }}
               >
                 <CreateIcon />
@@ -100,6 +101,7 @@ function LargeCard({ title, state, color, handleDetail, handleDelete, handleEdit
                 style={{
                   backgroundColor: "#FFB1B8",
                   boxShadow: "none",
+                  zIndex: 0
                 }}
               >
                 <DeleteIcon
@@ -118,6 +120,7 @@ function LargeCard({ title, state, color, handleDetail, handleDelete, handleEdit
                   backgroundColor: "#E1F9F3",
                   marginLeft: "10px",
                   boxShadow: "none",
+                  zIndex: 0
                 }}
               >
                 <ContentPasteSearchIcon

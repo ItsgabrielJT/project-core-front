@@ -32,28 +32,108 @@ import { CustomizedPopover } from "../../assets/statics/constants/styles";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import EditPassword from "./EditPassword";
+import { BarChart } from '@mui/x-charts/BarChart';
+import { axisClasses } from '@mui/x-charts';
 
-const data = [
+
+const chartSetting = {
+  yAxis: [
+    {
+      label: 'rainfall (mm)',
+    },
+  ],
+  height: 300,
+  sx: {
+    [`.${axisClasses.left} .${axisClasses.label}`]: {
+      transform: 'translate(-20px, 0)',
+    },
+  },
+};
+
+const dataset = [
   {
-    iniciado: 1,
-    enProceso: 0,
-    enRevision: 1,
-    finalizado: 0,
-    mes: "Enero",
+    london: 59,
+    paris: 57,
+    newYork: 86,
+    seoul: 21,
+    month: 'Jan',
   },
   {
-    iniciado: 0,
-    enProceso: 0,
-    enRevision: 0,
-    finalizado: 0,
-    mes: "Febrero",
+    london: 50,
+    paris: 52,
+    newYork: 78,
+    seoul: 28,
+    month: 'Fev',
   },
   {
-    iniciado: 0,
-    enProceso: 0,
-    enRevision: 0,
-    finalizado: 0,
-    mes: "Marzo",
+    london: 47,
+    paris: 53,
+    newYork: 106,
+    seoul: 41,
+    month: 'Mar',
+  },
+  {
+    london: 54,
+    paris: 56,
+    newYork: 92,
+    seoul: 73,
+    month: 'Apr',
+  },
+  {
+    london: 57,
+    paris: 69,
+    newYork: 92,
+    seoul: 99,
+    month: 'May',
+  },
+  {
+    london: 60,
+    paris: 63,
+    newYork: 103,
+    seoul: 144,
+    month: 'June',
+  },
+  {
+    london: 59,
+    paris: 60,
+    newYork: 105,
+    seoul: 319,
+    month: 'July',
+  },
+  {
+    london: 65,
+    paris: 60,
+    newYork: 106,
+    seoul: 249,
+    month: 'Aug',
+  },
+  {
+    london: 51,
+    paris: 51,
+    newYork: 95,
+    seoul: 131,
+    month: 'Sept',
+  },
+  {
+    london: 60,
+    paris: 65,
+    newYork: 97,
+    seoul: 55,
+    month: 'Oct',
+  },
+  {
+    london: 67,
+    paris: 64,
+    newYork: 76,
+    seoul: 48,
+    month: 'Nov',
+  },
+  {
+    london: 61,
+    paris: 70,
+    newYork: 103,
+    seoul: 25,
+    month: 'Dec',
   },
 ];
 
@@ -65,7 +145,8 @@ function UserPage() {
   const { id } = useParams();
   const { user } = useAuth();
   const { profile, loading } = useUser(success, id ? id : user.id);
-  const { staticts } = useStaticts(success, id);
+  const { staticts } = useStaticts(success, id ? id : user.id);
+
   const cld = new Cloudinary({
     cloud: {
       cloudName,
@@ -103,6 +184,8 @@ function UserPage() {
   const handleClosePopover = () => {
     setAnchorEl(null);
   };
+
+  const valueFormatter = (value) => `${value} proyecto`;
 
   return (
     <>
@@ -276,145 +359,21 @@ function UserPage() {
               <Typography variant="h6" sx={{ marginBottom: "20px" }}>
                 Estadisticas
               </Typography>
+              <BarChart
+                dataset={staticts ? staticts : dataset}
+                xAxis={[{ scaleType: 'band', dataKey: 'mes' }]}
+                margin={{ top: 80, left: 10, right: 30, bottom: 20 }}
+                width={isSmallScreen ? 300 : 650}
+                series={[
+                  { dataKey: 'iniciado', label: 'Iniciado', valueFormatter },
+                  { dataKey: 'enProceso', label: 'En proceso', valueFormatter },
+                  { dataKey: 'finalizado', label: 'Finalizado', valueFormatter },
+                  { dataKey: 'enRevision', label: 'En revision', valueFormatter },
+                ]}
+                {...chartSetting}
+              />
             </div>
-            <ResponsiveBar
-              data={staticts ? staticts : []}
-              height={300}
-              keys={["iniciado", "enProceso", "enRevision", "finalizado"]}
-              indexBy="mes"
-              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-              padding={0.3}
-              valueScale={{ type: "linear" }}
-              indexScale={{ type: "band", round: true }}
-              colors={{ scheme: "nivo" }}
-              borderColor={{
-                from: "color",
-                modifiers: [["darker", 1.6]],
-              }}
-              tooltip={(value) => {
-                console.log(value);
-                if (value.id == "iniciado")
-                  return (
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <div
-                        style={{
-                          width: "12px",
-                          height: "12px",
-                          background: value.color,
-                          marginRight: "5px",
-                        }}
-                      ></div>
-                      <center>
-                        Iniciados - {value.indexValue}:{" "}
-                        <b>{value.data.iniciado}</b>
-                      </center>
-                    </div>
-                  );
-                else if (value.id == "finalizado")
-                  return (
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <div
-                        style={{
-                          width: "12px",
-                          height: "12px",
-                          background: value.color,
-                          marginRight: "5px",
-                        }}
-                      ></div>
-                      <center>
-                        Finalizados - {value.indexValue}:{" "}
-                        <b>{value.data.finalizado}</b>
-                      </center>
-                    </div>
-                  );
-                else if (value.id == "enProceso")
-                  return (
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <div
-                        style={{
-                          width: "12px",
-                          height: "12px",
-                          background: value.color,
-                          marginRight: "5px",
-                        }}
-                      ></div>
-                      <center>
-                        En Proceso - {value.indexValue}:{" "}
-                        <b>{value.data.enProceso}</b>
-                      </center>
-                    </div>
-                  );
-                else if (value.id == "enRevision")
-                  return (
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <div
-                        style={{
-                          width: "12px",
-                          height: "12px",
-                          background: value.color,
-                          marginRight: "5px",
-                        }}
-                      ></div>
-                      <center>
-                        En Revision - {value.indexValue}:{" "}
-                        <b>{value.data.enRevision}</b>
-                      </center>
-                    </div>
-                  );
-              }}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={{
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: "MESES",
-                legendPosition: "middle",
-                legendOffset: 32,
-                truncateTickAt: 0,
-              }}
-              axisLeft={{
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: "PROYECTOS",
-                legendPosition: "middle",
-                legendOffset: -40,
-                truncateTickAt: 0,
-              }}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              labelTextColor={{
-                from: "color",
-                modifiers: [["darker", 1.6]],
-              }}
-              legends={[
-                {
-                  dataFrom: "keys",
-                  anchor: "bottom-right",
-                  direction: "column",
-                  justify: false,
-                  translateX: 120,
-                  translateY: 0,
-                  itemsSpacing: 2,
-                  itemWidth: 100,
-                  itemHeight: 20,
-                  itemDirection: "left-to-right",
-                  itemOpacity: 0.85,
-                  symbolSize: 20,
-                  effects: [
-                    {
-                      on: "hover",
-                      style: {
-                        itemOpacity: 1,
-                      },
-                    },
-                  ],
-                },
-              ]}
-              role="application"
-              ariaLabel="Nivo bar chart demo"
-            />
+
           </Box>
         </Grid>
       ) : (

@@ -23,7 +23,7 @@ export const useNotifications = (success, onSuccess) => {
                             projectId: item.projectId,
                             collaborator_userId: item.collaborator_userId,
                             full_name: item.owner.full_name,
-                            type: content.includes("pedido") ? "pedido" : "solicitado"
+                            type: item.tipo
                         })
                     })
                     setNotifications(data)

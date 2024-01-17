@@ -14,7 +14,6 @@ export const useStaticts = (success, id = null) => {
         .then((res) => {
             let data = []
             let iniciado, enProceso, finalizado, enRevision
-            let mes = ["Enero", "Febrero", "Marzo"]
 
             res.data.proyectos.map((item) => {
                 if (item.estado == 1) {

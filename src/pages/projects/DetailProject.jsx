@@ -284,7 +284,28 @@ function DetailProject() {
                         : "En revision"}
                 </Typography>
               </div>
+              <Tooltip title="Colaboradores">
+                <Fab
+                  aria-describedby={idPopover}
 
+                  size="small"
+                  aria-label="edit"
+                  onClick={handleOpenModal}
+                  style={{
+                    backgroundColor: "#E1F9F3",
+                    boxShadow: "none",
+                    zIndex: 0,
+                    marginRight: "10px",
+
+                  }}
+                >
+                  <GroupIcon
+                    sx={{
+                      color: "#319795",
+                    }}
+                  />
+                </Fab>
+              </Tooltip>
 
               {project.userId == idLogin && (
                 <>
@@ -296,28 +317,7 @@ function DetailProject() {
                       marginTop: "15px",
                     }}
                   >
-                    <Tooltip title="Colaboradores">
-                      <Fab
-                        aria-describedby={idPopover}
 
-                        size="small"
-                        aria-label="edit"
-                        onClick={handleOpenModal}
-                        style={{
-                          backgroundColor: "#E1F9F3",
-                          boxShadow: "none",
-                          zIndex: 0,
-                  marginRight: "10px",
-
-                        }}
-                      >
-                        <GroupIcon
-                          sx={{
-                            color: "#319795",
-                          }}
-                        />
-                      </Fab>
-                    </Tooltip>
                     <Tooltip title="Editar">
                       <Fab
                         size="small"
@@ -326,7 +326,7 @@ function DetailProject() {
                         style={{
                           boxShadow: "none",
                           zIndex: 0,
-                  marginRight: "10px",
+                          marginRight: "10px",
 
                         }}
                       >

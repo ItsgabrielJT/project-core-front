@@ -81,7 +81,7 @@ const NotificationsPage = () => {
   };
 
   const directionateEventAccept = (id, type) => {
-    if (type === "pedido") {
+    if (type === "peticion") {
       handleAceppt(id)
     } else {
       handleAcepptInivitation(id)
@@ -89,7 +89,7 @@ const NotificationsPage = () => {
   }
 
   const directionateEventRefuse = (id, type) => {
-    if (type === "pedido") {
+    if (type === "peticion") {
       handleRefuse(id)
     } else {
       handleRefuseInvitation(id)

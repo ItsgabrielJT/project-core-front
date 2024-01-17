@@ -40,6 +40,9 @@ function ModalDialog({ open, onClose, onConfirm, title, slots = {} }) {
             open={open}
             closeAfterTransition
             slots={slots}
+            style={{
+                zIndex: 2
+            }}
 
         >
             <Fade in={open}>
