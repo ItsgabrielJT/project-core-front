@@ -30,6 +30,8 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import QueueIcon from '@mui/icons-material/Queue';
+import styled from "@emotion/styled";
+import { searchService } from "../services/searchService";
 
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -92,6 +94,7 @@ function Header() {
     navigate(`/projects/${value.idProject}`);
   };
 
+
   return (
     <Grid
       item
@@ -116,13 +119,21 @@ function Header() {
             borderRadius: "8px",
             marginTop: "6px",
             marginLeft: "20px",
+            marginBottom: '6px'
           }}
         />
       </Grid>
-      <Grid item >
+      <Grid item sx={{
+        marginLeft: isSmallScreen ? "auto" : "260px",
+        width: isSmallScreen ? '0px' : "30%",
+        marginTop: '6px',
+        marginBottom: '6px'
+
+      }}>
         {
           !isSmallScreen && (
             <Autocomplete
+              freeSolo
               size="small"
               disablePortal
               id="combo-box-demo"
@@ -135,11 +146,23 @@ function Header() {
                 setInputValue(newInputValue);
               }}
               options={dataSelect}
-              style={{
-                marginLeft: "250px",
-                width: "350px",
-                borderRadius: "80px",
-                marginTop: "5px",
+              sx={{
+                '& .MuiAutocomplete-inputRoot': {
+                  '& fieldset': {
+                    borderRadius: '50px',
+                    border: '1.2px solid #319795',
+
+                  },
+                  '&:hover fieldset': {
+                    border: '1.2px solid #9AD0C2',
+                    borderRadius: '50px',
+                  },
+                  '&.Mui-focused fieldset': {
+                    border: '1.2px solid #5CDDDB',
+                    borderRadius: '50px',
+                  },
+                },
+
               }}
               renderInput={(params) => <TextField {...params} label="Buscar" />}
             />
@@ -161,6 +184,7 @@ function Header() {
                   boxShadow: "none",
                   backgroundColor: "#F2F1EE",
                   marginTop: "6px",
+                  marginBottom: '6px',
                   marginLeft: "60px",
                   display: "flex",
                 }}
