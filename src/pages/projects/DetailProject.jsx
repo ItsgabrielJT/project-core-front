@@ -46,8 +46,6 @@ function DetailProject() {
   const [openModal, setOpenModal] = useState(false);
   const [success, setSuccess] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [perfil, setPerfilImage] = useState("")
-  const [proyecto, setProyectoImage] = useState("")
 
   const openPopover = Boolean(anchorEl);
   const idPopover = openPopover ? "simple-popover" : undefined;
@@ -93,7 +91,6 @@ function DetailProject() {
 
 
 
-  useEffect(() => {
     const cld = new Cloudinary({
       cloud: {
         cloudName
@@ -101,9 +98,7 @@ function DetailProject() {
     });
     const perfil = cld.image(project ? project.link_image_user : "");
     const proyecto = cld.image(project ? project.link_image_project : "");
-    setPerfilImage(perfil)
-    setProyectoImage(proyecto)
-  }, [project])
+
 
 
   return (
@@ -296,6 +291,7 @@ function DetailProject() {
                     boxShadow: "none",
                     zIndex: 0,
                     marginRight: "10px",
+                    marginTop: "15px",
 
                   }}
                 >

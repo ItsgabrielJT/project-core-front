@@ -32,7 +32,7 @@ export const useDetail = (id = null) => {
                             occupation: res.data.proyecto.users[0].user.occupation,
                             career: res.data.proyecto.users[0].user.career,
                             university_name: res.data.proyecto.users[0].user.university_name,
-                            colaborators: []
+                            colaborators: res.data.proyecto.colaborators
                         }
                         setProject(data)
                     } else {

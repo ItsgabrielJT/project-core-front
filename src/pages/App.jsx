@@ -11,6 +11,7 @@ import ListProjects from "./projects/ListProjects";
 import DetailProject from "./projects/DetailProject";
 import { ProtectedRoute } from "../_routes";
 import ErrorPage from "./errors/ErrorPage";
+import RecoveryPassword from "./account/RecoveryPassword";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         <Routes>
           <Route path="/" index element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/recuperar-contraseña/:token" element={<RecoveryPassword/>} />
+
 
           <Route
             element={<ProtectedRoute/>}

@@ -76,5 +76,23 @@ export const accountService = {
     }
   },
 
+  sendEmailPassword: async function (json) {
+    try {
+      const res = await axios.post(URL_BASE + "api/recuperar-contrasenia", json);
+      return res;
+    } catch (error) {
+      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+    }
+  },
+
+  recoveryPassword: async function (token, json) {
+    try {
+      const res = await axios.post(URL_BASE + "api/nueva-contrasenia/" + token, json);
+      return res;
+    } catch (error) {
+      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+    }
+  },
+
 
 };
