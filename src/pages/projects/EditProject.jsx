@@ -19,23 +19,18 @@ import {
 import React, { useEffect, useState } from "react";
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import ButtonContained from "@components/buttons/ButtonContained";
-import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import { CssTexField } from "@constants/styles";
 import { useEdit } from "@hook/projects/useEdit";
 import Fab from "@mui/material/Fab";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { MagicMotion } from "react-magic-motion";
 import ClearIcon from "@mui/icons-material/Clear";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useParams } from "react-router-dom";
 import CloudinaryUploadWidget from "@components/modals/CloudinaryUpload";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
-import { CustomizedPopover } from "../../assets/statics/constants/styles";
-import { useUsers } from "@hook/colaborators/useUsers";
-import notificationService from "@services/notificationService";
-import { colaboratorService } from "@services/colaborators/colaboratorService";
+
 import CustomSelect from "@components/selects/CustomSelect";
+import ModalInvitations from "./ModalInvitations";
 
 
 const options = [
@@ -75,13 +70,8 @@ function EditProject() {
   const [inputs, setInputs] = useState([""]);
   const [links, setLinks] = useState([""]);
   const [uploadPreset] = useState("o0bi0kjz");
-  const { users } = useUsers();
   const [cloudName] = useState("dnkst5hjn");
-
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const openPopover = Boolean(anchorEl);
-  const idPopover = openPopover ? "simple-popover" : undefined;
+  const [openInvitations, setOpenInvitations] = useState(false);
 
 
   const [uwConfig] = useState({
@@ -98,16 +88,12 @@ function EditProject() {
     setInputs([...inputs, ""]);
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpenInvitations(false);
   };
 
-  const handleOpenModal = (event) => {
-    handleClick(event);
+  const handleOpenModal = () => {
+    setOpenInvitations(true)
   };
 
   const handleRemoveInput = (index) => {
@@ -143,80 +129,15 @@ function EditProject() {
     formProject.setFieldValue("estado", e)
   }
 
-  const handleInvite = (idUser) => {
-    let json = {
-      id_proyecto: id,
-      id_usuario_colaborador: idUser,
-    };
-    colaboratorService
-      .inviteColaborate(json)
-      .then((res) => {
-        if (res.data.status) {
-          notificationService.success("Se ha enviado la invitacion");
-          setAnchorEl(null);
-
-        }
-      })
-      .catch((err) => {
-        notificationService.error(err.message);
-      });
-  };
+  
 
   return (
     <Grid item xs={12}>
-      <CustomizedPopover
-        id={idPopover}
-        open={openPopover}
-        anchorEl={anchorEl}
+      <ModalInvitations
+        open={openInvitations}
         onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-      >
-        <List
-          sx={{
-            maxHeight: "150px", // ajusta la altura máxima según sea necesario
-            overflowY: "auto", // añade un scrollbar si el contenido excede la altura máxima
-          }}
-        >
-          {users &&
-            users.map((item, index) => (
-              <ListItem
-                key={index}
-                sx={{
-                  borderRadius: "30px",
-                  marginBottom: "10px",
-
-                  "&.Mui-selected": {
-                    backgroundColor: "rgba(92, 221, 219, 0.3)",
-                  },
-                }}
-              >
-                <AccountCircleIcon
-                  style={{
-                    width: "30px",
-                    height: "auto",
-                    borderRadius: "8px",
-                    marginRight: "7px",
-                  }}
-                />
-                <ListItemText primary={item.full_name} />
-                <IconButton
-                  aria-label="delete"
-                  color="primary"
-                  onClick={() => handleInvite(item.id)}
-                >
-                  <PersonAddAlt1Icon />
-                </IconButton>
-              </ListItem>
-            ))}
-        </List>
-      </CustomizedPopover>
+        idProjecto={id}
+      />
       <Box
         sx={{
           marginTop: "90px",

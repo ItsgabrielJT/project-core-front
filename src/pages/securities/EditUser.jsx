@@ -76,6 +76,9 @@ function EditUser({ user, open, handleClose, onSuccess }) {
                 open={open}
                 closeAfterTransition
                 slots={{ backdrop: StyledBackdrop }}
+                sx={{
+                    padding: "20px 20px 20px 20px",
+                }}  
             >
                 <Fade in={open}>
                     <ModalContent sx={{ width: 450 }}>

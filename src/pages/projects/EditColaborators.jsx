@@ -65,6 +65,9 @@ function EditColaborators({ open, handleClose, onSuccess, colaborators }) {
                 open={open}
                 closeAfterTransition
                 slots={{ backdrop: StyledBackdrop }}
+                sx={{
+                    padding: "20px 20px 20px 20px",
+                }}
             >
                 <ModalContent sx={{ width: 650 }}>
                     {

@@ -18,16 +18,16 @@ const CssButtonContained = {
     lineHeight: 1.5,
     backgroundColor: '#DC3545',
     '&:hover': {
-      backgroundColor: '#F85D6C',
-      borderColor: '#F85D6C',
-      boxShadow: 'none',
+        backgroundColor: '#F85D6C',
+        borderColor: '#F85D6C',
+        boxShadow: 'none',
     },
     '&:active': {
-      boxShadow: 'none',
-      backgroundColor: '#F85D6C',
-      borderColor: '#F85D6C',
+        boxShadow: 'none',
+        backgroundColor: '#F85D6C',
+        borderColor: '#F85D6C',
     },
-  }
+}
 
 function ModalDialog({ open, onClose, onConfirm, title, slots = {} }) {
 
@@ -41,45 +41,46 @@ function ModalDialog({ open, onClose, onConfirm, title, slots = {} }) {
             closeAfterTransition
             slots={slots}
             style={{
-                zIndex: 2
+                zIndex: 2,
+                padding: "20px 20px 20px 20px",
             }}
 
         >
             <Fade in={open}>
-            <ModalContentConfirm sx={{ width: 250 }}>
-                <div>
-                    <div
-                        style={{ display: "flex", justifyContent: "space-between" }}
-                    >
-                        <div>
+                <ModalContentConfirm sx={{ width: 250 }}>
+                    <div>
+                        <div
+                            style={{ display: "flex", justifyContent: "space-between" }}
+                        >
+                            <div>
 
-                            <h2 id="unstyled-modal-title" className="modal-title" style={{ marginLeft: '10px' }}>
-                                {title}
-                            </h2>
+                                <h2 id="unstyled-modal-title" className="modal-title" style={{ marginLeft: '10px' }}>
+                                    {title}
+                                </h2>
+                            </div>
+
                         </div>
+                        <Button
+                            fullWidth
 
-                    </div>
-                    <Button
-                        fullWidth
-
-                        onClick={onConfirm}
-                        sx={CssButtonContained}
+                            onClick={onConfirm}
+                            sx={CssButtonContained}
                         >
                             Aceptar
                         </Button>
-                    <ButtonOutline text={"Cancelar"}
-                        fullWidth
+                        <ButtonOutline text={"Cancelar"}
+                            fullWidth
 
-                        onClick={onClose}
-                        style={{
-                            marginTop: '10px',
-                        }}
-                    />
+                            onClick={onClose}
+                            style={{
+                                marginTop: '10px',
+                            }}
+                        />
 
-                </div>
-            </ModalContentConfirm>
+                    </div>
+                </ModalContentConfirm>
             </Fade>
-            
+
         </Modal>
 
     )
