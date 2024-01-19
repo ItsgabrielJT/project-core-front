@@ -12,6 +12,7 @@ import DetailProject from "./projects/DetailProject";
 import { ProtectedRoute } from "../_routes";
 import ErrorPage from "./errors/ErrorPage";
 import RecoveryPassword from "./account/RecoveryPassword";
+import ListFolloProjects from "./projects/ListFollowProjects";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="user" element={<UserPage/>} />
             <Route path="user/:id" element={<UserPage/>} />
             <Route path="projects" element={<ListProjects/>} />
+            <Route path="projects/follow" element={<ListFolloProjects/>} />
             <Route path="notifications" element={<NotificationsPage/>} />
             <Route path="create/project" element={<EditProject/>} />
             <Route path="projects/:id/edit" element={<EditProject/>} />

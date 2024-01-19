@@ -11,16 +11,16 @@ function LittleCard({
     ...props
 }) {
     return (
-        <Grid 
+        <Grid
             {...props}
-        sx={{
-            backgroundColor: '#F2F1EE',
-            borderRadius: '25px',
-            padding: '15px 15px 15px 15px',
-            margin: '0px 0px 20px 40px'
-        }}>
+            sx={{
+                backgroundColor: '#F2F1EE',
+                borderRadius: '25px',
+                padding: '15px 15px 15px 15px',
+                margin: '0px 0px 20px 40px'
+            }}>
             <Typography variant='subtitle2' sx={{ fontWeight: "bold", fontSize: '18px' }}>
-               {title}
+                {title}
             </Typography>
             <Typography variant='subtitle2' sx={{ fontWeight: "bold", color: '#355890' }}>
                 {fecha}

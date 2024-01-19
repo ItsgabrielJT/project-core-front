@@ -30,6 +30,7 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import QueueIcon from '@mui/icons-material/Queue';
+import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
 import styled from "@emotion/styled";
 import { searchService } from "../services/searchService";
 
@@ -345,6 +346,12 @@ function Header() {
                     <FileCopyOutlinedIcon fontSize="small" />
                   </ListItemIcon>
                   Mis proyectos
+                </MenuItem>
+                <MenuItem onClick={() => handleRedirecTo("/projects/follow")}>
+                  <ListItemIcon>
+                    <LibraryAddCheckIcon fontSize="small" />
+                  </ListItemIcon>
+                  Proyectos seguidos
                 </MenuItem>
                 <MenuItem onClick={() => handleRedirecTo("/user")}>
                   <ListItemIcon>
