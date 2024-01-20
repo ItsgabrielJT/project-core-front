@@ -72,13 +72,9 @@ function EditColaborators({ open, handleClose, idProject, onSuccess, colaborator
                     let { update_project, delete_project } = res.data.permiso.permission
                     if (update_project) {
                         data.push(0)
-                    } else {
-                        return
                     }
                     if (delete_project) {
                         data.push(1)
-                    } else {
-                        return
                     }
                     setChecked(data);
                     setLoadingPermission(false);
@@ -196,7 +192,7 @@ function EditColaborators({ open, handleClose, idProject, onSuccess, colaborator
                                                                         transitionDelay: loadingPermission ? '800ms' : '0ms',
                                                                     }}
                                                                 >
-                                                                    <CircularProgress sx={{ marginLeft: '20px' }}/>
+                                                                    <CircularProgress sx={{ marginLeft: '20px' }} />
                                                                 </Fade>
                                                             </ListItem>
                                                         )
@@ -214,12 +210,10 @@ function EditColaborators({ open, handleClose, idProject, onSuccess, colaborator
 
                                                         return (
                                                             <>
-                                                                {
-                                                                    checked.length > 0 && (
-                                                                        <Fade
-                                                                            in={checked.length > 0}
 
-                                                                        >
+                                                                {
+                                                                    selectedIndex != null && !loadingPermission && (
+                                                                        <Fade in={selectedIndex != null && !loadingPermission}>
                                                                             <ListItem
                                                                                 key={index}
                                                                                 disablePadding
@@ -251,9 +245,9 @@ function EditColaborators({ open, handleClose, idProject, onSuccess, colaborator
 
                                                                     )
                                                                 }
+
+
                                                             </>
-
-
                                                         );
                                                     })}
                                                 </List>
@@ -261,7 +255,6 @@ function EditColaborators({ open, handleClose, idProject, onSuccess, colaborator
                                         </Grid>
                                     </div>
                                 </div>
-
                             </form>
                         )
                     }
