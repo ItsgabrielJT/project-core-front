@@ -34,14 +34,16 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { format } from "date-fns";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import { useAuth } from "../../context/AuthContext";
 
-var idLogin = JSON.parse(localStorage.getItem("id"));
+
 
 function DetailProject() {
   const navigate = useNavigate()
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [cloudName] = useState("dnkst5hjn");
+  const { user } = useAuth();
   const { project, loading } = useDetail(id);
   const [openModal, setOpenModal] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -79,7 +81,7 @@ function DetailProject() {
   }
 
   const handleOpenModal = (event) => {
-    if (project.userId != idLogin) {
+    if (project.userId != user.id) {
       handleClick(event)
     } else {
       setOpenModal(true)
@@ -107,6 +109,7 @@ function DetailProject() {
         open={openModal}
         handleClose={handleCloseModal}
         onSuccess={setSuccess}
+        idProject={id}
         colaborators={project ? project.colaborators : []}
       />
       <CustomizedPopover
@@ -177,7 +180,7 @@ function DetailProject() {
             boxShadow: "none",
           }}
         >
-          {project.userId != idLogin && (
+          {project.userId != user.id && (
             <>
               <div style={{ display: 'flex' }}>
                 <AdvancedImage
@@ -303,7 +306,7 @@ function DetailProject() {
                 </Fab>
               </Tooltip>
 
-              {project.userId == idLogin && (
+              {project.userId == user.id && (
                 <>
 
                   <div

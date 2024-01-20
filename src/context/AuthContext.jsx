@@ -22,13 +22,14 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
 
-  const singIn = async (user) => {  
+  const singIn = async (user) => {
     await accountService
       .loginUser(user)
       .then((res) => {
         if (res.data.status) {
           localStorage.setItem("user", JSON.stringify(res.data));
           localStorage.setItem("id", JSON.stringify(res.data.id));
+          localStorage.setItem("expired", JSON.stringify(new Date()));
           setUser(res.data);
           setIsAuthenticated(res.data.status);
         }
@@ -37,14 +38,25 @@ export const AuthProvider = ({ children }) => {
         notificationService.warning(err.message);
         setLoading(false);
       });
-      setLoading(false);
+    setLoading(false);
 
   };
 
-  const checkLogin =  () => {
-    var objetoRecuperado =  JSON.parse(localStorage.getItem("user"));
+  const isExpired = (storedDate) => {
+    const storedTime = new Date(storedDate).getTime();
+    const currentTime = new Date().getTime();
+    const hoursDifference = (currentTime - storedTime) / (1000 * 60 * 60);
+  
+    return hoursDifference >= 24;
+  };
+
+  const checkLogin = () => {
+    var objetoRecuperado = JSON.parse(localStorage.getItem("user"));
+    var timeOut = JSON.parse(localStorage.getItem("expired"));
     if (!objetoRecuperado) {
       setIsAuthenticated(false);
+    } else if (!timeOut || isExpired(timeOut)) {
+      logOut();
     } else {
       setIsAuthenticated(true);
       setUser(objetoRecuperado);
@@ -55,9 +67,9 @@ export const AuthProvider = ({ children }) => {
   const logOut = () => {
     localStorage.removeItem("id");
     localStorage.removeItem("user");
+    localStorage.removeItem("expired");
     setUser(null);
     setIsAuthenticated(false);
-    window.location.href = "/";
   };
 
   return (

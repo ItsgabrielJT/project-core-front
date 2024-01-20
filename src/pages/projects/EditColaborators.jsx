@@ -7,31 +7,39 @@ import {
 } from "@constants/styles";
 import Fab from "@mui/material/Fab";
 import ClearIcon from "@mui/icons-material/Clear";
-import { Button, Checkbox, Collapse, Grid, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, TextField, Typography } from "@mui/material";
+import { Button, Checkbox, CircularProgress, Collapse, Fade, Grid, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, TextField, Typography } from "@mui/material";
 import ButtonContained from "@components/buttons/ButtonContained";
 import ModalDialog from "@components/modals/ModalDialog";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useEdit } from "@hook/securities/useEdit";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff';
+import { colaboratorService } from "../../services/colaborators/colaboratorService";
+import notificationService from "@services/notificationService"
+
 
 const PERMISSIONS = [
     'Editar',
     'Eliminar',
-    'Lectura',
-    'Editar'
 ]
 
-function EditColaborators({ open, handleClose, onSuccess, colaborators }) {
+function EditColaborators({ open, handleClose, idProject, onSuccess, colaborators }) {
 
     const { formUser } = useEdit(handleClose, onSuccess);
-    const [selectedIndex, setSelectedIndex] = useState(2);
-    const [checked, setChecked] = React.useState([0]);
+    const [selectedIndex, setSelectedIndex] = useState(null);
+    const [checked, setChecked] = useState([]);
+    const [loadingPermission, setLoadingPermission] = useState(false);
     const [users, setUsers] = useState([])
+    const [user, setUser] = useState({})
 
     useEffect(() => {
         setUsers(colaborators)
     }, [colaborators])
+
+    useEffect(() => {
+
+    }, [selectedIndex])
+
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -49,10 +57,37 @@ function EditColaborators({ open, handleClose, onSuccess, colaborators }) {
 
     const onClose = () => {
         handleClose();
+        setChecked([]);
+        setSelectedIndex(null)
+        setLoadingPermission(false);
     };
 
-    const handleListItemClick = (event, index) => {
+    const handleListItemClick = (event, index, item) => {
+        setLoadingPermission(true);
         setSelectedIndex(index);
+        colaboratorService.getPermissions(idProject, item.user.id)
+            .then((res) => {
+                if (res.data.status) {
+                    let data = []
+                    let { update_project, delete_project } = res.data.permiso.permission
+                    if (update_project) {
+                        data.push(0)
+                    } else {
+                        return
+                    }
+                    if (delete_project) {
+                        data.push(1)
+                    } else {
+                        return
+                    }
+                    setChecked(data);
+                    setLoadingPermission(false);
+                }
+            })
+            .catch((err) => {
+                notificationService.error(err.message);
+                setLoadingPermission(false);
+            })
     };
 
     return (
@@ -132,7 +167,7 @@ function EditColaborators({ open, handleClose, onSuccess, colaborators }) {
                                                         <ListItemButton
                                                             key={index}
                                                             selected={selectedIndex === index}
-                                                            onClick={(event) => handleListItemClick(event, index)}
+                                                            onClick={(event) => handleListItemClick(event, index, item)}
                                                             sx={{
                                                                 borderRadius: '30px',
                                                                 marginBottom: '10px',
@@ -151,37 +186,74 @@ function EditColaborators({ open, handleClose, onSuccess, colaborators }) {
                                             </Grid>
                                             <Grid item xs={9} sx={{ marginTop: '22px' }}>
                                                 <List sx={{ width: '100%', maxWidth: 360, bgcolor: '#FFFDFA' }}>
+
+                                                    {
+                                                        loadingPermission && (
+                                                            <ListItem>
+                                                                <Fade
+                                                                    in={loadingPermission}
+                                                                    style={{
+                                                                        transitionDelay: loadingPermission ? '800ms' : '0ms',
+                                                                    }}
+                                                                >
+                                                                    <CircularProgress sx={{ marginLeft: '20px' }}/>
+                                                                </Fade>
+                                                            </ListItem>
+                                                        )
+                                                    }
+                                                    {
+                                                        selectedIndex == null && (
+                                                            <ListItem>
+                                                                <Typography variant="body1" sx={{ marginTop: '5px', color: '#9AD0C2' }}> Selecione un colaborador ! </Typography>
+                                                            </ListItem>
+                                                        )
+                                                    }
+
                                                     {PERMISSIONS.map((value, index) => {
                                                         const labelId = `checkbox-list-label-${index}`;
 
                                                         return (
-                                                            <ListItem
-                                                                key={index}
-                                                                disablePadding
-                                                            >
-                                                                <ListItemButton
-                                                                    sx={{
-                                                                        borderRadius: '30px',
-                                                                    }}
-                                                                    role={undefined} onClick={handleToggle(index)} dense>
-                                                                    <ListItemIcon>
-                                                                        <Checkbox
-                                                                            edge="start"
-                                                                            checked={checked.indexOf(index) !== -1}
-                                                                            tabIndex={-1}
-                                                                            disableRipple
-                                                                            inputProps={{ 'aria-labelledby': labelId }}
-                                                                            sx={{
-                                                                                color: '#319795',
-                                                                                '&.Mui-checked': {
-                                                                                    color: 'rgba(92, 221, 219)',
-                                                                                },
-                                                                            }}
-                                                                        />
-                                                                    </ListItemIcon>
-                                                                    <ListItemText id={labelId} primary={value} />
-                                                                </ListItemButton>
-                                                            </ListItem>
+                                                            <>
+                                                                {
+                                                                    checked.length > 0 && (
+                                                                        <Fade
+                                                                            in={checked.length > 0}
+
+                                                                        >
+                                                                            <ListItem
+                                                                                key={index}
+                                                                                disablePadding
+                                                                            >
+                                                                                <ListItemButton
+                                                                                    sx={{
+                                                                                        borderRadius: '30px',
+                                                                                    }}
+                                                                                    role={undefined} onClick={handleToggle(index)} dense>
+                                                                                    <ListItemIcon>
+                                                                                        <Checkbox
+                                                                                            edge="start"
+                                                                                            checked={checked.indexOf(index) !== -1}
+                                                                                            tabIndex={-1}
+                                                                                            disableRipple
+                                                                                            inputProps={{ 'aria-labelledby': labelId }}
+                                                                                            sx={{
+                                                                                                color: '#319795',
+                                                                                                '&.Mui-checked': {
+                                                                                                    color: 'rgba(92, 221, 219)',
+                                                                                                },
+                                                                                            }}
+                                                                                        />
+                                                                                    </ListItemIcon>
+                                                                                    <ListItemText id={labelId} primary={value} />
+                                                                                </ListItemButton>
+                                                                            </ListItem>
+                                                                        </Fade>
+
+                                                                    )
+                                                                }
+                                                            </>
+
+
                                                         );
                                                     })}
                                                 </List>

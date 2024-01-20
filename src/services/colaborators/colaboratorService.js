@@ -125,4 +125,16 @@ export const colaboratorService = {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
     }
   },
+
+  getPermissions: async function (project, colaborator) {
+    const { token } = JSON.parse(localStorage.getItem("user"));
+    try {
+      const res = await axios.get(URL_BASE + "api/ver-permiso/" + colaborator + "/" + project, {
+        headers: { Authorization: "Bearer " + token },
+      });
+      return res;
+    } catch (error) {
+      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+    }
+  },
 };
