@@ -13,33 +13,20 @@ export const useStaticts = (success, id = null) => {
         accountService.getStatistics()
         .then((res) => {
             let data = []
-            let iniciado, enProceso, finalizado, enRevision
 
             res.data.proyectos.map((item) => {
-                if (item.estado == 1) {
-                    iniciado = item.proyectos
-                } else if (item.estado == 2) {
-                    enProceso = item.proyectos
+                data.push({
+                  iniciado: item["1"],
+                  enProceso: item["2"],
+                  finalizado: item["3"],
+                  enRevision: item["4"],
+                  mes: item.MES
 
-                } else if (item.estado == 3) {
-                    finalizado = item.proyectos
-
-                } else {
-                    enRevision = item.proyectos
-                }
+                })
                 
             })
 
-            data.push({
-                iniciado, enProceso, finalizado, enRevision, mes : "Enero"
-            })
-            data.push({
-                iniciado: 0, enProceso: 0, finalizado: 0, enRevision: 0, mes : "Febrero"
-            })
-            data.push({
-                iniciado: 0, enProceso: 0, finalizado: 0, enRevision: 0, mes : "Marzo"
-
-            })
+           
 
           setStaticts(data)
         })
