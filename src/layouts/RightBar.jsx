@@ -20,12 +20,14 @@ function RightBar() {
             <Box
                 sx={{
                     height: '100vh',
+                    width: '20%',
+                    
                     backgroundColor: '#FFFDFA',
                     position: 'fixed',
                     borderLeft: '2px solid #F2F1EE',
                     marginTop: '50px',
                     paddingTop: '50px',
-                    marginLeft: '35px',
+                    marginLeft: '40px',
                 }}
             >
                 {projects && projects.map((item, index) => (

@@ -137,4 +137,16 @@ export const colaboratorService = {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
     }
   },
+
+  updatePermissions: async function (project, colaborator, json) {
+    const { token } = JSON.parse(localStorage.getItem("user"));
+    try {
+      const res = await axios.put(URL_BASE + "api/cambiar-permiso/" + colaborator + "/" + project, json, {
+        headers: { Authorization: "Bearer " + token },
+      });
+      return res;
+    } catch (error) {
+      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+    }
+  },
 };

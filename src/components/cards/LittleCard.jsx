@@ -17,7 +17,7 @@ function LittleCard({
                 backgroundColor: '#F2F1EE',
                 borderRadius: '25px',
                 padding: '15px 15px 15px 15px',
-                margin: '0px 0px 20px 40px'
+                margin: '0px 0px 20px 30px'
             }}>
             <Typography variant='subtitle2' sx={{ fontWeight: "bold", fontSize: '18px' }}>
                 {title}
