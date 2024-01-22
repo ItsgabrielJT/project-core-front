@@ -9,7 +9,7 @@ import {
 } from "@constants/styles";
 import { Alert, Box, Button, Collapse, Fade, LinearProgress, Snackbar, TextField, Typography } from "@mui/material";
 import ButtonContained from "@components/buttons/ButtonContained";
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { useResetPassword } from "../../hooks/accounts/useResetPassword";
 
 const slideInFromLeft = keyframes`
