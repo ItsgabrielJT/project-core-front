@@ -33,7 +33,7 @@ import LockResetIcon from "@mui/icons-material/LockReset";
 import EditPassword from "./EditPassword";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { axisClasses } from "@mui/x-charts";
-import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
+import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 
 const chartSetting = {
   yAxis: [
@@ -287,45 +287,51 @@ function UserPage() {
                 </Typography>
               </div>
             </div>
-            <div style={CssContentInfo}>
-              <Typography variant="h6" sx={{ marginBottom: "20px" }}>
-                Estadisticas
-              </Typography>
-              {staticts && staticts.length == 0 ? (
-                <center>
-                  <SignalCellularAltIcon sx={{ fontSize: 60 }}/>
-                  <Typography variant="h6">
-                    Aun no hay proyectos que mostrar !
-                  </Typography>
-                </center>
-              ) : (
-                <BarChart
-                  dataset={staticts ? staticts : dataset}
-                  xAxis={[{ scaleType: "band", dataKey: "mes" }]}
-                  margin={{ top: 80, left: 10, right: 30, bottom: 20 }}
-                  width={isSmallScreen ? 300 : 650}
-                  series={[
-                    { dataKey: "iniciado", label: "Iniciado", valueFormatter },
-                    {
-                      dataKey: "enProceso",
-                      label: "En proceso",
-                      valueFormatter,
-                    },
-                    {
-                      dataKey: "finalizado",
-                      label: "Finalizado",
-                      valueFormatter,
-                    },
-                    {
-                      dataKey: "enRevision",
-                      label: "En revision",
-                      valueFormatter,
-                    },
-                  ]}
-                  {...chartSetting}
-                />
-              )}
-            </div>
+            {profile.id == user.id && (
+              <div style={CssContentInfo}>
+                <Typography variant="h6" sx={{ marginBottom: "20px" }}>
+                  Estadisticas
+                </Typography>
+                {staticts && staticts.length == 0 ? (
+                  <center>
+                    <SignalCellularAltIcon sx={{ fontSize: 60 }} />
+                    <Typography variant="h6">
+                      Aun no hay proyectos que mostrar !
+                    </Typography>
+                  </center>
+                ) : (
+                  <BarChart
+                    dataset={staticts ? staticts : dataset}
+                    xAxis={[{ scaleType: "band", dataKey: "mes" }]}
+                    margin={{ top: 80, left: 10, right: 30, bottom: 20 }}
+                    width={isSmallScreen ? 300 : 650}
+                    series={[
+                      {
+                        dataKey: "iniciado",
+                        label: "Iniciado",
+                        valueFormatter,
+                      },
+                      {
+                        dataKey: "enProceso",
+                        label: "En proceso",
+                        valueFormatter,
+                      },
+                      {
+                        dataKey: "finalizado",
+                        label: "Finalizado",
+                        valueFormatter,
+                      },
+                      {
+                        dataKey: "enRevision",
+                        label: "En revision",
+                        valueFormatter,
+                      },
+                    ]}
+                    {...chartSetting}
+                  />
+                )}
+              </div>
+            )}
           </Box>
         </Grid>
       ) : (
