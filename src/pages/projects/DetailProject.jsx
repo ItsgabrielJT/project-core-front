@@ -21,13 +21,11 @@ import CreateIcon from "@mui/icons-material/Create";
 import { useDetail } from "@hook/projects/useDetail";
 import { useParams } from "react-router";
 import { projectService } from "@services/projects/projectService";
-import notificationService from "@services/notificationService"
+import notificationService from "@services/notificationService";
 import { useNavigate } from "react-router";
-import {
-  CssButtonContained
-} from "@constants/styles";
-import GroupIcon from '@mui/icons-material/Group';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { CssButtonContained } from "@constants/styles";
+import GroupIcon from "@mui/icons-material/Group";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditColaborators from "./EditColaborators";
 import { CustomizedPopover } from "../../assets/statics/constants/styles";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -36,10 +34,8 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { useAuth } from "../../context/AuthContext";
 
-
-
 function DetailProject() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [cloudName] = useState("dnkst5hjn");
@@ -61,47 +57,44 @@ function DetailProject() {
   };
 
   const handleConfirm = () => {
-    projectService.deleteProject(id)
+    projectService
+      .deleteProject(id)
       .then((res) => {
         if (res.data.status) {
-          notificationService.success("Se ha eliminado correctamente")
-          navigate("/home")
+          notificationService.success("Se ha eliminado correctamente");
+          navigate("/home");
         }
       })
       .catch((err) => {
-        notificationService.error(err.message)
+        notificationService.error(err.message);
       })
       .finally(() => {
         setOpen(false);
-      })
+      });
   };
 
   const editProject = () => {
-    navigate(`/projects/${id}/edit`)
-  }
+    navigate(`/projects/${id}/edit`);
+  };
 
   const handleOpenModal = (event) => {
     if (project.userId != user.id) {
-      handleClick(event)
+      handleClick(event);
     } else {
-      setOpenModal(true)
-      setSuccess(false)
+      setOpenModal(true);
+      setSuccess(false);
     }
   };
 
   const handleCloseModal = () => setOpenModal(false);
 
-
-
-    const cld = new Cloudinary({
-      cloud: {
-        cloudName
-      }
-    });
-    const perfil = cld.image(project ? project.link_image_user : "");
-    const proyecto = cld.image(project ? project.link_image_project : "");
-
-
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName,
+    },
+  });
+  const perfil = cld.image(project ? project.link_image_user : "");
+  const proyecto = cld.image(project ? project.link_image_project : "");
 
   return (
     <Grid item xs={12}>
@@ -127,39 +120,35 @@ function DetailProject() {
         }}
       >
         <List>
-          {
-            project && project.colaborators.map((item, index) => (
+          {project &&
+            project.colaborators.map((item, index) => (
               <ListItem
                 key={index}
                 sx={{
-                  borderRadius: '30px',
-                  marginBottom: '10px',
+                  borderRadius: "30px",
+                  marginBottom: "10px",
 
-                  '&.Mui-selected': {
-                    backgroundColor: 'rgba(92, 221, 219, 0.3)',
-                  }
+                  "&.Mui-selected": {
+                    backgroundColor: "rgba(92, 221, 219, 0.3)",
+                  },
                 }}
-
               >
                 <AccountCircleIcon
                   style={{
                     width: "30px",
                     height: "auto",
                     borderRadius: "8px",
-                    marginRight: '7px'
+                    marginRight: "7px",
                   }}
                 />
                 <ListItemText primary={item.user.full_name} />
               </ListItem>
-            ))
-          }
-          {
-            project && project.colaborators.length === 0 && (
-              <ListItem>
-                <ListItemText primary="Aun no hay colaboradores" />
-              </ListItem>
-            )
-          }
+            ))}
+          {project && project.colaborators.length === 0 && (
+            <ListItem>
+              <ListItemText primary="Aun no hay colaboradores" />
+            </ListItem>
+          )}
         </List>
       </CustomizedPopover>
       <ModalDialog
@@ -182,24 +171,26 @@ function DetailProject() {
         >
           {project.userId != user.id && (
             <>
-              <div style={{ display: 'flex' }}>
+              <div style={{ display: "flex" }}>
                 <AdvancedImage
                   style={{
                     width: "30px",
                     height: "30px",
-                    marginRight: '10px',
+                    marginRight: "10px",
                     objectFit: "cover",
                     borderRadius: "50%",
                     overflow: "hidden",
                   }}
-                  cldImg={perfil
-                  }
+                  cldImg={perfil}
                   plugins={[responsive(), placeholder()]}
                 />
-                <Typography variant="body1" sx={{
-                  fontWeight: "bold",
-                  fontSize: "16px"
-                }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "16px",
+                  }}
+                >
                   {project.full_name}
                 </Typography>
                 <Typography
@@ -214,19 +205,22 @@ function DetailProject() {
                   / {project.occupation}
                 </Typography>
               </div>
-              <Typography variant="overline" sx={{ display: 'flex' }}>
+              <Typography variant="overline" sx={{ display: "flex" }}>
                 {project.university_name} - {project.career}
-
               </Typography>
             </>
           )}
           <Typography
             variant="body1"
-            sx={{ fontSize: 13, marginBottom: "3px", color: "#355890", fontWeight: "bold" }}
+            sx={{
+              fontSize: 13,
+              marginBottom: "3px",
+              color: "#355890",
+              fontWeight: "bold",
+            }}
           >
-            {format(new Date(project.fecha), 'EEEE, d MMMM yyyy')}
+            {format(new Date(project.fecha), "EEEE, d MMMM yyyy")}
           </Typography>
-
 
           <AdvancedImage
             style={{
@@ -242,9 +236,6 @@ function DetailProject() {
             plugins={[responsive(), placeholder()]}
           />
 
-
-
-
           <div>
             <div
               style={{
@@ -255,7 +246,7 @@ function DetailProject() {
               <div
                 style={{
                   display: "flex",
-                  justifyContent: 'end',
+                  justifyContent: "end",
                   marginTop: "20px",
                 }}
               >
@@ -276,16 +267,15 @@ function DetailProject() {
                   {project.state === 1
                     ? "Iniciado"
                     : project.state === 2
-                      ? "En curso"
-                      : project.state === 3
-                        ? "Finalizado"
-                        : "En revision"}
+                    ? "En curso"
+                    : project.state === 3
+                    ? "Finalizado"
+                    : "En revision"}
                 </Typography>
               </div>
               <Tooltip title="Colaboradores">
                 <Fab
                   aria-describedby={idPopover}
-
                   size="small"
                   aria-label="edit"
                   onClick={handleOpenModal}
@@ -295,7 +285,6 @@ function DetailProject() {
                     zIndex: 0,
                     marginRight: "10px",
                     marginTop: "15px",
-
                   }}
                 >
                   <GroupIcon
@@ -308,7 +297,6 @@ function DetailProject() {
 
               {project.userId == user.id && (
                 <>
-
                   <div
                     style={{
                       display: "flex",
@@ -316,7 +304,6 @@ function DetailProject() {
                       marginTop: "15px",
                     }}
                   >
-
                     <Tooltip title="Editar">
                       <Fab
                         size="small"
@@ -326,7 +313,6 @@ function DetailProject() {
                           boxShadow: "none",
                           zIndex: 0,
                           marginRight: "10px",
-
                         }}
                       >
                         <CreateIcon />
@@ -350,12 +336,9 @@ function DetailProject() {
                         />
                       </Fab>
                     </Tooltip>
-
-
                   </div>
                 </>
               )}
-
             </div>
           </div>
 
@@ -370,90 +353,71 @@ function DetailProject() {
                   variant="dot"
                   badgeContent=" "
                   anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
+                    vertical: "bottom",
+                    horizontal: "left",
                   }}
-
                 />
-                <ListItem sx={{ height: '20px', marginBottom: '30px' }}>
+                <ListItem sx={{ }}>
                   <ListItemText
                     primary={project.description}
-                    sx={{
-                      whiteSpace: 'pre-line', overflowWrap: 'break-word', maxHeight: '3em', textOverflow: 'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2,
-
-                    }}
+                    
                   />
                 </ListItem>
               </List>
             </div>
-            <div >
+            <div>
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Objetivo General
               </Typography>
               <List dense={true}>
                 {project.general_objetive.map((item, index) => (
-                  <div
-                    key={index}
-                  >
+                  <div key={index}>
                     <Badge
                       color="primary"
                       variant="dot"
                       badgeContent=" "
                       anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
+                        vertical: "bottom",
+                        horizontal: "left",
                       }}
-
                     />
-                    <ListItem sx={{ height: '20px', marginBottom: '40px' }}>
-
+                    <ListItem sx={{  }}>
                       <ListItemText
                         primary={item}
-                        sx={{
-                          whiteSpace: 'pre-line', overflowWrap: 'break-word', maxHeight: '3em', textOverflow: 'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2,
-
-                        }}
+                        
                       />
                     </ListItem>
                   </div>
-
                 ))}
               </List>
             </div>
-            <div >
+            <div>
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Objetivos Especificos
               </Typography>
               <List dense={true}>
-
                 {project.specific_object.map((item, index) => (
-                  <div
-                    key={index}
-                  >
+                  <div key={index}>
                     <Badge
                       color="primary"
                       variant="dot"
                       badgeContent=" "
                       anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
+                        vertical: "bottom",
+                        horizontal: "left",
                       }}
-
                     />
-                    <ListItem sx={{ height: '20px', marginBottom: '40px' }}>
+                    <ListItem sx={{ }}>
                       <ListItemText
                         primary={item}
-                        sx={{
-                          whiteSpace: 'pre-line', overflowWrap: 'break-word', maxHeight: '3em', textOverflow: 'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2,
-
-                        }}
+                        
                       />
                     </ListItem>
                   </div>
                 ))}
               </List>
             </div>
-            <div >
+            <div>
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Alcance
               </Typography>
@@ -463,54 +427,52 @@ function DetailProject() {
                   variant="dot"
                   badgeContent=" "
                   anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
+                    vertical: "bottom",
+                    horizontal: "left",
                   }}
                 />
-                <ListItem sx={{ height: '20px', marginBottom: '40px' }}>
-
+                <ListItem sx={{ }}>
                   <ListItemText
                     primary={project.scope}
-                    sx={{
-                      whiteSpace: 'pre-line', overflowWrap: 'break-word', maxHeight: '3em', textOverflow: 'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2,
-
-                    }}
+                    
                   />
                 </ListItem>
               </List>
             </div>
-            <div >
+            <div>
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Referencias
               </Typography>
               <List dense={true}>
                 {project.bibliographic_references.map((item, index) => (
-                  <div
-                    key={index}
-                  >
+                  <div key={index}>
                     <Badge
                       color="primary"
                       variant="dot"
                       badgeContent=" "
                       anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
+                        vertical: "bottom",
+                        horizontal: "left",
                       }}
-
                     />
-                    <ListItem sx={{ height: '20px', marginBottom: '40px' }}>
+                    <ListItem sx={{ }}>
                       <ListItemText
                         primary={item}
                         sx={{
-                          whiteSpace: 'pre-line', overflowWrap: 'break-word', maxHeight: '3em', textOverflow: 'ellipsis', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2,
-
+                          whiteSpace: "pre-line",
+                          overflowWrap: "break-word",
+                          textOverflow: "ellipsis",
+                          maxHeight: "3em",  // Establece la altura máxima que deseas
+                          display: "-webkit-box",
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: "vertical",
+                          marginBottom: "10px",  // Ajusta el margen inferior según tus preferencias
                         }}
                       />
                     </ListItem>
                   </div>
                 ))}
               </List>
-
             </div>
           </div>
         </Grid>

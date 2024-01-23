@@ -305,7 +305,9 @@ export const ModalButton = styled(Button)(
 );
 
 export const CssContentInfo = {
-  display: 'block',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '20px', // Espacio entre cada sección
   backgroundColor: "#F2F1EE",
   margin: '30px 0px 0px 0px',
   borderRadius: "20px",
