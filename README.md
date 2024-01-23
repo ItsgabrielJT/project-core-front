@@ -2,12 +2,9 @@
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/badge/React-18.2.0-skyblue
-" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/badge/Node-20.10.0-green
-" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/badge/NPM-10.2.3-greendark
-" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/badge/React-18.2.0-skyblue" alt="React version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/badge/Node-20.10.0-green" alt="Node version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/badge/NPM-10.2.3-greendark" alt="npm version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
