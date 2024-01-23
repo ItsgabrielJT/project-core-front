@@ -22,7 +22,7 @@ export const useNotifications = (success, onSuccess) => {
                             fecha: item.updatedAt,
                             projectId: item.projectId,
                             collaborator_userId: item.collaborator_userId,
-                            full_name: item.owner.full_name,
+                            full_name: item.tipo == "peticion" ? item.collaborator.full_name : item.owner.full_name,
                             type: item.tipo
                         })
                     })

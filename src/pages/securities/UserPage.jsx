@@ -1,7 +1,8 @@
+import React, { useEffect, useState } from "react";
 import {
+  Box,
   Avatar,
   Backdrop,
-  Box,
   CircularProgress,
   Fab,
   Grid,
@@ -16,65 +17,61 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
 import ButtonOutline from "@components/buttons/ButtonOutline";
 import { CssContentInfo } from "@constants/styles";
 import EditUser from "./EditUser";
-import { ResponsiveBar, ResponsiveBarCanvas } from "@nivo/bar";
 import { useUser } from "@hook/securities/useUser";
 import { useParams } from "react-router-dom";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { useAuth } from "../../context/AuthContext";
 import { useStaticts } from "@hook/securities/useStaticts";
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from "@mui/icons-material/Settings";
 import { CustomizedPopover } from "../../assets/statics/constants/styles";
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import LockResetIcon from '@mui/icons-material/LockReset';
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import LockResetIcon from "@mui/icons-material/LockReset";
 import EditPassword from "./EditPassword";
-import { BarChart } from '@mui/x-charts/BarChart';
-import { axisClasses } from '@mui/x-charts';
-
+import { BarChart } from "@mui/x-charts/BarChart";
+import { axisClasses } from "@mui/x-charts";
+import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
 
 const chartSetting = {
   yAxis: [
     {
-      label: 'rainfall (mm)',
+      label: "rainfall (mm)",
     },
   ],
   height: 300,
   sx: {
     [`.${axisClasses.left} .${axisClasses.label}`]: {
-      transform: 'translate(-20px, 0)',
+      transform: "translate(-20px, 0)",
     },
   },
 };
 
 const dataset = [
   {
-    iniciados: 59,
+    iniciado: 59,
     enProceso: 57,
     finalizado: 86,
     enRevision: 21,
-    mes: 'Enero',
+    mes: "Enero",
   },
   {
-    iniciados: 59,
+    iniciado: 59,
     enProceso: 57,
     finalizado: 86,
     enRevision: 21,
-    mes: 'FEbrero',
+    mes: "FEbrero",
   },
   {
-    iniciados: 59,
+    iniciado: 59,
     enProceso: 57,
     finalizado: 86,
     enRevision: 21,
-    mes: 'Marzo',
+    mes: "Marzo",
   },
-  
 ];
-
 
 function UserPage() {
   const [open, setOpen] = useState(false);
@@ -95,10 +92,8 @@ function UserPage() {
   const openPopover = Boolean(anchorEl);
   const idPopover = openPopover ? "simple-popover" : undefined;
 
-
   const myImage = cld.image(profile ? profile.link_image : "");
-  const isSmallScreen = useMediaQuery('(max-width:800px)');
-
+  const isSmallScreen = useMediaQuery("(max-width:800px)");
 
   const handleOpen = () => {
     setOpen(true);
@@ -152,31 +147,31 @@ function UserPage() {
             PaperProps={{
               elevation: 0,
               sx: {
-                overflow: 'visible',
-                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                overflow: "visible",
+                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                 mt: 1.5,
-                '& .MuiAvatar-root': {
+                "& .MuiAvatar-root": {
                   width: 32,
                   height: 32,
                   ml: -0.5,
                   mr: 1,
                 },
-                '&::before': {
+                "&::before": {
                   content: '""',
-                  display: 'block',
-                  position: 'absolute',
+                  display: "block",
+                  position: "absolute",
                   top: 0,
                   right: 14,
                   width: 10,
                   height: 10,
-                  bgcolor: 'background.paper',
-                  transform: 'translateY(-50%) rotate(45deg)',
+                  bgcolor: "background.paper",
+                  transform: "translateY(-50%) rotate(45deg)",
                   zIndex: 0,
                 },
               },
             }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
             <MenuItem onClick={handleOpen}>
               <ListItemIcon>
@@ -190,7 +185,6 @@ function UserPage() {
               </ListItemIcon>
               Editar contraseña
             </MenuItem>
-
           </Menu>
 
           <Box
@@ -265,11 +259,10 @@ function UserPage() {
                       style={{
                         boxShadow: "none",
                         marginRight: "10px",
-                        zIndex: 0
+                        zIndex: 0,
                       }}
                     >
-                      <SettingsIcon
-                      />
+                      <SettingsIcon />
                     </Fab>
                   </Tooltip>
                 )}
@@ -298,21 +291,41 @@ function UserPage() {
               <Typography variant="h6" sx={{ marginBottom: "20px" }}>
                 Estadisticas
               </Typography>
-              <BarChart
-                dataset={staticts ? staticts : dataset}
-                xAxis={[{ scaleType: 'band', dataKey: 'mes' }]}
-                margin={{ top: 80, left: 10, right: 30, bottom: 20 }}
-                width={isSmallScreen ? 300 : 650}
-                series={[
-                  { dataKey: 'iniciado', label: 'Iniciado', valueFormatter },
-                  { dataKey: 'enProceso', label: 'En proceso', valueFormatter },
-                  { dataKey: 'finalizado', label: 'Finalizado', valueFormatter },
-                  { dataKey: 'enRevision', label: 'En revision', valueFormatter },
-                ]}
-                {...chartSetting}
-              />
+              {staticts && staticts.length == 0 ? (
+                <center>
+                  <SignalCellularAltIcon sx={{ fontSize: 60 }}/>
+                  <Typography variant="h6">
+                    Aun no hay proyectos que mostrar !
+                  </Typography>
+                </center>
+              ) : (
+                <BarChart
+                  dataset={staticts ? staticts : dataset}
+                  xAxis={[{ scaleType: "band", dataKey: "mes" }]}
+                  margin={{ top: 80, left: 10, right: 30, bottom: 20 }}
+                  width={isSmallScreen ? 300 : 650}
+                  series={[
+                    { dataKey: "iniciado", label: "Iniciado", valueFormatter },
+                    {
+                      dataKey: "enProceso",
+                      label: "En proceso",
+                      valueFormatter,
+                    },
+                    {
+                      dataKey: "finalizado",
+                      label: "Finalizado",
+                      valueFormatter,
+                    },
+                    {
+                      dataKey: "enRevision",
+                      label: "En revision",
+                      valueFormatter,
+                    },
+                  ]}
+                  {...chartSetting}
+                />
+              )}
             </div>
-
           </Box>
         </Grid>
       ) : (

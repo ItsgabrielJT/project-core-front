@@ -28,13 +28,17 @@ export const useEdit = (id = null, image, setPublicId) => {
 
         descripcion: yup
             .string('Enter your institute')
+            .max(1200, 'La descripcion debe ser maximo de 1200 caracteres')
             .required('La descripcion es requerido'),
+            
         alcance: yup
             .string('Enter your carrer')
+            .max(1200, 'El alcance debe ser maximo de 1200 caracteres')
             .required('El alcance es requerido'),
         objetivos_generales: yup
             .string('Enter your phone number')
-            .required('El obejtivo general es requerido'),
+            .max(1200, 'El objetivo general debe ser maximo de 1200 caracteres')
+            .required('El objetivo general es requerido'),
     });
 
     const [specifics, setSpecifics] = useState([''])
