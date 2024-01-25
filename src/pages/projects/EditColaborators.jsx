@@ -310,6 +310,7 @@ function EditColaborators({
                         }}
                       >
                         <ButtonContained
+                          disabled={selectedIndex == null}
                           onClick={handleSavePermission}
                           text={"Guardar cambios"}
                           style={{
