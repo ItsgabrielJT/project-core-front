@@ -39,14 +39,14 @@ import { usePermissions } from "../../hooks/colaborators/usePermissions";
 function DetailProject() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [success, setSuccess] = useState(true);
   const [open, setOpen] = useState(false);
   const [cloudName] = useState("dnkst5hjn");
   const { user } = useAuth();
-  const { project, loading, isColaborator } = useDetail(id, user);
+  const { project, loading, isColaborator } = useDetail(id, user, success);
   const { permission } = usePermissions(id, user.id, isColaborator)
   const [openModal, setOpenModal] = useState(false);
   const [openListColaborator, setOpenListColaborators] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleCloseListColaborators = () => {
@@ -75,6 +75,7 @@ function DetailProject() {
   };
 
   const handleOpenModal = (event) => {
+    setSuccess(false);
     if (project.userId != user.id) {
       setOpenListColaborators(true);
     } else {

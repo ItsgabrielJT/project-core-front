@@ -3,14 +3,14 @@ import { projectService } from "@services/projects/projectService";
 import notificationService from "@services/notificationService";
 import { useNavigate } from "react-router-dom";
 
-export const useDetail = (id = null, user) => {
+export const useDetail = (id = null, user, success) => {
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isColaborator, setIsColaborator] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (id) {
+    if (id && success) {
       projectService
         .getProjectById(id)
         .then((res) => {
@@ -57,7 +57,7 @@ export const useDetail = (id = null, user) => {
         })
         .finally(() => [setLoading(false)]);
     }
-  }, [id]);
+  }, [id, success]);
 
   return {
     project,

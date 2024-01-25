@@ -21,18 +21,17 @@ import {
   ListItemIcon,
   ListItemText,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
-import ButtonContained from "@components/buttons/ButtonContained";
 import ModalDialog from "@components/modals/ModalDialog";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useEdit } from "@hook/securities/useEdit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import CheckIcon from '@mui/icons-material/Check';
 import FaceRetouchingOffIcon from "@mui/icons-material/FaceRetouchingOff";
 import { colaboratorService } from "../../services/colaborators/colaboratorService";
 import notificationService from "@services/notificationService";
 import GroupIcon from "@mui/icons-material/Group";
-
 
 const PERMISSIONS = ["Editar", "Eliminar"];
 
@@ -43,12 +42,13 @@ function EditColaborators({
   onSuccess,
   colaborators,
 }) {
-  const { formUser } = useEdit(handleClose, onSuccess);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [checked, setChecked] = useState([]);
   const [loadingPermission, setLoadingPermission] = useState(false);
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
+  const [openConfirm, setOpenConfirm] = useState(false);
+
 
   useEffect(() => {
     setUsers(colaborators);
@@ -102,8 +102,24 @@ function EditColaborators({
       });
   };
 
-  const handleSavePermission = () => {
+  const handleDeleteColaborator = () => {
 
+    colaboratorService
+      .deleteColaborator(user.id, idProject)
+      .then((res) => {
+        if (res.data.status) {
+          notificationService.success("Colaborador eliminado correctamente");
+          onClose();
+          onSuccess(true);
+          setOpenConfirm(false);
+        }
+      })
+      .catch((err) => {
+        notificationService.error(err.message);
+      });
+  };
+
+  const handleSavePermission = () => {
     let json = {
       crear: false,
       actualizar: checked.indexOf(0) !== -1,
@@ -111,19 +127,26 @@ function EditColaborators({
       visualizar: false,
     };
     colaboratorService
-    .updatePermissions(idProject, user.id, json)
-    .then((res) => {
-      if (res.data.status) {
-        notificationService.success("Permisos actualizados correctamente");
-      }
-    })
-    .catch((err) => {
-      notificationService.error(err.message);
-    });
+      .updatePermissions(idProject, user.id, json)
+      .then((res) => {
+        if (res.data.status) {
+          notificationService.success("Permisos actualizados correctamente");
+        }
+      })
+      .catch((err) => {
+        notificationService.error(err.message);
+      });
   };
 
   return (
     <>
+    <ModalDialog
+        title={`Quieres eliminar al usuario ${user.full_name}?` }
+        open={openConfirm}
+        onClose={() => setOpenConfirm(false)}
+        onConfirm={handleDeleteColaborator}
+        slots={{ backdrop: StyledBackdrop }}
+      />
       <Modal
         aria-labelledby="unstyled-modal-title"
         aria-describedby="unstyled-modal-description"
@@ -189,7 +212,10 @@ function EditColaborators({
                       color: "#9BBEC8",
                     }}
                   />
-                  <Typography variant="h6"> Configurar Colaboradores</Typography>
+                  <Typography variant="h6">
+                    {" "}
+                    Configurar Colaboradores
+                  </Typography>
                 </div>
               </div>
               <div
@@ -200,11 +226,15 @@ function EditColaborators({
                 }}
               >
                 <Grid container spacing={1} columns={16}>
-                  <Grid item xs={7} sx={{ 
-                      marginTop: "30px" ,
+                  <Grid
+                    item
+                    xs={7}
+                    sx={{
+                      marginTop: "30px",
                       overflow: "auto",
-                  maxHeight: "190px",
-                      }}>
+                      maxHeight: "190px",
+                    }}
+                  >
                     {users &&
                       users.map((item, index) => (
                         <ListItemButton
@@ -225,7 +255,6 @@ function EditColaborators({
                           <ListItemText primary={item.user.full_name} />
                         </ListItemButton>
                       ))}
-                      
                   </Grid>
                   <Grid item xs={9} sx={{ marginTop: "22px" }}>
                     <List
@@ -303,23 +332,56 @@ function EditColaborators({
                           </>
                         );
                       })}
-                      <ListItem
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <ButtonContained
-                          disabled={selectedIndex == null}
-                          onClick={handleSavePermission}
-                          text={"Guardar cambios"}
-                          style={{
-                            height: "37px",
-
-                            marginTop: "20px",
+                      {selectedIndex != null && (
+                        <ListItem
+                          sx={{
+                            display: "flex",
+                            justifyContent: "end",
                           }}
-                        />
-                      </ListItem>
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "end",
+                              marginTop: "15px",
+                            }}
+                          >
+                            <Tooltip title="Guardar">
+                              <Fab
+                                size="small"
+                                aria-label="edit"
+                                disabled={selectedIndex == null}
+                                onClick={handleSavePermission}
+                                style={{
+                                  boxShadow: "none",
+                                  zIndex: 0,
+                                  marginRight: "10px",
+                                }}
+                              >
+                                <CheckIcon />
+                              </Fab>
+                            </Tooltip>
+                            <Tooltip title="Eliminar Colaborador">
+                              <Fab
+                                size="small"
+                                aria-label="edit"
+                                onClick={() => setOpenConfirm(true)}
+                                style={{
+                                  backgroundColor: "#FFB1B8",
+                                  boxShadow: "none",
+                                  zIndex: 0,
+                                }}
+                              >
+                                <PersonRemoveIcon
+                                  sx={{
+                                    color: "#DC3545",
+                                  }}
+                                />
+                              </Fab>
+                            </Tooltip>
+                          </div>
+                        </ListItem>
+                      )}
                     </List>
                   </Grid>
                 </Grid>

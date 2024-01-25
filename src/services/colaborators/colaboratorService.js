@@ -149,4 +149,16 @@ export const colaboratorService = {
       throw new Error("Ha ocurrido un error, intentelo mas tarde");
     }
   },
+
+  deleteColaborator: async function (colaborator, project) {
+    const { token } = JSON.parse(localStorage.getItem("user"));
+    try {
+      const res = await axios.delete(URL_BASE + "api/eliminar-colaborador/" + colaborator + "/" + project, {
+        headers: { Authorization: "Bearer " + token },
+      });
+      return res;
+    } catch (error) {
+      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+    }
+  },
 };
