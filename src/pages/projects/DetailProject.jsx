@@ -28,11 +28,13 @@ import GroupIcon from "@mui/icons-material/Group";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditColaborators from "./EditColaborators";
 import { CustomizedPopover } from "../../assets/statics/constants/styles";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { format } from "date-fns";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { useAuth } from "../../context/AuthContext";
+import ListColaborators from "./ListColaborators";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { usePermissions } from "../../hooks/colaborators/usePermissions";
 
 function DetailProject() {
   const navigate = useNavigate();
@@ -40,20 +42,15 @@ function DetailProject() {
   const [open, setOpen] = useState(false);
   const [cloudName] = useState("dnkst5hjn");
   const { user } = useAuth();
-  const { project, loading } = useDetail(id);
+  const { project, loading, isColaborator } = useDetail(id, user);
+  const { permission } = usePermissions(id, user.id, isColaborator)
   const [openModal, setOpenModal] = useState(false);
+  const [openListColaborator, setOpenListColaborators] = useState(false);
   const [success, setSuccess] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const openPopover = Boolean(anchorEl);
-  const idPopover = openPopover ? "simple-popover" : undefined;
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleCloseListColaborators = () => {
+    setOpenListColaborators(false);
   };
 
   const handleConfirm = () => {
@@ -79,7 +76,7 @@ function DetailProject() {
 
   const handleOpenModal = (event) => {
     if (project.userId != user.id) {
-      handleClick(event);
+      setOpenListColaborators(true);
     } else {
       setOpenModal(true);
       setSuccess(false);
@@ -105,52 +102,12 @@ function DetailProject() {
         idProject={id}
         colaborators={project ? project.colaborators : []}
       />
-      <CustomizedPopover
-        id={idPopover}
-        open={openPopover}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-      >
-        <List>
-          {project &&
-            project.colaborators.map((item, index) => (
-              <ListItem
-                key={index}
-                sx={{
-                  borderRadius: "30px",
-                  marginBottom: "10px",
-
-                  "&.Mui-selected": {
-                    backgroundColor: "rgba(92, 221, 219, 0.3)",
-                  },
-                }}
-              >
-                <AccountCircleIcon
-                  style={{
-                    width: "30px",
-                    height: "auto",
-                    borderRadius: "8px",
-                    marginRight: "7px",
-                  }}
-                />
-                <ListItemText primary={item.user.full_name} />
-              </ListItem>
-            ))}
-          {project && project.colaborators.length === 0 && (
-            <ListItem>
-              <ListItemText primary="Aun no hay colaboradores" />
-            </ListItem>
-          )}
-        </List>
-      </CustomizedPopover>
+      <ListColaborators
+        open={openListColaborator}
+        handleClose={handleCloseListColaborators}
+        idProject={id}
+        colaborators={project ? project.colaborators : []}
+      />
       <ModalDialog
         title={"Quieres eliminar este proyecto ?"}
         open={open}
@@ -172,18 +129,32 @@ function DetailProject() {
           {project.userId != user.id && (
             <>
               <div style={{ display: "flex" }}>
-                <AdvancedImage
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    marginRight: "10px",
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    overflow: "hidden",
-                  }}
-                  cldImg={perfil}
-                  plugins={[responsive(), placeholder()]}
-                />
+                {project.link_image_user == "default" ? (
+                  <AccountCircleIcon
+                    sx={{
+                      width: "30px",
+                      height: "30px",
+                      marginRight: "10px",
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                      overflow: "hidden", 
+                    }}
+                  />
+                ) : (
+                  <AdvancedImage
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      marginRight: "10px",
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                    }}
+                    cldImg={perfil}
+                    plugins={[responsive(), placeholder()]}
+                  />
+                )}
+
                 <Typography
                   variant="body1"
                   sx={{
@@ -275,7 +246,6 @@ function DetailProject() {
               </div>
               <Tooltip title="Colaboradores">
                 <Fab
-                  aria-describedby={idPopover}
                   size="small"
                   aria-label="edit"
                   onClick={handleOpenModal}
@@ -294,7 +264,52 @@ function DetailProject() {
                   />
                 </Fab>
               </Tooltip>
-
+              {isColaborator && (
+                <>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "end",
+                      marginTop: "15px",
+                    }}
+                  >
+                    <Tooltip title="Editar">
+                      <Fab
+                        size="small"
+                        disabled={!permission.edit}
+                        aria-label="edit"
+                        onClick={editProject}
+                        style={{
+                          boxShadow: "none",
+                          zIndex: 0,
+                          marginRight: "10px",
+                        }}
+                      >
+                        <CreateIcon />
+                      </Fab>
+                    </Tooltip>
+                    <Tooltip title="Eliminar">
+                      <Fab
+                        size="small"
+                        disabled={!permission.delete}
+                        aria-label="edit"
+                        onClick={() => setOpen(true)}
+                        style={{
+                          backgroundColor: "#FFB1B8",
+                          boxShadow: "none",
+                          zIndex: 0,
+                        }}
+                      >
+                        <DeleteIcon
+                          sx={{
+                            color: "#DC3545",
+                          }}
+                        />
+                      </Fab>
+                    </Tooltip>
+                  </div>
+                </>
+              )}
               {project.userId == user.id && (
                 <>
                   <div
@@ -357,11 +372,8 @@ function DetailProject() {
                     horizontal: "left",
                   }}
                 />
-                <ListItem sx={{ }}>
-                  <ListItemText
-                    primary={project.description}
-                    
-                  />
+                <ListItem sx={{}}>
+                  <ListItemText primary={project.description} />
                 </ListItem>
               </List>
             </div>
@@ -381,11 +393,8 @@ function DetailProject() {
                         horizontal: "left",
                       }}
                     />
-                    <ListItem sx={{  }}>
-                      <ListItemText
-                        primary={item}
-                        
-                      />
+                    <ListItem sx={{}}>
+                      <ListItemText primary={item} />
                     </ListItem>
                   </div>
                 ))}
@@ -407,11 +416,8 @@ function DetailProject() {
                         horizontal: "left",
                       }}
                     />
-                    <ListItem sx={{ }}>
-                      <ListItemText
-                        primary={item}
-                        
-                      />
+                    <ListItem sx={{}}>
+                      <ListItemText primary={item} />
                     </ListItem>
                   </div>
                 ))}
@@ -431,11 +437,8 @@ function DetailProject() {
                     horizontal: "left",
                   }}
                 />
-                <ListItem sx={{ }}>
-                  <ListItemText
-                    primary={project.scope}
-                    
-                  />
+                <ListItem sx={{}}>
+                  <ListItemText primary={project.scope} />
                 </ListItem>
               </List>
             </div>
@@ -455,18 +458,18 @@ function DetailProject() {
                         horizontal: "left",
                       }}
                     />
-                    <ListItem sx={{ }}>
+                    <ListItem sx={{}}>
                       <ListItemText
                         primary={item}
                         sx={{
                           whiteSpace: "pre-line",
                           overflowWrap: "break-word",
                           textOverflow: "ellipsis",
-                          maxHeight: "3em",  // Establece la altura máxima que deseas
+                          maxHeight: "3em", // Establece la altura máxima que deseas
                           display: "-webkit-box",
                           WebkitLineClamp: 3,
                           WebkitBoxOrient: "vertical",
-                          marginBottom: "10px",  // Ajusta el margen inferior según tus preferencias
+                          marginBottom: "10px", // Ajusta el margen inferior según tus preferencias
                         }}
                       />
                     </ListItem>
