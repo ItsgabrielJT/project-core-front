@@ -329,18 +329,24 @@ function Header() {
                   size="small"
                   sx={{ marginRight: "10px" }}
                 >
-                  <AdvancedImage
-                    style={{
-                      width: "35px",
-                      height: "35px",
-                      marginRight: "10px",
-                      objectFit: "cover",
-                      borderRadius: "50%",
-                      overflow: "hidden",
-                    }}
-                    cldImg={perfil}
-                    plugins={[responsive(), placeholder()]}
-                  />
+                  {user.linkImagen == "default" ? (
+                    <PersonRoundedIcon 
+                      sx={{ fontSize: 30 }}
+                    />
+                  ) : (
+                    <AdvancedImage
+                      style={{
+                        width: "35px",
+                        height: "35px",
+                        marginRight: "10px",
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                        overflow: "hidden",
+                      }}
+                      cldImg={perfil}
+                      plugins={[responsive(), placeholder()]}
+                    />
+                  )}
                 </IconButton>
               </Tooltip>
 

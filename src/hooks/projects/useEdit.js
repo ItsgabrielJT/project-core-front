@@ -73,6 +73,10 @@ export const useEdit = (id = null, image, setPublicId) => {
 
     }, [id])
 
+    const handleAddInput = () => {
+        setSpecifics([...specifics, ""]);
+      };
+
     const handleObjectSpecifics = (event, index) => {
         const newSpecifics = [...specifics];
         newSpecifics[index] = event.target.value;
@@ -82,8 +86,13 @@ export const useEdit = (id = null, image, setPublicId) => {
     const cleanObjectSpecifics = (index) => {
         const newInputs = [...specifics];
         newInputs.splice(index, 1);
+        console.log(newInputs)
         setSpecifics(newInputs);
     }
+
+    const handleAddLink = () => {
+        setReferences([...references, ""]);
+      };
 
     const handleReferences = (event, index) => {
         const newSpecifics = [...references];
@@ -154,6 +163,8 @@ export const useEdit = (id = null, image, setPublicId) => {
         specifics,
         references,
         loading,
+        handleAddInput,
+        handleAddLink,
         handleObjectSpecifics,
         cleanObjectSpecifics,
         handleReferences,
