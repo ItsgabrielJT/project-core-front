@@ -53,7 +53,7 @@ export const useDetail = (id = null, user, success) => {
         })
         .catch((err) => {
           navigate("/error");
-          notificationService.error(err.message);
+          notificationService.error(err);
         })
         .finally(() => [setLoading(false)]);
     }

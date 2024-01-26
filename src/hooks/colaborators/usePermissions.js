@@ -22,7 +22,7 @@ export const usePermissions = (project, colaborator, isColaborator) => {
           }   
         })
         .catch((err) => {
-          notificationService.error(err.message);
+          notificationService.error(err);
         })
     }
     

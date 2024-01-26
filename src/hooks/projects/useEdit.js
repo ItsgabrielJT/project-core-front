@@ -134,7 +134,7 @@ export const useEdit = (id = null, image, setPublicId) => {
                         }
                     })
                     .catch((err) => {
-                        notificationService.error(err.message)
+                        notificationService.error(err)
                     })
             } else {
                 json.id_usuario = JSON.parse(localStorage.getItem("id"));
@@ -151,7 +151,7 @@ export const useEdit = (id = null, image, setPublicId) => {
                         }
                     })
                     .catch((err) => {
-                        notificationService.error(err.message)
+                        notificationService.error(err)
                     })
             }
 

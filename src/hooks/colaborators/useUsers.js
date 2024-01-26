@@ -19,7 +19,7 @@ export const useUsers = () => {
             }
         })
         .catch((err) => {
-            notificationService.error(err.message);
+            notificationService.error(err);
         })
         .finally(() => [
             setLoading(false)

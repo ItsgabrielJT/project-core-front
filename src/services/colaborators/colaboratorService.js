@@ -10,7 +10,7 @@ export const colaboratorService = {
       });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -22,7 +22,7 @@ export const colaboratorService = {
       });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -37,7 +37,7 @@ export const colaboratorService = {
       );
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -52,7 +52,7 @@ export const colaboratorService = {
       );
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -67,7 +67,7 @@ export const colaboratorService = {
       );
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -82,7 +82,7 @@ export const colaboratorService = {
       );
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -94,7 +94,7 @@ export const colaboratorService = {
       });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -110,7 +110,7 @@ export const colaboratorService = {
       );
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -122,7 +122,7 @@ export const colaboratorService = {
       });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -134,7 +134,7 @@ export const colaboratorService = {
       });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -146,7 +146,7 @@ export const colaboratorService = {
       });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -158,7 +158,7 @@ export const colaboratorService = {
       });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 };

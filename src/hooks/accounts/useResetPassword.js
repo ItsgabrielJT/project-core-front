@@ -54,7 +54,7 @@ export const useResetPassword = (token) => {
             }
           })
           .catch((err) => {
-            notificationService.error(err.message)
+            notificationService.error(err)
           })
       }
 

@@ -5,29 +5,24 @@ export const projectService = {
   getAllProjects: async function () {
     try {
       const { token } = JSON.parse(localStorage.getItem("user"));
-      const res = await axios.get(URL_BASE + "api/proyectos",
-      {
+      const res = await axios.get(URL_BASE + "api/proyectos", {
         headers: { Authorization: "Bearer " + token },
-      }
-      );
+      });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
   getProjectById: async function (id) {
-    
     try {
       const { token } = JSON.parse(localStorage.getItem("user"));
-      const res = await axios.get(URL_BASE + "api/proyecto/" + id,
-      {
+      const res = await axios.get(URL_BASE + "api/proyecto/" + id, {
         headers: { Authorization: "Bearer " + token },
-      }
-      );
+      });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -40,7 +35,7 @@ export const projectService = {
       });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -53,7 +48,7 @@ export const projectService = {
       });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -62,11 +57,10 @@ export const projectService = {
       const { token } = JSON.parse(localStorage.getItem("user"));
       const res = await axios.delete(URL_BASE + "api/eliminar-proyecto/" + id, {
         headers: { Authorization: "Bearer " + token },
-
       });
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 
@@ -82,7 +76,7 @@ export const projectService = {
       );
       return res;
     } catch (error) {
-      throw new Error("Ha ocurrido un error, intentelo mas tarde");
+      throw error.response.data.msg;
     }
   },
 };

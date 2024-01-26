@@ -60,7 +60,7 @@ export const useEdit = (handleClose, onSuccess, image, onImage, user, open) => {
                         }
                     })
                     .catch((err) => {
-                        notificationService.error(err.message)
+                        notificationService.error(err)
                     })
             }
         }
