@@ -58,7 +58,7 @@ export const usePassword = (handleClose, onSuccess) => {
             }
           })
           .catch((err) => {
-            notificationService.error(err.message)
+            notificationService.error(err)
           })
       }
 

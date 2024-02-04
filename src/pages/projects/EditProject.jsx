@@ -62,13 +62,13 @@ function EditProject() {
     specifics,
     references,
     loading,
+    handleAddInput,
+    handleAddLink,
     handleObjectSpecifics,
     cleanObjectSpecifics,
     handleReferences,
     cleanReferences,
   } = useEdit(id, publicId, setPublicId);
-  const [inputs, setInputs] = useState([""]);
-  const [links, setLinks] = useState([""]);
   const [uploadPreset] = useState("o0bi0kjz");
   const [cloudName] = useState("dnkst5hjn");
   const [openInvitations, setOpenInvitations] = useState(false);
@@ -84,9 +84,7 @@ function EditProject() {
     theme: "blue", //change to a purple theme
   });
 
-  const handleAddInput = () => {
-    setInputs([...inputs, ""]);
-  };
+  
 
   const handleClose = () => {
     setOpenInvitations(false);
@@ -94,24 +92,6 @@ function EditProject() {
 
   const handleOpenModal = () => {
     setOpenInvitations(true)
-  };
-
-  const handleRemoveInput = (index) => {
-    const newInputs = [...inputs];
-    newInputs.splice(index, 1);
-    setInputs(newInputs);
-    cleanObjectSpecifics(index);
-  };
-
-  const handleAddLink = () => {
-    setLinks([...links, ""]);
-  };
-
-  const handleRemoveLink = (index) => {
-    const newInputs = [...links];
-    newInputs.splice(index, 1);
-    setLinks(newInputs);
-    cleanReferences(index);
   };
 
   const cld = new Cloudinary({
@@ -128,8 +108,6 @@ function EditProject() {
   const handleSelectOcupacion = (e) => {
     formProject.setFieldValue("estado", e)
   }
-
-  
 
   return (
     <Grid item xs={12}>
@@ -298,7 +276,6 @@ function EditProject() {
             name="alcance"
             label="Alcance"
             id="alcance"
-            autoComplete="current-name"
             value={formProject.values.alcance}
             onChange={formProject.handleChange}
             onBlur={formProject.handleBlur}
@@ -332,7 +309,7 @@ function EditProject() {
             </Tooltip>
 
           </Divider>
-          {inputs.map((value, index) => (
+          {specifics.map((value, index) => (
             <div
               key={index}
               style={{
@@ -340,12 +317,12 @@ function EditProject() {
               }}
             >
               {
-                inputs.length > 1 && (
+                specifics.length > 1 && (
                   <Tooltip title="Eliminar">
                     <Fab
                       size="small"
                       aria-label="add"
-                      onClick={() => handleRemoveInput(index)}
+                      onClick={() => cleanObjectSpecifics(index)}
                       sx={{
                         backgroundColor: "#FFFDFA",
                         boxShadow: "none",
@@ -362,8 +339,7 @@ function EditProject() {
                 margin="normal"
                 fullWidth
                 multiline
-                label="Objetivo Specifico"
-                autoComplete="current-name"
+                label="Objetivo especifico"
                 value={specifics[index]}
                 onChange={(event) => handleObjectSpecifics(event, index)}
                 sx={CssTexField}
@@ -393,7 +369,7 @@ function EditProject() {
             </Tooltip>
 
           </Divider>
-          {links.map((value, index) => (
+          {references.map((value, index) => (
             <div
               key={index}
               style={{
@@ -401,12 +377,12 @@ function EditProject() {
               }}
             >
               {
-                links.length > 1 && (
+                references.length > 1 && (
                   <Tooltip title="Eliminar">
                     <Fab
                       size="small"
                       aria-label="add"
-                      onClick={() => handleRemoveLink(index)}
+                      onClick={() => cleanReferences(index)}
                       sx={{
                         backgroundColor: "#FFFDFA",
                         boxShadow: "none",
@@ -424,7 +400,6 @@ function EditProject() {
                 fullWidth
                 multiline
                 label="Referencia Bibliografica"
-                autoComplete="current-name"
                 value={references[index]}
                 onChange={(event) => handleReferences(event, index)}
                 sx={CssTexField}

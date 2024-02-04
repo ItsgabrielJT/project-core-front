@@ -26,7 +26,6 @@ import { useNavigate } from "react-router";
 import { CssButtonContained } from "@constants/styles";
 import GroupIcon from "@mui/icons-material/Group";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import EditColaborators from "./EditColaborators";
 import { CustomizedPopover } from "../../assets/statics/constants/styles";
 import { format } from "date-fns";
 import { Cloudinary } from "@cloudinary/url-gen";
@@ -36,7 +35,7 @@ import ListColaborators from "./ListColaborators";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { usePermissions } from "../../hooks/colaborators/usePermissions";
 
-function DetailProject() {
+function ProjectDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [success, setSuccess] = useState(true);
@@ -59,7 +58,7 @@ function DetailProject() {
       .then((res) => {
         if (res.data.status) {
           notificationService.success("Se ha eliminado correctamente");
-          navigate("/home");
+          navigate("/admin/projects");
         }
       })
       .catch((err) => {
@@ -68,10 +67,6 @@ function DetailProject() {
       .finally(() => {
         setOpen(false);
       });
-  };
-
-  const editProject = () => {
-    navigate(`/projects/${id}/edit`);
   };
 
   const handleOpenModal = (event) => {
@@ -96,13 +91,7 @@ function DetailProject() {
 
   return (
     <Grid item xs={12}>
-      <EditColaborators
-        open={openModal}
-        handleClose={handleCloseModal}
-        onSuccess={setSuccess}
-        idProject={id}
-        colaborators={project ? project.colaborators : []}
-      />
+      
       <ListColaborators
         open={openListColaborator}
         handleClose={handleCloseListColaborators}
@@ -265,7 +254,7 @@ function DetailProject() {
                   />
                 </Fab>
               </Tooltip>
-              {isColaborator && (
+             
                 <>
                   <div
                     style={{
@@ -274,66 +263,7 @@ function DetailProject() {
                       marginTop: "15px",
                     }}
                   >
-                    <Tooltip title="Editar">
-                      <Fab
-                        size="small"
-                        disabled={!permission.edit}
-                        aria-label="edit"
-                        onClick={editProject}
-                        style={{
-                          boxShadow: "none",
-                          zIndex: 0,
-                          marginRight: "10px",
-                        }}
-                      >
-                        <CreateIcon />
-                      </Fab>
-                    </Tooltip>
-                    <Tooltip title="Eliminar">
-                      <Fab
-                        size="small"
-                        disabled={!permission.delete}
-                        aria-label="edit"
-                        onClick={() => setOpen(true)}
-                        style={{
-                          backgroundColor: "#FFB1B8",
-                          boxShadow: "none",
-                          zIndex: 0,
-                        }}
-                      >
-                        <DeleteIcon
-                          sx={{
-                            color: "#DC3545",
-                          }}
-                        />
-                      </Fab>
-                    </Tooltip>
-                  </div>
-                </>
-              )}
-              {project.userId == user.id && (
-                <>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "end",
-                      marginTop: "15px",
-                    }}
-                  >
-                    <Tooltip title="Editar">
-                      <Fab
-                        size="small"
-                        aria-label="edit"
-                        onClick={editProject}
-                        style={{
-                          boxShadow: "none",
-                          zIndex: 0,
-                          marginRight: "10px",
-                        }}
-                      >
-                        <CreateIcon />
-                      </Fab>
-                    </Tooltip>
+                   
                     <Tooltip title="Eliminar">
                       <Fab
                         size="small"
@@ -354,7 +284,6 @@ function DetailProject() {
                     </Tooltip>
                   </div>
                 </>
-              )}
             </div>
           </div>
 
@@ -504,4 +433,4 @@ function DetailProject() {
   );
 }
 
-export default DetailProject;
+export default ProjectDetail;

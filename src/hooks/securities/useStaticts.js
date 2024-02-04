@@ -31,7 +31,7 @@ export const useStaticts = (success, id = null) => {
           setStaticts(data)
         })
         .catch((err) => {
-          notificationService.error(err.message)
+          notificationService.error(err)
         })
         .finally(() => {
           setLoading(false)

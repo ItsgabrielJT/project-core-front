@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         }
       })
       .catch((err) => {
-        notificationService.warning(err.message);
+        notificationService.warning(err);
         setLoading(false);
       });
     setLoading(false);

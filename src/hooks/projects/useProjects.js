@@ -32,12 +32,12 @@ export const useProjects = () => {
                     })
                     setDataHome(data)
                 } else {
-                    notificationService.warning("Intentlo mas tarde")
+                    notificationService.warning("Intentalo mas tarde")
                 }
             })
             .catch((err) => {
                 navigate('/error')
-                notificationService.error(err.message);
+                notificationService.error(err);
             })
             .finally(() => [
                 setLoading(false)

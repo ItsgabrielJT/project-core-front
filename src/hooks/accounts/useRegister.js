@@ -76,7 +76,7 @@ export const useRegister = (handleClose, publicId) => {
                     }
                 })
                 .catch((err) => {
-                    notificationService.warning(err.message);
+                    notificationService.warning(err);
                 });
         
         }

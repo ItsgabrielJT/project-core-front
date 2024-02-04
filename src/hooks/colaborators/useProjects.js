@@ -27,7 +27,7 @@ export const useProjects = () => {
                 }
             })
             .catch((err) => {
-                notificationService.error(err.message);
+                notificationService.error(err);
             })
             .finally(() => [
                 setLoading(false)

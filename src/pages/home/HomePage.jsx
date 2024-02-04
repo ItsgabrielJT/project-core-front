@@ -80,7 +80,7 @@ const HomePage = () => {
               projectImage={item.link_image_project}
               occupation={item.occupation}
               full_name={item.full_name}
-              fecha={format(new Date(item.fecha), 'EEEE, d MMMM yyyy')}
+              fecha={format(new Date(item.fecha), 'd/MM/yyyy HH:mm')}
               description={item.description}
               title_project={item.title_project}
               onDetail={() => handleDetail(item.idProject)}

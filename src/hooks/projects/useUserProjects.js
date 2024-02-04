@@ -35,7 +35,7 @@ export const useUserProjects = (success, onSuccess) => {
             .catch((err) => {
                 navigate('/error')
 
-                notificationService.error(err.message);
+                notificationService.error(err);
             })
             .finally(() => [
                 setLoading(false)

@@ -28,13 +28,17 @@ export const useEdit = (id = null, image, setPublicId) => {
 
         descripcion: yup
             .string('Enter your institute')
+            .max(1200, 'La descripcion debe ser maximo de 1200 caracteres')
             .required('La descripcion es requerido'),
+            
         alcance: yup
             .string('Enter your carrer')
+            .max(1200, 'El alcance debe ser maximo de 1200 caracteres')
             .required('El alcance es requerido'),
         objetivos_generales: yup
             .string('Enter your phone number')
-            .required('El obejtivo general es requerido'),
+            .max(1200, 'El objetivo general debe ser maximo de 1200 caracteres')
+            .required('El objetivo general es requerido'),
     });
 
     const [specifics, setSpecifics] = useState([''])
@@ -69,6 +73,10 @@ export const useEdit = (id = null, image, setPublicId) => {
 
     }, [id])
 
+    const handleAddInput = () => {
+        setSpecifics([...specifics, ""]);
+      };
+
     const handleObjectSpecifics = (event, index) => {
         const newSpecifics = [...specifics];
         newSpecifics[index] = event.target.value;
@@ -78,8 +86,13 @@ export const useEdit = (id = null, image, setPublicId) => {
     const cleanObjectSpecifics = (index) => {
         const newInputs = [...specifics];
         newInputs.splice(index, 1);
+        console.log(newInputs)
         setSpecifics(newInputs);
     }
+
+    const handleAddLink = () => {
+        setReferences([...references, ""]);
+      };
 
     const handleReferences = (event, index) => {
         const newSpecifics = [...references];
@@ -121,7 +134,7 @@ export const useEdit = (id = null, image, setPublicId) => {
                         }
                     })
                     .catch((err) => {
-                        notificationService.error(err.message)
+                        notificationService.error(err)
                     })
             } else {
                 json.id_usuario = JSON.parse(localStorage.getItem("id"));
@@ -138,7 +151,7 @@ export const useEdit = (id = null, image, setPublicId) => {
                         }
                     })
                     .catch((err) => {
-                        notificationService.error(err.message)
+                        notificationService.error(err)
                     })
             }
 
@@ -150,6 +163,8 @@ export const useEdit = (id = null, image, setPublicId) => {
         specifics,
         references,
         loading,
+        handleAddInput,
+        handleAddLink,
         handleObjectSpecifics,
         cleanObjectSpecifics,
         handleReferences,

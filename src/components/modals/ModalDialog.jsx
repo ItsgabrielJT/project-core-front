@@ -47,7 +47,7 @@ function ModalDialog({ open, onClose, onConfirm, title, slots = {} }) {
 
         >
             <Fade in={open}>
-                <ModalContentConfirm sx={{ width: 250 }}>
+                <ModalContentConfirm sx={{ width: 300 }}>
                     <div>
                         <div
                             style={{ display: "flex", justifyContent: "space-between" }}

@@ -4,7 +4,7 @@ import notificationService from "@services/notificationService"
 
 export const useUsers = () => {
   
-    const [ users, setUsers ] = useState()
+    const [ users, setUsers ] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export const useUsers = () => {
             }
         })
         .catch((err) => {
-            notificationService.error(err.message);
+            notificationService.error(err);
         })
         .finally(() => [
             setLoading(false)

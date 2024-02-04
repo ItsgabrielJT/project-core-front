@@ -17,8 +17,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import ButtonOutline from "@components/buttons/ButtonOutline";
-import { CssContentInfo } from "@constants/styles";
+import { CssContentInfo, StyledBackdrop } from "@constants/styles";
 import EditUser from "./EditUser";
 import { useUser } from "@hook/securities/useUser";
 import { useParams } from "react-router-dom";
@@ -26,55 +25,18 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import { useAuth } from "../../context/AuthContext";
 import { useStaticts } from "@hook/securities/useStaticts";
+import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { CustomizedPopover } from "../../assets/statics/constants/styles";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import ModalDialog from "@components/modals/ModalDialog";
 import LockResetIcon from "@mui/icons-material/LockReset";
 import EditPassword from "./EditPassword";
-import { BarChart } from "@mui/x-charts/BarChart";
-import { axisClasses } from "@mui/x-charts";
-import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
+import { accountService } from "@services/account/accountService";
 
-const chartSetting = {
-  yAxis: [
-    {
-      label: "rainfall (mm)",
-    },
-  ],
-  height: 300,
-  sx: {
-    [`.${axisClasses.left} .${axisClasses.label}`]: {
-      transform: "translate(-20px, 0)",
-    },
-  },
-};
 
-const dataset = [
-  {
-    iniciado: 59,
-    enProceso: 57,
-    finalizado: 86,
-    enRevision: 21,
-    mes: "Enero",
-  },
-  {
-    iniciado: 59,
-    enProceso: 57,
-    finalizado: 86,
-    enRevision: 21,
-    mes: "FEbrero",
-  },
-  {
-    iniciado: 59,
-    enProceso: 57,
-    finalizado: 86,
-    enRevision: 21,
-    mes: "Marzo",
-  },
-];
-
-function UserPage() {
+function UserDetail() {
   const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [openPassword, setOpenPassword] = useState(false);
   const [success, setSuccess] = useState(false);
   const [cloudName] = useState("dnkst5hjn");
@@ -119,7 +81,22 @@ function UserPage() {
     setAnchorEl(null);
   };
 
-  const valueFormatter = (value) => `${value} proyecto`;
+  const handleConfirm = () => {
+    accountService
+      .deleteUser(id)
+      .then((res) => {
+        if (res.data.status) {
+          notificationService.success("Se ha eliminado correctamente");
+          navigate("/admin/users");
+        }
+      })
+      .catch((err) => {
+        notificationService.error(err.message);
+      })
+      .finally(() => {
+        setOpen(false);
+      });
+  };
 
   return (
     <>
@@ -131,7 +108,13 @@ function UserPage() {
             handleClose={handleClose}
             onSuccess={setSuccess}
           />
-
+          <ModalDialog
+            title={"Quieres eliminar este usuario ?"}
+            open={openDelete}
+            onClose={() => setOpenDelete(false)}
+            onConfirm={handleConfirm}
+            slots={{ backdrop: StyledBackdrop }}
+          />
           <EditPassword
             user={profile}
             open={openPassword}
@@ -249,7 +232,7 @@ function UserPage() {
                 </Typography>
               </div>
               <div>
-                {profile.id == user.id && (
+                {profile.id == user.id ? (
                   <Tooltip title="Configuraciones">
                     <Fab
                       aria-describedby={idPopover}
@@ -263,6 +246,26 @@ function UserPage() {
                       }}
                     >
                       <SettingsIcon />
+                    </Fab>
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Configuraciones">
+                    <Fab
+                      aria-describedby={idPopover}
+                      size="small"
+                      aria-label="edit"
+                      onClick={() => setOpenDelete(true)}
+                      style={{
+                        backgroundColor: "#FFB1B8",
+                        boxShadow: "none",
+                        zIndex: 0,
+                      }}
+                    >
+                      <DeleteIcon
+                        sx={{
+                          color: "#DC3545",
+                        }}
+                      />
                     </Fab>
                   </Tooltip>
                 )}
@@ -287,51 +290,6 @@ function UserPage() {
                 </Typography>
               </div>
             </div>
-            {profile.id == user.id && (
-              <div style={CssContentInfo}>
-                <Typography variant="h6" sx={{ marginBottom: "20px" }}>
-                  Estadisticas
-                </Typography>
-                {staticts && staticts.length == 0 ? (
-                  <center>
-                    <SignalCellularAltIcon sx={{ fontSize: 60 }} />
-                    <Typography variant="h6">
-                      Aun no hay proyectos que mostrar !
-                    </Typography>
-                  </center>
-                ) : (
-                  <BarChart
-                    dataset={staticts ? staticts : dataset}
-                    xAxis={[{ scaleType: "band", dataKey: "mes" }]}
-                    margin={{ top: 80, left: 10, right: 30, bottom: 20 }}
-                    width={isSmallScreen ? 300 : 650}
-                    series={[
-                      {
-                        dataKey: "iniciado",
-                        label: "Iniciado",
-                        valueFormatter,
-                      },
-                      {
-                        dataKey: "enProceso",
-                        label: "En proceso",
-                        valueFormatter,
-                      },
-                      {
-                        dataKey: "finalizado",
-                        label: "Finalizado",
-                        valueFormatter,
-                      },
-                      {
-                        dataKey: "enRevision",
-                        label: "En revision",
-                        valueFormatter,
-                      },
-                    ]}
-                    {...chartSetting}
-                  />
-                )}
-              </div>
-            )}
           </Box>
         </Grid>
       ) : (
@@ -362,4 +320,4 @@ function UserPage() {
   );
 }
 
-export default UserPage;
+export default UserDetail;
