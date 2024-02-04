@@ -330,9 +330,7 @@ function Header() {
                   sx={{ marginRight: "10px" }}
                 >
                   {user.linkImagen == "default" ? (
-                    <PersonRoundedIcon 
-                      sx={{ fontSize: 30 }}
-                    />
+                    <PersonRoundedIcon sx={{ fontSize: 30 }} />
                   ) : (
                     <AdvancedImage
                       style={{
@@ -386,42 +384,75 @@ function Header() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
-                <MenuItem onClick={() => handleRedirecTo("/home")}>
-                  <ListItemIcon>
-                    <HomeRoundedIcon fontSize="small" />
-                  </ListItemIcon>
-                  Home
-                </MenuItem>
-                <MenuItem onClick={() => handleRedirecTo("/notifications")}>
-                  <ListItemIcon>
-                    <MailOutlineIcon fontSize="small" />
-                  </ListItemIcon>
-                  Notificaciones
-                </MenuItem>
-                <MenuItem onClick={() => handleRedirecTo("/projects")}>
-                  <ListItemIcon>
-                    <FileCopyOutlinedIcon fontSize="small" />
-                  </ListItemIcon>
-                  Mis proyectos
-                </MenuItem>
-                <MenuItem onClick={() => handleRedirecTo("/projects/follow")}>
-                  <ListItemIcon>
-                    <LibraryAddCheckIcon fontSize="small" />
-                  </ListItemIcon>
-                  Proyectos seguidos
-                </MenuItem>
-                <MenuItem onClick={() => handleRedirecTo("/user")}>
-                  <ListItemIcon>
-                    <PersonRoundedIcon fontSize="small" />
-                  </ListItemIcon>
-                  Perfil
-                </MenuItem>
-                <MenuItem onClick={() => handleRedirecTo("/create/project")}>
-                  <ListItemIcon>
-                    <QueueIcon fontSize="small" />
-                  </ListItemIcon>
-                  Crear proyecto
-                </MenuItem>
+                {user.rol != "Admin" ? (
+                  <>
+                    <MenuItem onClick={() => handleRedirecTo("/home")}>
+                      <ListItemIcon>
+                        <HomeRoundedIcon fontSize="small" />
+                      </ListItemIcon>
+                      Home
+                    </MenuItem>
+                    <MenuItem onClick={() => handleRedirecTo("/notifications")}>
+                      <ListItemIcon>
+                        <MailOutlineIcon fontSize="small" />
+                      </ListItemIcon>
+                      Notificaciones
+                    </MenuItem>
+                    <MenuItem onClick={() => handleRedirecTo("/projects")}>
+                      <ListItemIcon>
+                        <FileCopyOutlinedIcon fontSize="small" />
+                      </ListItemIcon>
+                      Mis proyectos
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => handleRedirecTo("/projects/follow")}
+                    >
+                      <ListItemIcon>
+                        <LibraryAddCheckIcon fontSize="small" />
+                      </ListItemIcon>
+                      Proyectos seguidos
+                    </MenuItem>
+                    <MenuItem onClick={() => handleRedirecTo("/user")}>
+                      <ListItemIcon>
+                        <PersonRoundedIcon fontSize="small" />
+                      </ListItemIcon>
+                      Perfil
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => handleRedirecTo("/create/project")}
+                    >
+                      <ListItemIcon>
+                        <QueueIcon fontSize="small" />
+                      </ListItemIcon>
+                      Crear proyecto
+                    </MenuItem>
+                  </>
+                ) : (
+                  <>
+                    
+                    <MenuItem onClick={() => handleRedirecTo("/admin/projects")}>
+                      <ListItemIcon>
+                        <FileCopyOutlinedIcon fontSize="small" />
+                      </ListItemIcon>
+                      Proyectos
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => handleRedirecTo("/admin/users")}
+                    >
+                      <ListItemIcon>
+                        <LibraryAddCheckIcon fontSize="small" />
+                      </ListItemIcon>
+                      Usuarios
+                    </MenuItem>
+                    <MenuItem onClick={() => handleRedirecTo("/admin/user")}>
+                      <ListItemIcon>
+                        <PersonRoundedIcon fontSize="small" />
+                      </ListItemIcon>
+                      Perfil administrador
+                    </MenuItem>
+                    
+                  </>
+                )}
                 <Divider />
 
                 <MenuItem onClick={logOut}>

@@ -13,13 +13,17 @@ const FORM_VALUES = {
 
 export const useLogin = () => {
 
-    const { singIn, isAuthenticated } = useAuth()
+    const { singIn, isAuthenticated, user } = useAuth()
     const navigate = useNavigate()
 
     useEffect(() => {
         
         if (isAuthenticated) {
-            navigate("/home")
+            if(user.rol == "Admin") {
+                navigate("/admin/projects")
+            } else {
+                navigate("/home")
+            }
         }
     }, [isAuthenticated])
 

@@ -46,6 +46,23 @@ export const accountService = {
     }
   },
 
+  deleteUser: async function (id) {
+    const { token } = JSON.parse(localStorage.getItem("user"));
+
+    try {
+      const res = await axios.delete(
+        URL_BASE + "api/eliminar-usuario/" +
+        id,
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      );
+      return res;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  },
+
   getStatistics: async function () {
     const { token } = JSON.parse(localStorage.getItem("user"));
 

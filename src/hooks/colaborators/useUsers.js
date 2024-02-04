@@ -4,7 +4,7 @@ import notificationService from "@services/notificationService"
 
 export const useUsers = () => {
   
-    const [ users, setUsers ] = useState()
+    const [ users, setUsers ] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
