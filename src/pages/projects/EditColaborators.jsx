@@ -290,12 +290,12 @@ function EditColaborators({
                         const labelId = `checkbox-list-label-${index}`;
 
                         return (
-                          <>
+                          <div key={index} >
                             {selectedIndex != null && !loadingPermission && (
                               <Fade
                                 in={selectedIndex != null && !loadingPermission}
                               >
-                                <ListItem key={index} disablePadding>
+                                <ListItem disablePadding>
                                   <ListItemButton
                                     sx={{
                                       borderRadius: "30px",
@@ -329,7 +329,7 @@ function EditColaborators({
                                 </ListItem>
                               </Fade>
                             )}
-                          </>
+                          </div>
                         );
                       })}
                       {selectedIndex != null && (

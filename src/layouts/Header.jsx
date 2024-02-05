@@ -102,7 +102,12 @@ function Header() {
 
   const selectProject = (value) => {
     setValue(value);
-    navigate(`/projects/${value.idProject}`);
+    if ( typeof(value) != "string") {
+      navigate(`/projects/${value.idProject}`);
+    } else {
+      let objeto = dataSelect.find( (obj) => obj.label === value )
+      navigate(`/projects/${objeto.idProject}`);
+    }
     setSearchModal(false);
   };
 
@@ -122,7 +127,6 @@ function Header() {
         <Fade in={searchModal}>
           <ModalContent sx={{ width: 285, height: 300 }}>
             <Autocomplete
-              freeSolo
               size="small"
               disablePortal
               id="combo-box-demo"
@@ -131,6 +135,7 @@ function Header() {
                 selectProject(newValue);
               }}
               inputValue={inputValue}
+              autoComplete={false}
               onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
               }}
